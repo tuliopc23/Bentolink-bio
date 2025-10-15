@@ -21,14 +21,14 @@ const {
 ---
 
 <a 
-  class={`dock-link ${featured ? 'dock-link--featured' : ''}`}
+  class="dock-link"
   href={href}
   data-reveal
   data-reveal-order={revealOrder}
   target={href.startsWith('http') ? '_blank' : undefined}
   rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
 >
-  <IconTile tint={tint} label={title} asset={iconAsset} size={featured ? 'large' : 'medium'} />
+  <IconTile tint={tint} label={title} asset={iconAsset} size="large" />
   <span class="dock-link__name">{title}</span>
 </a>
 
@@ -38,9 +38,9 @@ const {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-xxs);
+    gap: 6px;
     text-decoration: none;
-    padding: var(--space-xs);
+    padding: 8px;
     border-radius: var(--radius-md);
     transition: all var(--motion-duration-sm) var(--motion-ease-out);
     min-height: 0;
@@ -61,35 +61,20 @@ const {
     color: var(--text);
     text-align: center;
     letter-spacing: var(--ls-body);
-    line-height: 1.1;
+    line-height: 1.2;
     margin: 0;
   }
   
-  /* Featured/enlarged variant */
-  .dock-link--featured {
-    grid-row: span 2;
-    padding: var(--space-md);
-  }
-  
-  .dock-link--featured .dock-link__name {
-    font-size: var(--fs--1);
-    font-weight: 700;
-    margin-top: var(--space-xs);
-  }
   
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 639px) {
     .dock-link {
       padding: 6px;
-      gap: 4px;
+      gap: 5px;
     }
     
     .dock-link__name {
       font-size: 11px;
-    }
-    
-    .dock-link--featured {
-      padding: var(--space-sm);
     }
   }
 </style>

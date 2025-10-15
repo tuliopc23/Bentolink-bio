@@ -27,7 +27,7 @@ const contacts = [
         target={contact.href.startsWith('http') ? '_blank' : undefined}
         rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
       >
-        <IconTile tint={contact.tint} label={contact.label} asset={contact.iconAsset} size="small" />
+        <IconTile tint={contact.tint} label={contact.label} asset={contact.iconAsset} size="large" />
         <span class="contact-widget__label">{contact.label}</span>
       </a>
     ))}
@@ -44,21 +44,24 @@ const contacts = [
   }
   
   .contact-widget__items {
-    display: flex;
-    gap: var(--space-xl);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 2.5rem);
     align-items: center;
-    padding: var(--space-sm) var(--space-lg);
+    justify-items: center;
+    padding: 12px 20px;
     background: var(--surface-elevated);
     border: 1px solid var(--panel-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-card);
+    width: clamp(420px, 48vw, 560px);
   }
   
   .contact-widget__item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-xxs);
+    gap: 6px;
     text-decoration: none;
     transition: all var(--motion-duration-sm) var(--motion-ease-out);
   }
@@ -82,12 +85,14 @@ const contacts = [
     }
     
     .contact-widget__items {
-      gap: var(--space-md);
-      padding: var(--space-xs) var(--space-sm);
+      width: 100%;
+      max-width: 400px;
+      gap: 1.5rem;
+      padding: 10px 16px;
     }
     
     .contact-widget__label {
-      font-size: 10px;
+      font-size: 11px;
     }
   }
 </style>
