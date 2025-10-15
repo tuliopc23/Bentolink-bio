@@ -1,0 +1,163 @@
+---
+interface Props {
+  tint: string;
+  label: string;
+  asset?: string;
+  size?: 'small' | 'medium' | 'large';
+}
+
+const {
+  tint = "blue",
+  label,
+  asset,
+  size = 'medium',
+} = Astro.props;
+
+const sizeMap = {
+  small: '40px',
+  medium: '56px',
+  large: '72px',
+};
+---
+
+<div class={`icon-tile icon-tile--${tint} icon-tile--${size}`} aria-label={label}>
+  {asset && (
+    <img src={asset} alt={label} class="icon-tile__image" loading="lazy" decoding="async" />
+  )}
+</div>
+
+<style>
+  .icon-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+  }
+  
+  .icon-tile--small {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .icon-tile--medium {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .icon-tile--large {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .icon-tile__image {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+  }
+  
+  /* Tint backgrounds - Dark mode */
+  .icon-tile--blue {
+    background: rgba(13, 138, 255, 0.12);
+    border: 1px solid rgba(13, 138, 255, 0.2);
+  }
+  
+  .icon-tile--green {
+    background: rgba(48, 217, 72, 0.12);
+    border: 1px solid rgba(48, 217, 72, 0.2);
+  }
+  
+  .icon-tile--indigo {
+    background: rgba(94, 92, 232, 0.12);
+    border: 1px solid rgba(94, 92, 232, 0.2);
+  }
+  
+  .icon-tile--teal {
+    background: rgba(95, 212, 255, 0.12);
+    border: 1px solid rgba(95, 212, 255, 0.2);
+  }
+  
+  .icon-tile--orange {
+    background: rgba(255, 160, 13, 0.12);
+    border: 1px solid rgba(255, 160, 13, 0.2);
+  }
+  
+  .icon-tile--pink {
+    background: rgba(255, 56, 97, 0.12);
+    border: 1px solid rgba(255, 56, 97, 0.2);
+  }
+  
+  .icon-tile--purple {
+    background: rgba(194, 91, 244, 0.12);
+    border: 1px solid rgba(194, 91, 244, 0.2);
+  }
+  
+  .icon-tile--red {
+    background: rgba(255, 71, 60, 0.12);
+    border: 1px solid rgba(255, 71, 60, 0.2);
+  }
+  
+  .icon-tile--yellow {
+    background: rgba(255, 215, 13, 0.12);
+    border: 1px solid rgba(255, 215, 13, 0.2);
+  }
+  
+  .icon-tile--cyan {
+    background: rgba(90, 200, 250, 0.12);
+    border: 1px solid rgba(90, 200, 250, 0.2);
+  }
+  
+  /* Light mode adjustments */
+  [data-theme="light"] .icon-tile--blue {
+    background: rgba(0, 122, 255, 0.15);
+    border-color: rgba(0, 122, 255, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--green {
+    background: rgba(52, 199, 89, 0.15);
+    border-color: rgba(52, 199, 89, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--indigo {
+    background: rgba(88, 86, 214, 0.15);
+    border-color: rgba(88, 86, 214, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--teal {
+    background: rgba(90, 200, 250, 0.15);
+    border-color: rgba(90, 200, 250, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--orange {
+    background: rgba(255, 149, 0, 0.15);
+    border-color: rgba(255, 149, 0, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--pink {
+    background: rgba(255, 45, 85, 0.15);
+    border-color: rgba(255, 45, 85, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--purple {
+    background: rgba(175, 82, 222, 0.15);
+    border-color: rgba(175, 82, 222, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--red {
+    background: rgba(255, 59, 48, 0.15);
+    border-color: rgba(255, 59, 48, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--yellow {
+    background: rgba(255, 204, 0, 0.15);
+    border-color: rgba(255, 204, 0, 0.25);
+  }
+  
+  [data-theme="light"] .icon-tile--cyan {
+    background: rgba(80, 200, 240, 0.15);
+    border-color: rgba(80, 200, 240, 0.25);
+  }
+</style>

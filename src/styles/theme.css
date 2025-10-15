@@ -1,0 +1,257 @@
+/* ======= Token Imports ======= */
+@import './tokens/colors.css';
+@import './tokens/shadows.css';
+
+/* ======= Apple-Inspired Design Tokens ======= */
+:root {
+  /* Typography - SF Pro Display and SF Mono */
+  --font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  
+  /* Font sizes - Responsive with clamp */
+  --fs-hero: clamp(2.4rem, 4.2vw + 1.3rem, 3.25rem);
+  --fs-h2: clamp(1.75rem, 2.4vw + 1.15rem, 2.55rem);
+  --fs-h3: clamp(1.24rem, 1.5vw + 0.98rem, 1.88rem);
+  --fs-0: clamp(1.0625rem, 1vw + 0.95rem, 1.2rem);
+  --fs--1: clamp(0.875rem, 0.8vw + 0.75rem, 1rem);
+  --fs--2: clamp(0.75rem, 0.6vw + 0.6875rem, 0.875rem);
+  
+  /* Line heights */
+  --lh: 1.65;
+  --lh-hero: 1.08;
+  --lh-heading: 1.2;
+  --lh-base: 1.65;
+  --lh-tight: 1.382;
+  --lh-compact: 1.45;
+  
+  /* Letter spacing - Apple HIG */
+  --ls-hero: -0.039em;
+  --ls-h2: -0.025em;
+  --ls-h3: -0.015em;
+  --ls-body: -0.010em;
+  --ls-caption: -0.006em;
+  --ls-button: 0.004em;
+  --ls-eyebrow: 0.06em;
+  --ls-tight: -0.01em;
+  
+  /* Font variation settings */
+  --font-variation-text: "opsz" 17;
+  --font-variation-display-small: "opsz" 20;
+  --font-variation-display-medium: "opsz" 28;
+  --font-variation-display-large: "opsz" 40;
+  --font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+  
+  /* Spacing - 8px baseline grid */
+  --space-xxs: 8px;
+  --space-xs: 12px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 80px;
+  
+  /* Golden ratio spacing multipliers */
+  --golden-ratio: 1.618;
+  --space-golden-1: calc(var(--space-sm) * var(--golden-ratio));
+  --space-golden-2: calc(var(--space-md) * var(--golden-ratio));
+  --space-golden-3: calc(var(--space-lg) * var(--golden-ratio));
+  --space-golden-4: calc(var(--space-xl) * var(--golden-ratio));
+  
+  /* Border radius - Tahoe 26 */
+  --radius-xs: 6px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-xl: 40px;
+  
+  /* Layout */
+  --container-max: 1000px;
+  --container-padding: clamp(var(--space-md), 6vw, var(--space-2xl));
+  
+  /* Motion - Spring-based animations */
+  --motion-duration-instant: 100ms;
+  --motion-duration-xs: 120ms;
+  --motion-duration-sm: 180ms;
+  --motion-duration-md: 240ms;
+  --motion-duration-lg: 280ms;
+  
+  --motion-duration-spring-xs: 240ms;
+  --motion-duration-spring-sm: 320ms;
+  --motion-duration-spring-md: 420ms;
+  --motion-duration-spring-lg: 520ms;
+  
+  --motion-ease-out: cubic-bezier(0.2, 0.68, 0.32, 1);
+  --motion-ease-in: cubic-bezier(0.32, 0.94, 0.6, 1);
+  --motion-ease-in-out: cubic-bezier(0.34, 0.7, 0.28, 1);
+  --motion-spring-out: cubic-bezier(0.16, 0.94, 0.28, 1.32);
+  
+  --spring-snappy: cubic-bezier(0.16, 1.04, 0.32, 0.98);
+  --spring-bouncy: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  --spring-smooth: cubic-bezier(0.28, 0.88, 0.42, 1.08);
+  --spring-responsive: cubic-bezier(0.22, 0.94, 0.38, 1.12);
+  
+  --motion-distance-xs: 4px;
+  --motion-distance-sm: 8px;
+  --motion-distance-md: 16px;
+  --motion-scale-xs: 1.01;
+  --motion-scale-sm: 1.015;
+  --motion-scale-card: 1.024;
+  --motion-scale-active: 0.984;
+  
+  /* Glass materials - Tahoe 26 Liquid Glass */
+  --glass-blur-base: 28px;
+  --glass-blur-active: 42px;
+  --glass-saturation-base: 2.1;
+  --glass-saturation-active: 2.4;
+  --glass-opacity-base: 72%;
+  --glass-opacity-active: 88%;
+  --glass-noise-opacity: 0.03;
+  --glass-border: var(--panel-border);
+  --glass-border-strong: var(--panel-border-strong);
+  
+  /* Glass Material Variants */
+  --glass-ultra-thin-blur: 12px;
+  --glass-ultra-thin-opacity: 60%;
+  --glass-ultra-thin-saturation: 1.6;
+  
+  --glass-thin-blur: 20px;
+  --glass-thin-opacity: 68%;
+  --glass-thin-saturation: 1.9;
+  
+  --glass-regular-blur: 28px;
+  --glass-regular-opacity: 72%;
+  --glass-regular-saturation: 2.1;
+  
+  --glass-thick-blur: 36px;
+  --glass-thick-opacity: 80%;
+  --glass-thick-saturation: 2.3;
+  
+  --glass-ultra-thick-blur: 48px;
+  --glass-ultra-thick-opacity: 90%;
+  --glass-ultra-thick-saturation: 2.5;
+  
+  --glass-frosted-blur: 64px;
+  --glass-frosted-opacity: 92%;
+  --glass-frosted-saturation: 2.8;
+  
+  --glass-crystal-blur: 18px;
+  --glass-crystal-opacity: 65%;
+  --glass-crystal-saturation: 2.6;
+  --glass-crystal-brightness: 1.08;
+}
+
+/* ======= Base Styles ======= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: var(--lh-base);
+  letter-spacing: var(--ls-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: var(--font-feature-settings);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background-color var(--motion-duration-md) var(--motion-ease-out),
+              color var(--motion-duration-md) var(--motion-ease-out);
+}
+
+/* Theme transition class */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: 
+    background-color var(--motion-duration-md) var(--motion-ease-out),
+    border-color var(--motion-duration-md) var(--motion-ease-out),
+    color var(--motion-duration-md) var(--motion-ease-out),
+    fill var(--motion-duration-md) var(--motion-ease-out),
+    stroke var(--motion-duration-md) var(--motion-ease-out),
+    box-shadow var(--motion-duration-md) var(--motion-ease-out) !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--lh-heading);
+  font-weight: 600;
+  letter-spacing: var(--ls-h2);
+}
+
+h1 {
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  letter-spacing: var(--ls-hero);
+  line-height: var(--lh-hero);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  letter-spacing: var(--ls-h3);
+}
+
+p {
+  font-size: var(--fs-0);
+  line-height: var(--lh-base);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color var(--motion-duration-sm) var(--motion-ease-out);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

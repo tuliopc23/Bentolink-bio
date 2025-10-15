@@ -1,0 +1,58 @@
+/* ======= Color Tokens ======= */
+
+:root {
+  /* Base colors - Dark mode default */
+  --bg: #050505;
+  --surface: #161618;
+  --surface-elevated: #1d1d20;
+  --surface-raised: #232327;
+  --subtle: #0a0a0b;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --panel-border-strong: rgba(255, 255, 255, 0.18);
+  --text: #f5f5f7;
+  --muted: rgba(235, 235, 245, 0.65);
+
+  /* Apple system colors - Dark mode with enhanced vibrancy */
+  --blue: #0d8aff;
+  --green: #30d948;
+  --indigo: #5e5ce8;
+  --teal: #5fd4ff;
+  --orange: #ffa00d;
+  --pink: #ff3861;
+  --purple: #c25bf4;
+  --red: #ff473c;
+  --yellow: #ffd70d;
+  --brown: #ac8e68;
+  --cyan: #5ac8fa;
+
+  /* Link color */
+  --link: var(--blue);
+}
+
+/* Light mode overrides */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f8f8fb;
+  --surface-elevated: #ffffff;
+  --surface-raised: #f0f0f5;
+  --subtle: #f5f5f5;
+  --hairline: rgba(60, 60, 67, 0.08);
+  --panel-border: rgba(60, 60, 67, 0.12);
+  --panel-border-strong: rgba(60, 60, 67, 0.18);
+  --text: #1d1d1f;
+  --muted: rgba(60, 60, 67, 0.65);
+
+  /* Apple system colors - Light mode */
+  --blue: #007aff;
+  --green: #34c759;
+  --indigo: #5856d6;
+  --teal: #5ac8fa;
+  --orange: #ff9500;
+  --pink: #ff2d55;
+  --purple: #af52de;
+  --red: #ff3b30;
+  --yellow: #ffcc00;
+  --brown: #a2845e;
+  --cyan: #50c8f0;
+}

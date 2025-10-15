@@ -1,0 +1,93 @@
+---
+import IconTile from './IconTile.astro';
+
+const contacts = [
+  {
+    label: "Email",
+    href: "mailto:contact@tuliocunha.dev",
+    tint: "orange",
+    iconAsset: "/icons/Email.webp",
+  },
+  {
+    label: "Brazil",
+    href: "#",
+    tint: "green",
+    iconAsset: "/icons/Location.svg",
+  },
+];
+---
+
+<div class="contact-widget" data-reveal data-reveal-order="1">
+  <div class="contact-widget__items">
+    {contacts.map((contact) => (
+      <a 
+        href={contact.href}
+        class="contact-widget__item"
+        aria-label={contact.label}
+        target={contact.href.startsWith('http') ? '_blank' : undefined}
+        rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+      >
+        <IconTile tint={contact.tint} label={contact.label} asset={contact.iconAsset} size="small" />
+        <span class="contact-widget__label">{contact.label}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .contact-widget {
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--container-padding);
+    margin: var(--space-lg) auto;
+    max-width: 600px;
+  }
+  
+  .contact-widget__items {
+    display: flex;
+    gap: var(--space-xl);
+    align-items: center;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--surface-elevated);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+  }
+  
+  .contact-widget__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xxs);
+    text-decoration: none;
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+  }
+  
+  .contact-widget__item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .contact-widget__label {
+    font-size: var(--fs--2);
+    color: var(--muted);
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-widget {
+      padding: 0 var(--space-md);
+      margin: var(--space-md) auto;
+    }
+    
+    .contact-widget__items {
+      gap: var(--space-md);
+      padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .contact-widget__label {
+      font-size: 10px;
+    }
+  }
+</style>

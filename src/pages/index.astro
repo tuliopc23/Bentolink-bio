@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import ProfileHeader from '../components/ProfileHeader.astro';
+import ContactWidget from '../components/ContactWidget.astro';
+import DockLink from '../components/DockLink.astro';
+
+const socialLinks = [
+  {
+    title: "My Website",
+    href: "#",
+    tint: "purple",
+    iconAsset: "/icons/website-placeholder.svg",
+  },
+  {
+    title: "My Portfolio",
+    href: "https://portfolio.tuliocunha.dev",
+    tint: "cyan",
+    iconAsset: "/icons/portfolio-macos.svg",
+  },
+  {
+    title: "Linkedin",
+    href: "https://linkedin.com/in/tuliocunha",
+    tint: "blue",
+    iconAsset: "/icons/linkedin-light.svg",
+  },
+  {
+    title: "Instagram",
+    href: "https://instagram.com/tuliopinheirocunha",
+    tint: "pink",
+    iconAsset: "/icons/instagram-light.svg",
+  },
+  {
+    title: "Fiverr",
+    href: "https://www.fiverr.com/tuliopc",
+    tint: "green",
+    iconAsset: "/icons/fiverr.svg",
+  },
+  {
+    title: "Book a meeting",
+    href: "https://cal.com/tuliopinheirocunha",
+    tint: "teal",
+    iconAsset: "/icons/calendar-light.svg",
+  },
+];
+---
+
+<Base 
+  title="Tulio Cunha" 
+  description="Full Stack Developer - Building elegant solutions with code. Connect with me on GitHub, LinkedIn, and more."
+>
+  <ProfileHeader 
+    name="Tulio Cunha"
+    title="Full Stack Developer"
+    bio="Building elegant solutions with code."
+    avatarSrc="/avatar-placeholder.svg"
+  />
+  
+  <ContactWidget />
+  
+  <section class="socials">
+    <h2 class="socials__heading" data-reveal data-reveal-order="2">Socials</h2>
+    <div class="socials__dock">
+      {socialLinks.map((link, index) => (
+        <DockLink
+          href={link.href}
+          title={link.title}
+          tint={link.tint}
+          iconAsset={link.iconAsset}
+          revealOrder={index + 3}
+          featured={index === 0}
+        />
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .socials {
+    padding: var(--space-xl) var(--container-padding) var(--space-2xl);
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  
+  .socials__heading {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: var(--ls-h3);
+    text-align: center;
+    margin: 0 0 var(--space-xl) 0;
+    color: var(--text);
+  }
+  
+  .socials__dock {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(110px, auto);
+    gap: var(--space-sm);
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    background: var(--surface-elevated);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+  
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .socials__dock {
+      max-width: 500px;
+      gap: var(--space-sm);
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1025px) {
+    .socials__dock {
+      max-width: 550px;
+      gap: var(--space-md);
+    }
+  }
+  
+  /* Mobile */
+  @media (max-width: 767px) {
+    .socials {
+      padding: var(--space-lg) var(--space-md) var(--space-2xl);
+    }
+    
+    .socials__heading {
+      margin-bottom: var(--space-lg);
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+    }
+    
+    .socials__dock {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-xs);
+      max-width: 350px;
+      padding: var(--space-md);
+    }
+  }
+</style>

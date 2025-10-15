@@ -1,0 +1,53 @@
+/* ======= Shadow Tokens ======= */
+/* Enhanced 4-layer shadow system for depth and definition */
+
+:root {
+  /* Card elevation system */
+  --shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.03);
+
+  --shadow-card-hover:
+    0 2px 4px rgba(0, 0, 0, 0.10),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    0 16px 32px rgba(0, 0, 0, 0.05);
+
+  /* Icon tile shadows */
+  --shadow-symbol-dark:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    0 2px 4px rgba(0, 0, 0, 0.22),
+    0 8px 16px rgba(0, 0, 0, 0.16),
+    0 16px 32px rgba(0, 0, 0, 0.12);
+
+  --shadow-symbol-dark-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 4px 8px rgba(0, 0, 0, 0.28),
+    0 12px 24px rgba(0, 0, 0, 0.24),
+    0 24px 48px rgba(0, 0, 0, 0.18);
+
+  --shadow-symbol-light:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 2px 4px rgba(31, 35, 53, 0.14),
+    0 8px 16px rgba(31, 35, 53, 0.18),
+    0 18px 36px rgba(31, 35, 53, 0.22);
+
+  --shadow-symbol-light-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 3px 6px rgba(31, 35, 53, 0.16),
+    0 10px 20px rgba(31, 35, 53, 0.20),
+    0 22px 40px rgba(31, 35, 53, 0.24);
+
+  /* Focus ring with glow */
+  --focus-ring: 
+    0 0 0 3px rgba(13, 138, 255, 0.48),
+    0 0 0 5px rgba(13, 138, 255, 0.24),
+    0 0 10px rgba(13, 138, 255, 0.18);
+
+  /* Glass surface shadows */
+  --shadow-glass:
+    0 0.5px 0 rgba(255, 255, 255, 0.28),
+    0 1px 2px rgba(0, 0, 0, 0.12);
+}

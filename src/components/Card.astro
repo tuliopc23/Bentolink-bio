@@ -1,0 +1,116 @@
+---
+import IconTile from './IconTile.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  body: string;
+  tint: string;
+  iconAsset?: string;
+  revealOrder?: number;
+}
+
+const {
+  href,
+  title,
+  body,
+  tint = "blue",
+  iconAsset,
+  revealOrder,
+} = Astro.props;
+---
+
+<a 
+  class="card" 
+  href={href}
+  data-reveal
+  data-reveal-order={revealOrder}
+  target={href.startsWith('http') ? '_blank' : undefined}
+  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+>
+  <div class="card__inner">
+    <IconTile tint={tint} label={title} asset={iconAsset} size="medium" />
+    <div class="card__content">
+      <h3 class="card__title">{title}</h3>
+      <p class="card__body">{body}</p>
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: block;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--panel-border);
+    background: var(--surface-elevated);
+    box-shadow: var(--shadow-card);
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--panel-border-strong);
+  }
+  
+  .card:active {
+    transform: translateY(0) scale(var(--motion-scale-active));
+  }
+  
+  .card__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+  
+  .card__content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card__title {
+    font-size: var(--fs-0);
+    font-weight: 600;
+    letter-spacing: var(--ls-body);
+    line-height: var(--lh-tight);
+    margin: 0 0 var(--space-xxs) 0;
+    color: var(--text);
+  }
+  
+  .card__body {
+    font-size: var(--fs--1);
+    line-height: var(--lh-compact);
+    color: var(--muted);
+    margin: 0;
+  }
+  
+  /* Light mode adjustments */
+  [data-theme="light"] .card {
+    background: var(--surface-elevated);
+    border-color: var(--panel-border);
+  }
+  
+  [data-theme="light"] .card:hover {
+    background: var(--surface-raised);
+    border-color: var(--panel-border-strong);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .card__inner {
+      padding: var(--space-sm) var(--space-md);
+    }
+    
+    .card__title {
+      font-size: clamp(0.95rem, 3vw, 1.05rem);
+    }
+    
+    .card__body {
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+  }
+</style>

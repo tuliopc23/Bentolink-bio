@@ -1,0 +1,95 @@
+---
+import IconTile from './IconTile.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  tint: string;
+  iconAsset?: string;
+  revealOrder?: number;
+  featured?: boolean;
+}
+
+const {
+  href,
+  title,
+  tint = "blue",
+  iconAsset,
+  revealOrder,
+  featured = false,
+} = Astro.props;
+---
+
+<a 
+  class={`dock-link ${featured ? 'dock-link--featured' : ''}`}
+  href={href}
+  data-reveal
+  data-reveal-order={revealOrder}
+  target={href.startsWith('http') ? '_blank' : undefined}
+  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+>
+  <IconTile tint={tint} label={title} asset={iconAsset} size={featured ? 'large' : 'medium'} />
+  <span class="dock-link__name">{title}</span>
+</a>
+
+<style>
+  .dock-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xxs);
+    text-decoration: none;
+    padding: var(--space-xs);
+    border-radius: var(--radius-md);
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    min-height: 0;
+  }
+  
+  .dock-link:hover {
+    background: var(--surface-elevated);
+    transform: translateY(-4px) scale(var(--motion-scale-sm));
+  }
+  
+  .dock-link:active {
+    transform: translateY(-2px) scale(var(--motion-scale-active));
+  }
+  
+  .dock-link__name {
+    font-size: var(--fs--2);
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: var(--ls-body);
+    line-height: 1.1;
+    margin: 0;
+  }
+  
+  /* Featured/enlarged variant */
+  .dock-link--featured {
+    grid-row: span 2;
+    padding: var(--space-md);
+  }
+  
+  .dock-link--featured .dock-link__name {
+    font-size: var(--fs--1);
+    font-weight: 700;
+    margin-top: var(--space-xs);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .dock-link {
+      padding: 6px;
+      gap: 4px;
+    }
+    
+    .dock-link__name {
+      font-size: 11px;
+    }
+    
+    .dock-link--featured {
+      padding: var(--space-sm);
+    }
+  }
+</style>

@@ -1,0 +1,242 @@
+---
+import '../styles/theme.css';
+import '../styles/motion.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Tulio Cunha",
+  description = "Full Stack Developer - Building elegant solutions with code.",
+} = Astro.props;
+
+const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    
+    <!-- Favicon placeholders -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Preconnect to SF font CDN -->
+    <link rel="preconnect" href="//fdn.fontcdn.ir" />
+    <link rel="preconnect" href="//v1.fontapi.ir" />
+    
+    <!-- SF Pro Display (main UI font) -->
+    <link href="https://v1.fontapi.ir/css/SFProDisplay" rel="stylesheet" />
+    
+    <!-- SF Mono (monospace for code) -->
+    <link href="https://v1.fontapi.ir/css/SFMono" rel="stylesheet" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    
+    <!-- Theme initialization script (runs before CSS to prevent FOUC) -->
+    <script is:inline>
+      (() => {
+        const readStoredTheme = () => {
+          try {
+            const value = localStorage.getItem("theme");
+            return value === "light" || value === "dark" ? value : null;
+          } catch {
+            return null;
+          }
+        };
+
+        const stored = readStoredTheme();
+        const root = document.documentElement;
+
+        if (stored === "light" || stored === "dark") {
+          root.setAttribute("data-theme", stored);
+          if (stored === "light") {
+            root.classList.remove("dark");
+            root.classList.add("light");
+          } else {
+            root.classList.remove("light");
+            root.classList.add("dark");
+          }
+        } else {
+          // Check system preference
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = prefersDark ? "dark" : "light";
+          root.setAttribute("data-theme", theme);
+          root.classList.add(theme);
+        }
+      })();
+    </script>
+  </head>
+  
+  <body>
+    <a href="#main" class="sr-only">Skip to content</a>
+    
+    <!-- Minimal topbar with theme toggle -->
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="topbar__toggle">
+          <button
+            type="button"
+            class="theme-toggle"
+            aria-label="Toggle theme"
+            data-theme-toggle
+          >
+            <span class="theme-toggle__icon theme-toggle__icon--sun">☀️</span>
+            <span class="theme-toggle__icon theme-toggle__icon--moon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <main id="main" class="content">
+      <slot />
+    </main>
+    
+    <!-- Simple footer -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <p class="footer__copy">
+          © {new Date().getFullYear()} Tulio Cunha. Built with Astro.
+        </p>
+      </div>
+    </footer>
+    
+    <!-- Theme controller and motion scripts -->
+    <script>
+      import '../scripts/theme.ts';
+      import '../scripts/motion.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  /* Topbar styles */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturation));
+    background: rgba(22, 22, 24, 0.72);
+    border-bottom: 1px solid var(--panel-border);
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+  }
+  
+  [data-theme="light"] .topbar {
+    background: rgba(248, 248, 251, 0.72);
+  }
+  
+  .topbar__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-sm) var(--container-padding);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  /* Theme toggle */
+  .theme-toggle {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+  }
+  
+  .theme-toggle:hover {
+    background: var(--surface-elevated);
+    transform: scale(var(--motion-scale-sm));
+  }
+  
+  .theme-toggle:active {
+    transform: scale(var(--motion-scale-active));
+  }
+  
+  .theme-toggle__icon {
+    position: absolute;
+    font-size: 20px;
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+  }
+  
+  .theme-toggle__icon--sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.8);
+  }
+  
+  .theme-toggle__icon--moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  
+  [data-theme="light"] .theme-toggle__icon--sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  
+  [data-theme="light"] .theme-toggle__icon--moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.8);
+  }
+  
+  /* Content */
+  .content {
+    padding-top: 80px;
+    padding-bottom: var(--space-2xl);
+    min-height: 100vh;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: var(--space-xl) var(--container-padding);
+    border-top: 1px solid var(--hairline);
+  }
+  
+  .footer__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .footer__copy {
+    font-size: var(--fs--1);
+    color: var(--muted);
+    margin: 0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .content {
+      padding-top: 72px;
+    }
+    
+    .topbar__inner {
+      padding: var(--space-xs) var(--space-md);
+    }
+    
+    .footer {
+      padding: var(--space-lg) var(--space-md);
+    }
+  }
+</style>
