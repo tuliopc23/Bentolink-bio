@@ -1,58 +1,116 @@
-/* ======= Color Tokens ======= */
+/* ======= Apple HIG Color System ======= */
 
 :root {
-  /* Base colors - Dark mode default */
-  --bg: #050505;
-  --surface: #161618;
-  --surface-elevated: #1d1d20;
-  --surface-raised: #232327;
-  --subtle: #0a0a0b;
-  --hairline: rgba(255, 255, 255, 0.08);
-  --panel-border: rgba(255, 255, 255, 0.12);
-  --panel-border-strong: rgba(255, 255, 255, 0.18);
-  --text: #f5f5f7;
-  --muted: rgba(235, 235, 245, 0.65);
+	/* Primary Background Hierarchy */
+	--bg: #000000;
+	--bg-base: #000000;
+	--bg-elevated: rgba(28, 28, 30, 0.85);
+	--bg-grouped: #1c1c1e;
+	--surface: #1c1c1e;
+	--surface-elevated: rgba(28, 28, 30, 0.9);
+	--surface-raised: #2c2c2e;
+	--subtle: #0a0a0b;
 
-  /* Apple system colors - Dark mode with enhanced vibrancy */
-  --blue: #0d8aff;
-  --green: #30d948;
-  --indigo: #5e5ce8;
-  --teal: #5fd4ff;
-  --orange: #ffa00d;
-  --pink: #ff3861;
-  --purple: #c25bf4;
-  --red: #ff473c;
-  --yellow: #ffd70d;
-  --brown: #ac8e68;
-  --cyan: #5ac8fa;
+	/* Borders & Separators */
+	--hairline: rgba(255, 255, 255, 0.08);
+	--panel-border: rgba(255, 255, 255, 0.12);
+	--panel-border-strong: rgba(255, 255, 255, 0.18);
+	--separator-opaque: rgba(84, 84, 88, 0.65);
 
-  /* Link color */
-  --link: var(--blue);
+	/* Text Hierarchy */
+	--text: rgba(255, 255, 255, 0.85);
+	--text-primary: rgba(255, 255, 255, 0.85);
+	--text-secondary: rgba(235, 235, 245, 0.6);
+	--text-tertiary: rgba(235, 235, 245, 0.4);
+	--muted: rgba(235, 235, 245, 0.6);
+
+	/* Fill Colors (Buttons, Controls) */
+	--fill-primary: rgba(120, 120, 128, 0.36);
+	--fill-secondary: rgba(120, 120, 128, 0.32);
+	--fill-tertiary: rgba(118, 118, 128, 0.28);
+
+	/* Apple System Colors - Dark Mode */
+	--blue: #0d8aff;
+	--green: #30d948;
+	--indigo: #5e5ce8;
+	--teal: #5fd4ff;
+	--orange: #ffa00d;
+	--pink: #ff3861;
+	--purple: #c25bf4;
+	--red: #ff453a;
+	--yellow: #ffd70d;
+	--brown: #ac8e68;
+	--cyan: #5ac8fa;
+	--gray: #8e8e93;
+
+	/* Semantic Colors */
+	--color-primary: var(--blue);
+	--color-success: var(--green);
+	--color-warning: var(--orange);
+	--color-error: var(--red);
+
+	/* Interactive States */
+	--link: var(--blue);
+	--link-hover: #3ea4ff;
+	--selection-bg: rgba(10, 132, 255, 0.3);
+
+	/* Glass & Materials */
+	--glass-bg: rgba(28, 28, 30, 0.7);
+	--glass-blur-base: 40px;
+	--glass-saturation-base: 180%;
+
+	/* Vibrant Gradients */
+	--gradient-blue: linear-gradient(180deg, #409cff 0%, #0d8aff 100%);
+	--gradient-purple: linear-gradient(180deg, #bf5af2 0%, #5e5ce8 100%);
+	--gradient-pink: linear-gradient(180deg, #ff6482 0%, #ff3861 100%);
 }
 
-/* Light mode overrides */
+/* Light Mode */
 [data-theme="light"] {
-  --bg: #ffffff;
-  --surface: #f8f8fb;
-  --surface-elevated: #ffffff;
-  --surface-raised: #f0f0f5;
-  --subtle: #f5f5f5;
-  --hairline: rgba(60, 60, 67, 0.08);
-  --panel-border: rgba(60, 60, 67, 0.12);
-  --panel-border-strong: rgba(60, 60, 67, 0.18);
-  --text: #1d1d1f;
-  --muted: rgba(60, 60, 67, 0.65);
+	--bg: #ffffff;
+	--bg-base: #ffffff;
+	--bg-elevated: rgba(255, 255, 255, 0.7);
+	--bg-grouped: #f2f2f7;
+	--surface: #f8f8fb;
+	--surface-elevated: rgba(255, 255, 255, 0.9);
+	--surface-raised: #f0f0f5;
+	--subtle: #f5f5f5;
 
-  /* Apple system colors - Light mode */
-  --blue: #007aff;
-  --green: #34c759;
-  --indigo: #5856d6;
-  --teal: #5ac8fa;
-  --orange: #ff9500;
-  --pink: #ff2d55;
-  --purple: #af52de;
-  --red: #ff3b30;
-  --yellow: #ffcc00;
-  --brown: #a2845e;
-  --cyan: #50c8f0;
+	--hairline: rgba(60, 60, 67, 0.08);
+	--panel-border: rgba(60, 60, 67, 0.12);
+	--panel-border-strong: rgba(60, 60, 67, 0.18);
+	--separator-opaque: rgba(60, 60, 67, 0.29);
+
+	--text: rgba(0, 0, 0, 0.85);
+	--text-primary: rgba(0, 0, 0, 0.85);
+	--text-secondary: rgba(0, 0, 0, 0.6);
+	--text-tertiary: rgba(0, 0, 0, 0.4);
+	--muted: rgba(60, 60, 67, 0.6);
+
+	--fill-primary: rgba(120, 120, 128, 0.2);
+	--fill-secondary: rgba(120, 120, 128, 0.16);
+	--fill-tertiary: rgba(118, 118, 128, 0.12);
+
+	--blue: #007aff;
+	--green: #34c759;
+	--indigo: #5856d6;
+	--teal: #5ac8fa;
+	--orange: #ff9500;
+	--pink: #ff2d55;
+	--purple: #af52de;
+	--red: #ff3b30;
+	--yellow: #ffcc00;
+	--brown: #a2845e;
+	--cyan: #50c8f0;
+
+	--color-primary: var(--blue);
+	--link-hover: #0055d4;
+	--selection-bg: rgba(0, 122, 255, 0.2);
+	--glass-bg: rgba(255, 255, 255, 0.7);
+}
+
+/* Selection Styling */
+::selection {
+	background-color: var(--selection-bg);
+	color: var(--text-primary);
 }

@@ -41,11 +41,11 @@ const {
   .card {
     display: block;
     text-decoration: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-card);
     border: 1px solid var(--panel-border);
     background: var(--surface-elevated);
     box-shadow: var(--shadow-card);
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-fast) var(--motion-ease-out);
     overflow: hidden;
     position: relative;
   }
@@ -63,28 +63,28 @@ const {
   .card__inner {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-md);
+    gap: var(--gap-lg);
+    padding: var(--card-padding-compact);
   }
-  
+
   .card__content {
     flex: 1;
     min-width: 0;
   }
-  
+
   .card__title {
-    font-size: var(--fs-0);
-    font-weight: 600;
+    font-size: var(--fs-body);
+    font-weight: var(--fw-semibold);
     letter-spacing: var(--ls-body);
     line-height: var(--lh-tight);
-    margin: 0 0 var(--space-xxs) 0;
-    color: var(--text);
+    margin: 0 0 var(--space-1) 0;
+    color: var(--text-primary);
   }
-  
+
   .card__body {
-    font-size: var(--fs--1);
-    line-height: var(--lh-compact);
-    color: var(--muted);
+    font-size: var(--fs-callout);
+    line-height: var(--lh-snug);
+    color: var(--text-secondary);
     margin: 0;
   }
   
@@ -102,15 +102,16 @@ const {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .card__inner {
-      padding: var(--space-sm) var(--space-md);
+      padding: var(--space-4);
+      gap: var(--gap-md);
     }
-    
+
     .card__title {
-      font-size: clamp(0.95rem, 3vw, 1.05rem);
+      font-size: var(--fs-callout);
     }
-    
+
     .card__body {
-      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      font-size: var(--fs-footnote);
     }
   }
 </style>

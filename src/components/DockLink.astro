@@ -38,12 +38,13 @@ const {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--space-2);
     text-decoration: none;
-    padding: 8px;
+    padding: var(--space-1);
     border-radius: var(--radius-md);
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-fast) var(--motion-ease-out);
     min-height: 0;
+    width: 100%;
   }
   
   .dock-link:hover {
@@ -56,12 +57,12 @@ const {
   }
   
   .dock-link__name {
-    font-size: var(--fs--2);
-    font-weight: 600;
-    color: var(--text);
+    font-size: var(--fs-caption-2);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
     text-align: center;
-    letter-spacing: var(--ls-body);
-    line-height: 1.2;
+    letter-spacing: var(--ls-caption);
+    line-height: var(--lh-tight);
     margin: 0;
   }
   
@@ -69,10 +70,10 @@ const {
   /* Responsive */
   @media (max-width: 639px) {
     .dock-link {
-      padding: 6px;
-      gap: 5px;
+      padding: var(--space-1);
+      gap: var(--space-1);
     }
-    
+
     .dock-link__name {
       font-size: 11px;
     }

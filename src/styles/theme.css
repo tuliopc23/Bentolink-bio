@@ -1,5 +1,9 @@
 /* ======= Token Imports ======= */
 @import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/materials.css';
+@import './tokens/animations.css';
 @import './tokens/shadows.css';
 
 /* ======= Apple-Inspired Design Tokens ======= */

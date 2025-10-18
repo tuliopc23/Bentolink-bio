@@ -14,16 +14,29 @@ const {
 } = Astro.props;
 
 const sizeMap = {
-  small: '40px',
-  medium: '56px',
-  large: '64px',
+	small: '40px',
+	medium: '56px',
+	large: '64px',
 };
+
+// Check if this icon needs special sizing (not 100% fill)
+const needsPadding =
+	asset &&
+	(asset.includes('portfolio') ||
+		asset.includes('orbstack') ||
+		asset.includes('Containerization'));
 ---
 
 <div class={`icon-tile icon-tile--${tint} icon-tile--${size}`} aria-label={label}>
-  {asset && (
-    <img src={asset} alt={label} class="icon-tile__image" loading="lazy" decoding="async" />
-  )}
+	{asset && (
+		<img
+			src={asset}
+			alt={label}
+			class={`icon-tile__image ${needsPadding ? 'icon-tile__image--padded' : ''}`}
+			loading="lazy"
+			decoding="async"
+		/>
+	)}
 </div>
 
 <style>
@@ -32,32 +45,55 @@ const sizeMap = {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
+    border-radius: var(--radius-lg);
+    overflow: visible;
     flex-shrink: 0;
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition:
+      transform var(--motion-duration-fast) var(--motion-ease-out),
+      box-shadow var(--motion-duration-fast) var(--motion-ease-out);
+    will-change: transform, box-shadow;
   }
   
+  /* Hover effects on parent card */
+  .card:hover .icon-tile {
+    transform: scale(1.05);
+  }
+
+  .card:active .icon-tile {
+    transform: scale(0.95);
+  }
+
   .icon-tile--small {
     width: 40px;
     height: 40px;
+    border-radius: var(--radius-sm);
   }
-  
+
   .icon-tile--medium {
     width: 52px;
     height: 52px;
+    border-radius: var(--radius-md);
   }
-  
+
   .icon-tile--large {
     width: 64px;
     height: 64px;
+    border-radius: var(--radius-lg);
   }
   
   .icon-tile__image {
-    width: 75%;
-    height: 75%;
-    object-fit: contain;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
     display: block;
+    margin: auto;
+  }
+
+  /* Special sizing for icons that need padding to match other icon styles */
+  .icon-tile__image--padded {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
   }
   
   /* Tint backgrounds - Dark mode */
