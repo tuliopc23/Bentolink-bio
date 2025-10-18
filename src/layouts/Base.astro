@@ -131,10 +131,10 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     left: 0;
     right: 0;
     z-index: 100;
-    backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-regular-saturation));
+    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
     background: rgba(22, 22, 24, 0.72);
     border-bottom: 1px solid var(--panel-border);
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
   
   [data-theme="light"] .topbar {
@@ -142,9 +142,9 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
   }
   
   .topbar__inner {
-    max-width: var(--container-max);
+    max-width: var(--container-xl);
     margin: 0 auto;
-    padding: var(--space-sm) var(--container-padding);
+    padding: var(--topbar-padding) var(--container-padding-x);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -162,7 +162,7 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-fast) var(--motion-ease-out);
   }
   
   .theme-toggle:hover {
@@ -177,7 +177,7 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
   .theme-toggle__icon {
     position: absolute;
     font-size: 20px;
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-fast) var(--motion-ease-out);
   }
   
   .theme-toggle__icon--sun {
@@ -203,25 +203,25 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
   /* Content */
   .content {
     padding-top: 80px;
-    padding-bottom: var(--space-2xl);
+    padding-bottom: var(--space-24);
     min-height: 100vh;
   }
   
   /* Footer */
   .footer {
-    padding: var(--space-xl) var(--container-padding);
+    padding: var(--space-12) var(--container-padding-x);
     border-top: 1px solid var(--hairline);
   }
-  
+
   .footer__inner {
-    max-width: var(--container-max);
+    max-width: var(--container-xl);
     margin: 0 auto;
     text-align: center;
   }
-  
+
   .footer__copy {
-    font-size: var(--fs--1);
-    color: var(--muted);
+    font-size: var(--fs-footnote);
+    color: var(--text-tertiary);
     margin: 0;
   }
   
@@ -232,11 +232,11 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     }
     
     .topbar__inner {
-      padding: var(--space-xs) var(--space-md);
+      padding: var(--space-2) var(--space-4);
     }
-    
+
     .footer {
-      padding: var(--space-lg) var(--space-md);
+      padding: var(--space-8) var(--space-4);
     }
   }
 </style>

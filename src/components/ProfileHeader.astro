@@ -29,21 +29,21 @@ const {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: var(--space-md);
-    padding: var(--space-2xl) var(--container-padding);
+    gap: var(--gap-md);
+    padding: var(--profile-padding) var(--container-padding-x);
     max-width: 600px;
     margin: 0 auto;
   }
-  
+
   .profile__avatar {
     position: relative;
-    width: clamp(100px, 20vw, 160px);
-    height: clamp(100px, 20vw, 160px);
-    border-radius: 32px;
+    width: var(--avatar-profile);
+    height: var(--avatar-profile);
+    border-radius: var(--radius-avatar-lg);
     overflow: hidden;
     border: 1px solid var(--panel-border);
     box-shadow: var(--shadow-card);
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-fast) var(--motion-ease-out);
   }
   
   .profile__avatar:hover {
@@ -60,25 +60,25 @@ const {
   }
   
   .profile__name {
-    font-size: var(--fs-h2);
-    font-weight: 700;
-    letter-spacing: var(--ls-h2);
-    line-height: var(--lh-heading);
+    font-size: var(--fs-profile-name);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-profile-name);
+    line-height: var(--lh-profile-name);
     margin: 0;
-    color: var(--text);
+    color: var(--text-primary);
   }
-  
+
   .profile__title {
-    font-size: var(--fs-0);
-    font-weight: 500;
-    color: var(--muted);
+    font-size: var(--fs-profile-title);
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
     margin: 0;
-    letter-spacing: var(--ls-body);
+    letter-spacing: var(--ls-profile-title);
   }
-  
+
   .profile__bio {
-    font-size: var(--fs--1);
-    color: var(--muted);
+    font-size: var(--fs-profile-bio);
+    color: var(--text-secondary);
     margin: 0;
     max-width: 48ch;
     line-height: var(--lh-base);
@@ -87,16 +87,16 @@ const {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .profile {
-      padding: var(--space-xl) var(--space-md);
-      gap: var(--space-sm);
+      padding: var(--space-8) var(--space-4);
+      gap: var(--gap-sm);
     }
-    
+
     .profile__name {
-      font-size: clamp(1.75rem, 5vw, 2.2rem);
+      font-size: var(--fs-profile-name);
     }
-    
+
     .profile__title {
-      font-size: clamp(0.9rem, 3vw, 1rem);
+      font-size: var(--fs-profile-title);
     }
   }
 </style>

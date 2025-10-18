@@ -38,61 +38,61 @@ const contacts = [
   .contact-widget {
     display: flex;
     justify-content: center;
-    padding: 0 var(--container-padding);
-    margin: var(--space-lg) auto;
+    padding: 0 var(--container-padding-x);
+    margin: var(--space-6) auto;
     max-width: 600px;
   }
-  
+
   .contact-widget__items {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(1.5rem, 4vw, 2.5rem);
     align-items: center;
     justify-items: center;
-    padding: 12px 20px;
+    padding: var(--space-3) var(--space-5);
     background: var(--surface-elevated);
     border: 1px solid var(--panel-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-widget);
     box-shadow: var(--shadow-card);
     width: clamp(420px, 48vw, 560px);
   }
-  
+
   .contact-widget__item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: var(--gap-sm);
     text-decoration: none;
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    transition: all var(--motion-duration-fast) var(--motion-ease-out);
   }
-  
+
   .contact-widget__item:hover {
-    transform: translateY(-2px);
+    transform: translateY(calc(-1 * var(--translate-xs)));
   }
-  
+
   .contact-widget__label {
-    font-size: var(--fs--2);
-    color: var(--muted);
-    font-weight: 500;
+    font-size: var(--fs-caption-2);
+    color: var(--text-secondary);
+    font-weight: var(--fw-medium);
     text-align: center;
   }
   
   /* Responsive */
   @media (max-width: 768px) {
     .contact-widget {
-      padding: 0 var(--space-md);
-      margin: var(--space-md) auto;
+      padding: 0 var(--space-4);
+      margin: var(--space-4) auto;
     }
-    
+
     .contact-widget__items {
       width: 100%;
       max-width: 400px;
-      gap: 1.5rem;
-      padding: 10px 16px;
+      gap: var(--gap-xl);
+      padding: var(--space-3) var(--space-4);
     }
-    
+
     .contact-widget__label {
-      font-size: 11px;
+      font-size: var(--fs-caption-2);
     }
   }
 </style>

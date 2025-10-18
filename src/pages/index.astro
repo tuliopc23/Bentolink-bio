@@ -48,11 +48,11 @@ const socialLinks = [
   title="Tulio Cunha" 
   description="Full Stack Developer - Building elegant solutions with code. Connect with me on GitHub, LinkedIn, and more."
 >
-  <ProfileHeader 
+  <ProfileHeader
     name="Tulio Cunha"
     title="Full Stack Developer"
     bio="Building elegant solutions with code."
-    avatarSrc="/avatar-placeholder.svg"
+    avatarSrc="/my photo.png"
   />
   
   <ContactWidget />
@@ -75,18 +75,18 @@ const socialLinks = [
 
 <style>
   .socials {
-    padding: var(--space-xl) var(--container-padding) var(--space-2xl);
-    max-width: var(--container-max);
+    padding: var(--space-12) var(--container-padding-x) var(--space-24);
+    max-width: var(--container-xl);
     margin: 0 auto;
   }
-  
+
   .socials__heading {
-    font-size: var(--fs-h3);
-    font-weight: 600;
-    letter-spacing: var(--ls-h3);
+    font-size: var(--fs-title-3);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-title);
     text-align: center;
-    margin: 0 0 var(--space-xl) 0;
-    color: var(--text);
+    margin: 0 0 var(--space-12) 0;
+    color: var(--text-primary);
   }
   
   .socials__dock {
@@ -97,40 +97,48 @@ const socialLinks = [
     width: clamp(560px, 65vw, 800px);
     max-width: 800px;
     margin: 0 auto;
-    padding: 16px 24px;
+    padding: var(--space-4) var(--space-6);
     background: var(--surface-elevated);
+    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
+    -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
     border: 1px solid var(--panel-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-card);
+    transition: all var(--motion-duration-base) var(--motion-ease-out);
+  }
+
+  .socials__dock:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--panel-border-strong);
   }
   
   /* Tablet */
   @media (min-width: 640px) and (max-width: 1023px) {
     .socials__dock {
       width: clamp(480px, 70vw, 600px);
-      gap: 14px 18px;
-      padding: 14px 20px;
+      gap: var(--space-3) var(--space-4);
+      padding: var(--space-3) var(--space-5);
     }
   }
-  
-  
+
+
   /* Mobile */
   @media (max-width: 639px) {
     .socials {
-      padding: var(--space-lg) var(--space-md) var(--space-2xl);
+      padding: var(--space-8) var(--space-4) var(--space-24);
     }
-    
+
     .socials__heading {
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-8);
       font-size: clamp(1.2rem, 4vw, 1.5rem);
     }
-    
+
     .socials__dock {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       width: 100%;
       max-width: 400px;
-      gap: 12px 16px;
-      padding: 12px 16px;
+      gap: var(--space-3) var(--space-4);
+      padding: var(--space-3) var(--space-4);
     }
   }
 </style>

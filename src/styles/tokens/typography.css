@@ -1,0 +1,49 @@
+/* ======= Apple HIG Typography System ======= */
+
+:root {
+	/* Font Families */
+	--font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+	--font-mono: 'SF Mono', 'Monaco', 'Menlo', monospace;
+
+	/* Font Sizes - Fluid Typography */
+	--fs-large-title: clamp(2rem, 5vw + 0.5rem, 2.75rem);
+	--fs-title-1: clamp(1.75rem, 4vw + 0.5rem, 2.25rem);
+	--fs-title-2: clamp(1.5rem, 3vw + 0.5rem, 1.75rem);
+	--fs-title-3: clamp(1.25rem, 2.5vw + 0.5rem, 1.5rem);
+	--fs-headline: clamp(1.0625rem, 2vw + 0.25rem, 1.125rem);
+	--fs-body: 1rem;
+	--fs-callout: 0.9375rem;
+	--fs-subheadline: 0.9375rem;
+	--fs-footnote: 0.8125rem;
+	--fs-caption-1: 0.75rem;
+	--fs-caption-2: 0.6875rem;
+
+	/* Profile-specific sizes */
+	--fs-profile-name: clamp(1.5rem, 3vw + 0.5rem, 1.875rem);
+	--fs-profile-title: clamp(0.9375rem, 2vw + 0.25rem, 1.0625rem);
+	--fs-profile-bio: clamp(0.875rem, 1.5vw + 0.25rem, 0.9375rem);
+
+	/* Font Weights */
+	--fw-regular: 400;
+	--fw-medium: 500;
+	--fw-semibold: 600;
+	--fw-bold: 700;
+
+	/* Line Heights */
+	--lh-heading: 1.1;
+	--lh-tight: 1.25;
+	--lh-snug: 1.375;
+	--lh-base: 1.5;
+	--lh-relaxed: 1.625;
+	--lh-profile-name: 1.2;
+
+	/* Letter Spacing - Apple HIG */
+	--ls-tight: -0.025em;
+	--ls-normal: 0;
+	--ls-title: -0.024em;
+	--ls-headline: -0.022em;
+	--ls-body: -0.016em;
+	--ls-caption: -0.008em;
+	--ls-profile-name: -0.024em;
+	--ls-profile-title: -0.020em;
+}
