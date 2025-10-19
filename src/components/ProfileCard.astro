@@ -52,7 +52,8 @@ const _contacts = [
 
     <div class="profile-card__content">
       <div class="profile-card__eyebrow" aria-hidden="true">
-        <span class="profile-card__eyebrow-badge">Hello there</span>
+        <span class="profile-card__eyebrow-indicator" aria-hidden="true"></span>
+        <span class="profile-card__eyebrow-label">Hello</span>
       </div>
       <h1 class="profile-card__name">{name}</h1>
       <p class="profile-card__title">{title}</p>
@@ -213,23 +214,30 @@ const _contacts = [
   .profile-card__eyebrow {
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    height: 1.6rem;
+    gap: clamp(8px, 1vw, 12px);
+    min-height: 1.4rem;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    font-weight: var(--fw-medium);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
   }
 
-  .profile-card__eyebrow-badge {
+  .profile-card__eyebrow-indicator {
+    width: clamp(18px, 2.4vw, 28px);
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, rgba(10, 132, 255, 0.75), rgba(136, 112, 255, 0.55));
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 12px rgba(10, 132, 255, 0.25);
+  }
+
+  .profile-card__eyebrow-label {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 12px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--surface-card) 72%, transparent);
-    border: 1px solid var(--surface-card-border);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    font-size: var(--fs-footnote);
-    letter-spacing: var(--ls-caption);
-    text-transform: uppercase;
-    color: var(--text-secondary);
+    color: inherit;
   }
 
   .profile-card__name {
@@ -441,10 +449,13 @@ const _contacts = [
     }
 
     .profile-card__eyebrow {
-      min-width: clamp(80px, 15vw, 100px);
-      max-width: clamp(120px, 25vw, 140px);
-      height: 1.25rem;
       justify-content: center;
+      min-width: auto;
+      max-width: none;
+    }
+
+    .profile-card__eyebrow-indicator {
+      width: clamp(22px, 12vw, 34px);
     }
 
     .profile-card__contact-bar {

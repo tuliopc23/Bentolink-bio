@@ -1,4 +1,4 @@
-// Motion system for scroll-reveal animations
+// Motion system utilities (instant reveal + scroll progress)
 
 let cleanupScrollProgress: (() => void) | null = null;
 
@@ -6,42 +6,11 @@ function initScrollReveal() {
 	if (typeof window === "undefined") return;
 
 	const root = document.documentElement;
+	root.classList.remove("motion-ready");
 
-	// Check for reduced motion preference
-	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-	if (prefersReducedMotion) {
-		root.classList.remove("motion-ready");
-		// Skip animations for users who prefer reduced motion
-		const revealElements = document.querySelectorAll("[data-reveal]");
-		revealElements.forEach((el) => {
-			el.classList.add("is-visible");
-		});
-		return;
-	}
-
-	root.classList.add("motion-ready");
-
-	// Intersection Observer for scroll reveals
-	const observerOptions = {
-		root: null,
-		rootMargin: "0px 0px -10% 0px",
-		threshold: 0.1,
-	};
-
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add("is-visible");
-				// Optionally unobserve after reveal
-				observer.unobserve(entry.target);
-			}
-		});
-	}, observerOptions);
-
-	// Observe all elements with data-reveal attribute
 	const revealElements = document.querySelectorAll("[data-reveal]");
 	revealElements.forEach((el) => {
-		observer.observe(el);
+		el.classList.add("is-visible");
 	});
 }
 

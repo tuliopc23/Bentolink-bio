@@ -19,6 +19,7 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  display: inline-block;
 
   /* Enable Ligatures ================ */
   letter-spacing: 0;
@@ -33,6 +34,10 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ph:before {
+  display: inline-block;
 }
 
 .ph.ph-acorn:before {

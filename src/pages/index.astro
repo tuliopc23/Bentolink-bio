@@ -165,12 +165,7 @@ const toolLinks = [
     align-items: stretch;
   }
 
-  .bento-grid > [data-reveal]:not(.is-visible) {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  .bento-grid > [data-reveal].is-visible {
+  .bento-grid > [data-reveal] {
     opacity: 1;
     transform: translateY(0);
     transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
