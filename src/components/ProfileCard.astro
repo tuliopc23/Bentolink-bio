@@ -92,22 +92,21 @@ const _contacts = [
   </div>
 
   <div class="profile-card__socials-section">
-    <div class="profile-socials">
-      <div class="profile-socials__header">
-        <span class="profile-socials__eyebrow">Socials</span>
-        <p class="profile-socials__caption">Connect across the ecosystem</p>
-      </div>
-      <div class="profile-socials__grid" role="list" aria-label="Social links">
-        {socialLinks.map((link, index) => (
-          <DockLink
-            href={link.href}
-            title={link.title}
-            tint={link.tint}
-            iconAsset={link.iconAsset}
-            revealOrder={0.2 + index * 0.05}
-          />
-        ))}
-      </div>
+    <div class="widget-header">
+      <span class="widget-eyebrow">Connect</span>
+      <h2 class="widget-title">Socials</h2>
+      <p class="widget-caption">Connect across the ecosystem</p>
+    </div>
+    <div class="profile-socials__grid" role="list" aria-label="Social links">
+      {socialLinks.map((link, index) => (
+        <DockLink
+          href={link.href}
+          title={link.title}
+          tint={link.tint}
+          iconAsset={link.iconAsset}
+          revealOrder={0.2 + index * 0.05}
+        />
+      ))}
     </div>
   </div>
 </section>
@@ -116,7 +115,7 @@ const _contacts = [
   .profile-card {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 340px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(var(--space-4), 2vw, var(--space-5));
     align-items: start;
     padding: clamp(28px, 3.5vw, 40px);
@@ -340,36 +339,50 @@ const _contacts = [
   }
 
   .profile-card__socials-section {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    padding: 18px;
-    border-radius: 28px;
-    border: 1px solid rgba(140, 170, 240, 0.18);
-    background: var(--surface-translucent-2);
-    background: color-mix(in srgb, var(--surface-translucent-2) 92%, transparent);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    min-width: min(280px, 100%);
-    max-width: 340px;
-    justify-self: end;
-    align-self: start;
-  }
-
-  .profile-card__socials-section :global(.profile-socials) {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
+    padding: clamp(24px, 2.8vw, 32px);
+    background: var(--surface-elevated);
+    background: color-mix(in srgb, var(--surface-elevated) 96%, transparent);
+    border: 1px solid var(--panel-border);
+    border-radius: 36px;
+    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
+    backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
+    -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
+    overflow: hidden;
+    z-index: 0;
+    transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
+                border-color var(--motion-duration-sm) var(--motion-ease-out),
+                box-shadow var(--motion-duration-sm) var(--motion-ease-out);
     width: 100%;
   }
 
-  .profile-card__socials-section .profile-socials__header {
+  .profile-card__socials-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 80%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .profile-card__socials-section:hover {
+    transform: translateY(-6px);
+    border-color: var(--panel-border-strong);
+    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+  }
+
+  .profile-card__socials-section .widget-header {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    flex-direction: column;
     gap: var(--space-2);
   }
 
-  .profile-card__socials-section .profile-socials__eyebrow {
+  .profile-card__socials-section .widget-eyebrow {
     font-size: var(--fs-eyebrow);
     letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
@@ -377,17 +390,26 @@ const _contacts = [
     color: var(--text-secondary);
   }
 
-  .profile-card__socials-section .profile-socials__caption {
-    font-size: var(--fs-footnote);
+  .profile-card__socials-section .widget-title {
+    font-size: var(--fs-title-2);
+    font-weight: 700;
+    letter-spacing: var(--ls-title);
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .profile-card__socials-section .widget-caption {
+    font-size: var(--fs-subheadline);
     color: var(--text-tertiary);
     letter-spacing: var(--ls-caption);
     margin: 0;
+    max-width: 42ch;
   }
 
   .profile-card__socials-section .profile-socials__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(var(--space-3), 1.4vw, var(--space-4));
+    gap: var(--space-3);
     width: 100%;
   }
 
@@ -447,7 +469,7 @@ const _contacts = [
       padding: 16px;
     }
 
-    .profile-card__socials-section .profile-socials__header {
+    .profile-card__socials-section .widget-header {
       align-items: center;
       text-align: center;
     }
