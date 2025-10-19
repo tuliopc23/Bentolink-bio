@@ -2,8 +2,9 @@
 
 :root {
 	/* Font Families */
-	--font-system: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
-	--font-mono: 'SF Mono', 'Monaco', 'Menlo', monospace;
+	--font-system:
+		-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+	--font-mono: "SF Mono", "Monaco", "Menlo", monospace;
 
 	/* Font Sizes - Fluid Typography (Dynamic Type aligned) */
 	--fs-large-title: clamp(2.125rem, 4.2vw + 1.2rem, 2.75rem);

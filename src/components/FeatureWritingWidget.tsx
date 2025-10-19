@@ -74,15 +74,9 @@ export default function FeatureWritingWidget() {
 		>
 			<div class="articles-carousel" role="list">
 				<div class="articles-track">
-				<For each={articles()}>
-					{(article) => (
-							<a
-								href={article.url}
-								class="article-card"
-								target="_blank"
-								rel="noopener noreferrer"
-								role="listitem"
-							>
+					<For each={articles()}>
+						{(article) => (
+							<a href={article.url} class="article-card" target="_blank" rel="noopener noreferrer">
 								<header class="article-card__header">
 									<span class="article-card__eyebrow">{article.category}</span>
 									<Show when={article.isNew}>
@@ -102,8 +96,8 @@ export default function FeatureWritingWidget() {
 									</span>
 								</footer>
 							</a>
-					)}
-				</For>
+						)}
+					</For>
 				</div>
 			</div>
 		</Show>

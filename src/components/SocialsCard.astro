@@ -1,24 +1,20 @@
 ---
-import DockLink from './DockLink.astro';
+import DockLink from "./DockLink.astro";
 
 interface SocialLink {
-  title: string;
-  href: string;
-  tint: string;
-  iconAsset: string;
+	title: string;
+	href: string;
+	tint: string;
+	iconAsset: string;
 }
 
 interface Props {
-  title?: string;
-  links: SocialLink[];
-  revealOrder?: number;
+	title?: string;
+	links: SocialLink[];
+	revealOrder?: number;
 }
 
-const {
-  title = "Socials",
-  links,
-  revealOrder = 1,
-} = Astro.props;
+const { title = "Socials", links, revealOrder = 1 } = Astro.props;
 ---
 
 <div class="socials-card" data-reveal data-reveal-order={revealOrder}>

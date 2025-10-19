@@ -1,16 +1,16 @@
 ---
 interface Props {
-  name: string;
-  title: string;
-  bio?: string;
-  avatarSrc?: string;
+	name: string;
+	title: string;
+	bio?: string;
+	avatarSrc?: string;
 }
 
 const {
-  name = "Tulio Cunha",
-  title = "Full Stack Developer",
-  bio,
-  avatarSrc = "/avatar-placeholder.svg", // Placeholder until provided
+	name = "Tulio Cunha",
+	title = "Full Stack Developer",
+	bio,
+	avatarSrc = "/avatar-placeholder.svg", // Placeholder until provided
 } = Astro.props;
 ---
 

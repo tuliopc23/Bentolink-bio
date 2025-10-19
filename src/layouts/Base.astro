@@ -1,22 +1,22 @@
 ---
-import '../styles/theme.css';
-import '../styles/motion.css';
+import "../styles/theme.css";
+import "../styles/motion.css";
 
 interface Props {
-  title?: string;
-  description?: string;
+	title?: string;
+	description?: string;
 }
 
 const {
-  title = "Tulio Cunha",
-  description = "Full Stack Developer - Building elegant solutions with code.",
+	title = "Tulio Cunha",
+	description = "Full Stack Developer - Building elegant solutions with code.",
 } = Astro.props;
 
-const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
-const lastUpdated = new Date().toLocaleDateString("en-US", {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
+const _fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
+const _lastUpdated = new Date().toLocaleDateString("en-US", {
+	month: "short",
+	day: "numeric",
+	year: "numeric",
 });
 ---
 
@@ -25,7 +25,7 @@ const lastUpdated = new Date().toLocaleDateString("en-US", {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{fullTitle}</title>
+    <title>{_fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
     
@@ -44,12 +44,12 @@ const lastUpdated = new Date().toLocaleDateString("en-US", {
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={_fullTitle} />
     <meta property="og:description" content={description} />
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:title" content={_fullTitle} />
     <meta name="twitter:description" content={description} />
     
     <!-- Theme initialization script (runs before CSS to prevent FOUC) -->
@@ -117,7 +117,7 @@ const lastUpdated = new Date().toLocaleDateString("en-US", {
       <div class="footer__inner">
         <div class="footer__badge" aria-live="polite">
           <span class="footer__badge-pulse" aria-hidden="true"></span>
-          <span class="footer__badge-text">Last updated {lastUpdated}</span>
+          <span class="footer__badge-text">Last updated {_lastUpdated}</span>
         </div>
         <div class="footer__meta">
           <span class="footer__branding">Bentolink™ by Tulio Cunha</span>

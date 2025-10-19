@@ -19,7 +19,7 @@ const {
 	location = "Brazil",
 } = Astro.props;
 
-const contacts = [
+const _contacts = [
 	{
 		label: "Email",
 		href: `mailto:${email}`,
@@ -52,7 +52,7 @@ const contacts = [
       {bio && <p class="profile-card__bio">{bio}</p>}
 
       <div class="profile-card__contact-bar" role="list">
-        {contacts.map((contact, index) => (
+        {_contacts.map((contact, index) => (
           <a
             href={contact.href}
             class="profile-card__contact"

@@ -1,64 +1,64 @@
 /* ======= Motion & Reveal System ======= */
 
 :root {
-  --reveal-delay-step: 120ms;
+	--reveal-delay-step: 120ms;
 }
 
 /* Scroll reveal animations */
 [data-reveal] {
-  --reveal-delay: 0ms;
-  opacity: 0;
-  transform: translateY(18px) scale(0.99);
-  transition:
-    opacity var(--motion-duration-spring-sm) var(--spring-smooth) var(--reveal-delay),
-    transform var(--motion-duration-spring-sm) var(--spring-smooth) var(--reveal-delay);
-  will-change: opacity, transform;
+	--reveal-delay: 0ms;
+	opacity: 0;
+	transform: translateY(18px) scale(0.99);
+	transition:
+		opacity var(--motion-duration-spring-sm) var(--spring-smooth) var(--reveal-delay),
+		transform var(--motion-duration-spring-sm) var(--spring-smooth) var(--reveal-delay);
+	will-change: opacity, transform;
 }
 
 [data-reveal][data-reveal-type="scale"] {
-  transform: scale(0.98);
+	transform: scale(0.98);
 }
 
 [data-reveal][data-reveal-type="slide-left"] {
-  transform: translateX(var(--motion-distance-md));
+	transform: translateX(var(--motion-distance-md));
 }
 
 [data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+	opacity: 1;
+	transform: translateY(0) scale(1);
 }
 
 /* Staggered reveals */
 [data-reveal][data-reveal-order="1"] {
-  --reveal-delay: calc(1 * var(--reveal-delay-step));
+	--reveal-delay: calc(1 * var(--reveal-delay-step));
 }
 
 [data-reveal][data-reveal-order="2"] {
-  --reveal-delay: calc(2 * var(--reveal-delay-step));
+	--reveal-delay: calc(2 * var(--reveal-delay-step));
 }
 
 [data-reveal][data-reveal-order="3"] {
-  --reveal-delay: calc(3 * var(--reveal-delay-step));
+	--reveal-delay: calc(3 * var(--reveal-delay-step));
 }
 
 [data-reveal][data-reveal-order="4"] {
-  --reveal-delay: calc(4 * var(--reveal-delay-step));
+	--reveal-delay: calc(4 * var(--reveal-delay-step));
 }
 
 [data-reveal][data-reveal-order="5"] {
-  --reveal-delay: calc(5 * var(--reveal-delay-step));
+	--reveal-delay: calc(5 * var(--reveal-delay-step));
 }
 
 [data-reveal][data-reveal-order="6"] {
-  --reveal-delay: calc(6 * var(--reveal-delay-step));
+	--reveal-delay: calc(6 * var(--reveal-delay-step));
 }
 
 /* Reduced motion fallback */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal],
-  [data-reveal].is-visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition: none;
-  }
+	[data-reveal],
+	[data-reveal].is-visible {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		transition: none;
+	}
 }

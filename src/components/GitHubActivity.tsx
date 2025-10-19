@@ -8,9 +8,7 @@ interface GitHubCommit {
 	url: string;
 }
 
-const fetchLatestCommits = async (
-	username: string,
-): Promise<GitHubCommit[]> => {
+const fetchLatestCommits = async (_username: string): Promise<GitHubCommit[]> => {
 	// Placeholder - replace with actual GitHub API call
 	return [
 		{
@@ -80,18 +78,16 @@ export default function GitHubActivity(props: { username: string }) {
 								</a>
 							</div>
 						</div>
-						<ul class="github-card__stats" role="list">
-							<li class="github-card__stat" role="listitem">
-								<span class="github-card__stat-value">
-									{commits()?.length ?? 0}
-								</span>
+						<ul class="github-card__stats">
+							<li class="github-card__stat">
+								<span class="github-card__stat-value">{commits()?.length ?? 0}</span>
 								<span class="github-card__stat-label">Recent</span>
 							</li>
-							<li class="github-card__stat" role="listitem">
+							<li class="github-card__stat">
 								<span class="github-card__stat-value">42</span>
 								<span class="github-card__stat-label">Repos</span>
 							</li>
-							<li class="github-card__stat" role="listitem">
+							<li class="github-card__stat">
 								<span class="github-card__stat-value">7d</span>
 								<span class="github-card__stat-label">Streak</span>
 							</li>
@@ -106,7 +102,6 @@ export default function GitHubActivity(props: { username: string }) {
 									class="github-commit"
 									target="_blank"
 									rel="noopener noreferrer"
-									role="listitem"
 								>
 									<span class="github-commit__accent" aria-hidden="true"></span>
 									<div class="github-commit__body">

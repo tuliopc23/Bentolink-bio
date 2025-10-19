@@ -1,23 +1,16 @@
 ---
-import IconTile from './IconTile.astro';
+import IconTile from "./IconTile.astro";
 
 interface Props {
-  href: string;
-  title: string;
-  body: string;
-  tint: string;
-  iconAsset?: string;
-  revealOrder?: number;
+	href: string;
+	title: string;
+	body: string;
+	tint: string;
+	iconAsset?: string;
+	revealOrder?: number;
 }
 
-const {
-  href,
-  title,
-  body,
-  tint = "blue",
-  iconAsset,
-  revealOrder,
-} = Astro.props;
+const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props;
 ---
 
 <a 
