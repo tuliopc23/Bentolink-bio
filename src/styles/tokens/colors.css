@@ -38,12 +38,15 @@
 	--panel-border: rgba(60, 60, 67, 0.28);
 	--panel-border-strong: rgba(99, 99, 102, 0.4);
 	--separator-opaque: rgba(44, 44, 46, 0.65);
+	--panel-border-glow: rgba(255, 255, 255, 0.06);
+	--panel-border-strong-glow: rgba(255, 255, 255, 0.12);
 
 	/* Text Hierarchy */
 	--text: rgba(255, 255, 255, 0.92);
 	--text-primary: rgba(255, 255, 255, 0.92);
 	--text-secondary: rgba(220, 232, 255, 0.76);
 	--text-tertiary: rgba(194, 210, 240, 0.54);
+	--text-quaternary: rgba(174, 190, 220, 0.42);
 	--muted: rgba(204, 220, 244, 0.64);
 
 	/* Fill Colors (Buttons, Controls) */
@@ -77,6 +80,8 @@
 	--accent-tint-strong: color-mix(in srgb, var(--surface-raised) 58%, var(--blue) 42%);
 	--accent-border: rgba(10, 132, 255, 0.45);
 	--accent-glow: rgba(10, 132, 255, 0.28);
+	--accent-hover: rgba(10, 132, 255, 0.22);
+	--accent-active: rgba(10, 132, 255, 0.32);
 
 	/* Interactive States */
 	--link: var(--blue);
@@ -128,14 +133,15 @@
 	--surface-card-border-strong: rgba(34, 48, 88, 0.16);
 
 	--hairline: rgba(120, 130, 160, 0.08);
-	--panel-border: rgba(118, 140, 190, 0.14);
-	--panel-border-strong: rgba(94, 124, 200, 0.22);
+	--panel-border: rgba(108, 130, 180, 0.18);
+	--panel-border-strong: rgba(84, 114, 190, 0.28);
 	--separator-opaque: rgba(110, 130, 172, 0.26);
 
-	--text: rgba(18, 23, 38, 0.92);
-	--text-primary: rgba(18, 23, 38, 0.92);
-	--text-secondary: rgba(34, 48, 88, 0.62);
-	--text-tertiary: rgba(64, 82, 120, 0.42);
+	--text: rgba(12, 17, 32, 0.96);
+	--text-primary: rgba(12, 17, 32, 0.96);
+	--text-secondary: rgba(28, 42, 76, 0.68);
+	--text-tertiary: rgba(54, 72, 110, 0.48);
+	--text-quaternary: rgba(84, 102, 140, 0.36);
 	--muted: rgba(50, 66, 104, 0.6);
 
 	--fill-primary: rgba(120, 144, 208, 0.16);
@@ -156,6 +162,8 @@
 
 	--color-primary: var(--blue);
 	--link-hover: #0055d4;
+	--accent-hover: rgba(0, 122, 255, 0.12);
+	--accent-active: rgba(0, 122, 255, 0.18);
 	--selection-bg: rgba(0, 122, 255, 0.16);
 	--glass-bg: rgba(255, 255, 255, 0.7);
 }

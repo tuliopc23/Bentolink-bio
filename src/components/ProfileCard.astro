@@ -128,15 +128,20 @@ const _contacts = [
     background: var(--surface-elevated);
     border: 1px solid var(--panel-border);
     border-radius: 36px;
-    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
+    box-shadow:
+      var(--shadow-card),
+      var(--shadow-card-highlight),
+      0 0 0 0.5px rgba(255, 255, 255, 0.05),
+      0 0 80px rgba(96, 156, 255, 0.06);
     backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-saturation-base));
     -webkit-backdrop-filter: blur(var(--glass-thick-blur)) saturate(var(--glass-saturation-base));
     grid-column: 1 / -1;
     isolation: isolate;
     overflow: hidden;
-    transition: box-shadow var(--motion-duration-spring-sm) var(--spring-smooth),
-                border-color var(--motion-duration-sm) var(--motion-ease-out),
-                transform var(--motion-duration-spring-sm) var(--spring-smooth);
+    transition:
+      box-shadow var(--motion-duration-base) var(--motion-ease-out),
+      border-color var(--motion-duration-fast) var(--motion-ease-out),
+      transform var(--motion-duration-base) var(--motion-ease-out);
   }
 
   .profile-card::after {
@@ -155,7 +160,12 @@ const _contacts = [
 
   .profile-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+    box-shadow:
+      var(--shadow-card-hover),
+      var(--shadow-card-highlight),
+      var(--shadow-card-glow),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 120px rgba(96, 156, 255, 0.12);
     border-color: var(--panel-border-strong);
   }
 
@@ -177,15 +187,21 @@ const _contacts = [
     border-radius: 32px;
     overflow: hidden;
     border: 1px solid var(--panel-border-strong);
-    box-shadow: var(--shadow-2);
-    transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
-                box-shadow var(--motion-duration-sm) var(--motion-ease-out);
+    box-shadow:
+      var(--shadow-2),
+      0 0 60px rgba(96, 156, 255, 0.15);
+    transition:
+      transform var(--motion-duration-base) var(--motion-ease-out),
+      box-shadow var(--motion-duration-fast) var(--motion-ease-out);
     transform-style: preserve-3d;
   }
 
   .profile-card__photo:hover {
     transform: translateY(-4px) scale(1.015);
-    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight);
+    box-shadow:
+      var(--shadow-card-hover),
+      var(--shadow-card-highlight),
+      0 0 80px rgba(96, 156, 255, 0.28);
   }
 
   .profile-card__photo-ring {
@@ -355,21 +371,31 @@ const _contacts = [
     background: var(--surface-elevated);
     border: 1px solid var(--panel-border);
     border-radius: 36px;
-    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
+    box-shadow:
+      var(--shadow-card),
+      var(--shadow-card-highlight),
+      0 0 0 0.5px rgba(255, 255, 255, 0.04),
+      0 0 50px rgba(10, 132, 255, 0.04);
     backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
     -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
     overflow: hidden;
     z-index: 0;
-    transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
-                border-color var(--motion-duration-sm) var(--motion-ease-out),
-                box-shadow var(--motion-duration-sm) var(--motion-ease-out);
+    transition:
+      transform var(--motion-duration-base) var(--motion-ease-out),
+      border-color var(--motion-duration-fast) var(--motion-ease-out),
+      box-shadow var(--motion-duration-base) var(--motion-ease-out);
     width: 100%;
   }
 
   .profile-card__socials-section:hover {
     transform: translateY(-6px);
     border-color: var(--panel-border-strong);
-    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+    box-shadow:
+      var(--shadow-card-hover),
+      var(--shadow-card-highlight),
+      var(--shadow-card-glow),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 0 90px rgba(10, 132, 255, 0.08);
   }
 
   .profile-card__socials-section .widget-header {

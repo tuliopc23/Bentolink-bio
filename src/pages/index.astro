@@ -193,7 +193,12 @@ const toolLinks = [
   .widget-box {
     --hover-elevate-translate: -6px;
     --hover-elevate-scale: 1.015;
-    --hover-elevate-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+    --hover-elevate-shadow:
+      var(--shadow-card-hover),
+      var(--shadow-card-highlight),
+      var(--shadow-card-glow),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 0 100px rgba(10, 132, 255, 0.08);
     --hover-elevate-border: var(--panel-border-strong);
     position: relative;
     display: flex;
@@ -204,14 +209,19 @@ const toolLinks = [
     background: color-mix(in srgb, var(--surface-elevated) 96%, transparent);
     border: 1px solid var(--panel-border);
     border-radius: 36px;
-    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
+    box-shadow:
+      var(--shadow-card),
+      var(--shadow-card-highlight),
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 0 60px rgba(10, 132, 255, 0.03);
     backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
     -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
     overflow: hidden;
     z-index: 0;
     transition:
-      border-color var(--motion-duration-sm) var(--motion-ease-out),
-      box-shadow var(--motion-duration-sm) var(--motion-ease-out);
+      transform var(--motion-duration-base) var(--motion-ease-out),
+      border-color var(--motion-duration-fast) var(--motion-ease-out),
+      box-shadow var(--motion-duration-base) var(--motion-ease-out);
     grid-column: span 6;
   }
 
@@ -246,10 +256,6 @@ const toolLinks = [
     letter-spacing: var(--ls-title);
     margin: 0;
     color: var(--text-primary);
-  }
-
-  .widget-title .ph-github-logo {
-    font-size: 28px;
   }
 
   .widget-caption {
@@ -293,16 +299,18 @@ const toolLinks = [
     overflow: hidden;
     
     /* Multi-layer shadows like article cards */
-    box-shadow: 
-      0 1px 2px rgba(0, 0, 0, 0.12),
-      0 2px 8px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.6),
+      0 2px 8px rgba(0, 0, 0, 0.48),
+      0 8px 16px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 40px rgba(10, 132, 255, 0.04);
     
     /* Enhanced glassmorphism */
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item {
@@ -314,7 +322,7 @@ const toolLinks = [
     text-decoration: none;
     border-bottom: 0.5px solid var(--hairline);
     background: transparent;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
     animation: slideIn 0.4s var(--spring-smooth) backwards;
     isolation: isolate;
   }
@@ -344,7 +352,7 @@ const toolLinks = [
       transparent 60%
     );
     opacity: 0;
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--motion-duration-base) var(--motion-ease-smooth);
     pointer-events: none;
     z-index: -1;
   }
@@ -381,7 +389,7 @@ const toolLinks = [
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
     
     flex-shrink: 0;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item:hover .commit-item__indicator {
@@ -414,7 +422,7 @@ const toolLinks = [
     overflow: hidden;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item:hover .commit-item__message {
@@ -451,7 +459,7 @@ const toolLinks = [
       0 1px 2px rgba(0, 0, 0, 0.1), 
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
     
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item:hover .commit-item__repo {
@@ -473,7 +481,7 @@ const toolLinks = [
     font-weight: var(--fw-medium);
     letter-spacing: 0.02em;
     opacity: 0.7;
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item__sha {
@@ -482,7 +490,7 @@ const toolLinks = [
     letter-spacing: 0.05em;
     opacity: 0.45;
     margin-left: auto;
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item:hover .commit-item__sha {
@@ -510,7 +518,7 @@ const toolLinks = [
     flex-shrink: 0;
     opacity: 0;
     transform: translateX(-6px) scale(0.95);
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .commit-item:hover .commit-item__arrow {
@@ -592,10 +600,14 @@ const toolLinks = [
     background: var(--surface-translucent-2);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
+    box-shadow:
+      var(--shadow-card),
+      var(--shadow-card-highlight),
+      0 0 0 0.5px rgba(255, 255, 255, 0.06),
+      0 0 40px rgba(10, 132, 255, 0.025);
     text-decoration: none;
     min-height: 100%;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
     cursor: pointer;
   }
 
@@ -611,14 +623,21 @@ const toolLinks = [
     );
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   .article-card:hover {
     transform: translateY(-4px) scale(1.01);
     border-color: var(--panel-border);
     background: var(--surface-elevated);
-    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+      var(--shadow-card-hover),
+      var(--shadow-card-highlight),
+      var(--shadow-card-glow),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 80px rgba(10, 132, 255, 0.1);
   }
 
   .article-card:hover::before {
@@ -627,7 +646,7 @@ const toolLinks = [
 
   .article-card:active {
     transform: translateY(-2px) scale(1.005);
-    transition-duration: 0.15s;
+    transition-duration: var(--motion-duration-instant);
   }
 
   .article-card__header {

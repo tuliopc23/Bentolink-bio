@@ -149,6 +149,16 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     min-height: 100vh;
     overflow-x: hidden;
     isolation: isolate;
+    transition:
+      background-color 400ms var(--motion-ease-smooth),
+      color 400ms var(--motion-ease-smooth);
+  }
+
+  body * {
+    transition:
+      background-color 400ms var(--motion-ease-smooth),
+      border-color 400ms var(--motion-ease-smooth),
+      color 400ms var(--motion-ease-smooth);
   }
 
   body::before,
@@ -225,7 +235,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     background: rgba(60, 60, 67, 0.36);
     border-radius: 31px;
     position: relative;
-    transition: all var(--motion-duration-base) cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   [data-theme="light"] .theme-toggle__track {
@@ -241,9 +251,10 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     background: #FFFFFF;
     border-radius: 50%;
     box-shadow:
-      0 3px 8px rgba(0, 0, 0, 0.15),
-      0 3px 1px rgba(0, 0, 0, 0.06);
-    transition: all var(--motion-duration-base) cubic-bezier(0.4, 0, 0.2, 1);
+      0 2px 4px rgba(0, 0, 0, 0.18),
+      0 4px 12px rgba(0, 0, 0, 0.12),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.08);
+    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
   [data-theme="light"] .theme-toggle__thumb {

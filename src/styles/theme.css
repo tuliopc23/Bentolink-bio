@@ -330,6 +330,7 @@ pre {
 .widget-box:hover .icon--heading {
 	transform: scale(1.08);
 	color: var(--color-primary);
+	filter: drop-shadow(0 2px 4px rgba(10, 132, 255, 0.3));
 }
 
 :focus-visible {
