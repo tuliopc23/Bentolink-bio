@@ -3,17 +3,17 @@
 
 :root {
 	/* Layered elevation system */
-	--shadow-0: 0 0.3px 0.6px rgba(4, 10, 20, 0.32);
+	--shadow-0: 0 0.4px 0.8px rgba(0, 0, 0, 0.38);
 
-	--shadow-1: 0 1px 2px rgba(4, 12, 30, 0.28), 0 12px 24px rgba(4, 12, 30, 0.16);
+	--shadow-1: 0 1px 3px rgba(2, 6, 14, 0.32), 0 12px 24px rgba(4, 10, 24, 0.24);
 
 	--shadow-2:
-		0 1.5px 3px rgba(8, 18, 48, 0.26), 0 14px 28px rgba(8, 24, 64, 0.22), 0 24px 40px
-		rgba(8, 24, 64, 0.14);
+		0 4px 8px rgba(4, 10, 22, 0.34), 0 18px 36px rgba(6, 14, 30, 0.28), 0 32px 52px
+		rgba(10, 20, 40, 0.2);
 
-	--shadow-3: 0 18px 44px rgba(12, 36, 96, 0.22), 0 36px 72px rgba(12, 40, 96, 0.18);
+	--shadow-3: 0 26px 52px rgba(8, 18, 40, 0.26), 0 52px 104px rgba(10, 22, 48, 0.22);
 
-	--shadow-4: 0 48px 120px rgba(16, 80, 200, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+	--shadow-4: 0 68px 140px rgba(18, 40, 86, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 
 	--shadow-card: var(--shadow-1);
 	--shadow-card-hover: var(--shadow-2);
@@ -22,12 +22,12 @@
 
 	/* Icon tile shadows */
 	--shadow-symbol-dark:
-		inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 3px 6px rgba(2, 8, 20, 0.32), 0 14px 24px
-		rgba(2, 8, 20, 0.18), 0 28px 48px rgba(2, 8, 20, 0.14);
+		inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 4px 10px rgba(4, 8, 16, 0.4), 0 18px 32px
+		rgba(4, 10, 22, 0.28), 0 36px 60px rgba(8, 18, 40, 0.22);
 
 	--shadow-symbol-dark-hover:
-		inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 8px rgba(2, 8, 20, 0.36), 0 18px 32px
-		rgba(2, 8, 20, 0.22), 0 36px 60px rgba(2, 8, 20, 0.18);
+		inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 14px rgba(4, 8, 16, 0.46), 0 24px 40px
+		rgba(4, 10, 24, 0.32), 0 44px 72px rgba(8, 18, 40, 0.24);
 
 	--shadow-symbol-light:
 		inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 2px 4px rgba(31, 35, 53, 0.14), 0 10px 18px
@@ -39,11 +39,11 @@
 
 	/* Focus ring with glow */
 	--focus-ring:
-		0 0 0 3px rgba(13, 138, 255, 0.42), 0 0 0 5px rgba(13, 138, 255, 0.18), 0 0 12px
-		rgba(13, 138, 255, 0.28);
+		0 0 0 3px rgba(64, 128, 240, 0.34), 0 0 0 5px rgba(64, 128, 240, 0.18), 0 0 16px
+		rgba(64, 128, 240, 0.22);
 
 	/* Glass surface shadows */
-	--shadow-glass: 0 0.5px 0 rgba(255, 255, 255, 0.24), 0 1px 2px rgba(0, 0, 0, 0.12);
+	--shadow-glass: 0 0.5px 0 rgba(255, 255, 255, 0.18), 0 8px 16px rgba(2, 6, 14, 0.24);
 }
 
 [data-theme="light"] {

@@ -28,30 +28,33 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     <title>{_fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/icons/website-placeholder.svg" />
-    
+
     <!-- Preconnect to SF font CDN -->
     <link rel="preconnect" href="//fdn.fontcdn.ir" />
     <link rel="preconnect" href="//v1.fontapi.ir" />
-    
+
     <!-- SF Pro Display (main UI font) -->
     <link href="https://v1.fontapi.ir/css/SFProDisplay" rel="stylesheet" />
-    
+
     <!-- SF Mono (monospace for code) -->
     <link href="https://v1.fontapi.ir/css/SFMono" rel="stylesheet" />
-    
+
+    <!-- Lottie Player for animations -->
+    <script is:inline src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={_fullTitle} />
     <meta property="og:description" content={description} />
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={_fullTitle} />
     <meta name="twitter:description" content={description} />
-    
+
     <!-- Theme initialization script (runs before CSS to prevent FOUC) -->
     <script is:inline>
       (() => {
@@ -86,10 +89,10 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
       })();
     </script>
   </head>
-  
+
   <body>
     <a href="#main" class="sr-only">Skip to content</a>
-    
+
     <!-- Minimal topbar with theme toggle -->
     <header class="topbar">
       <div class="topbar__inner">
@@ -107,11 +110,11 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
         </div>
       </div>
     </header>
-    
+
     <main id="main" class="content">
       <slot />
     </main>
-    
+
     <!-- Simple footer -->
     <footer class="footer">
       <div class="footer__inner">
@@ -130,7 +133,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
         </div>
       </div>
     </footer>
-    
+
     <!-- Theme controller and motion scripts -->
     <script>
       import '../scripts/theme.ts';
@@ -190,12 +193,12 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     box-shadow: var(--shadow-0);
     transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
-  
+
   [data-theme="light"] .topbar {
     background: color-mix(in srgb, var(--surface-elevated) 82%, transparent);
     border-bottom-color: rgba(120, 140, 200, 0.2);
   }
-  
+
   .topbar__inner {
     max-width: var(--container-xl);
     margin: 0 auto;
@@ -204,7 +207,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     justify-content: flex-end;
     align-items: center;
   }
-  
+
   /* iOS-style Theme Toggle */
   .theme-toggle {
     position: relative;
@@ -256,7 +259,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
   .theme-toggle:hover .theme-toggle__track {
     opacity: 0.8;
   }
-  
+
   /* Content */
   .content {
     padding-top: 80px;
@@ -276,7 +279,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     z-index: -1;
     filter: blur(0.5px);
   }
-  
+
   /* Footer */
   .footer {
     padding: clamp(24px, 4vw, 40px) var(--container-padding);
@@ -385,13 +388,13 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
       box-shadow: 0 0 0 0 rgba(13, 138, 255, 0);
     }
   }
-  
+
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .content {
       padding-top: 72px;
     }
-    
+
     .topbar__inner {
       padding: var(--space-2) var(--space-4);
     }

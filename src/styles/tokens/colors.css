@@ -2,37 +2,37 @@
 
 :root {
 	/* Primary Background Hierarchy */
-	--bg: #03050d;
-	--bg-base: #03050d;
-	--bg-gradient: linear-gradient(180deg, #03050d 0%, #040710 60%, #020308 100%);
+	--bg: #050506;
+	--bg-base: #050506;
+	--bg-gradient: linear-gradient(180deg, #050506 0%, #040407 58%, #020203 100%);
 	--bg-radial-primary: radial-gradient(
-		120% 120% at 30% 5%,
-		rgba(84, 134, 255, 0.32) 0%,
-		rgba(4, 10, 24, 0) 55%
+		120% 120% at 28% 4%,
+		rgba(44, 96, 190, 0.2) 0%,
+		rgba(5, 6, 10, 0) 58%
 	);
 	--bg-radial-secondary: radial-gradient(
-		140% 120% at 75% 15%,
-		rgba(12, 42, 112, 0.28) 0%,
-		rgba(2, 4, 10, 0) 65%
+		140% 120% at 74% 12%,
+		rgba(32, 74, 168, 0.16) 0%,
+		rgba(4, 6, 12, 0) 64%
 	);
 	--bg-radial-tertiary: radial-gradient(
-		180% 120% at 50% 120%,
-		rgba(12, 36, 110, 0.18) 0%,
-		rgba(2, 4, 10, 0) 70%
+		180% 120% at 50% 118%,
+		rgba(30, 72, 168, 0.1) 0%,
+		rgba(4, 6, 12, 0) 70%
 	);
-	--bg-elevated: rgba(12, 18, 32, 0.86);
-	--bg-grouped: #090c14;
-	--surface: rgba(16, 22, 36, 0.88);
-	--surface-elevated: rgba(28, 36, 52, 0.78);
-	--surface-raised: rgba(36, 48, 72, 0.82);
-	--surface-translucent-2: rgba(18, 26, 44, 0.62);
-	--subtle: #070910;
+	--bg-elevated: #0b0d12;
+	--bg-grouped: #08090d;
+	--surface: #10131b;
+	--surface-elevated: #151923;
+	--surface-raised: #1a1f2c;
+	--surface-translucent-2: rgba(20, 24, 34, 0.92);
+	--subtle: #090b10;
 
 	/* Borders & Separators */
-	--hairline: rgba(255, 255, 255, 0.06);
-	--panel-border: rgba(142, 168, 232, 0.18);
-	--panel-border-strong: rgba(162, 190, 255, 0.28);
-	--separator-opaque: rgba(96, 116, 170, 0.32);
+	--hairline: rgba(255, 255, 255, 0.05);
+	--panel-border: rgba(112, 140, 212, 0.18);
+	--panel-border-strong: rgba(138, 168, 238, 0.28);
+	--separator-opaque: rgba(86, 112, 182, 0.32);
 
 	/* Text Hierarchy */
 	--text: rgba(255, 255, 255, 0.92);
@@ -42,9 +42,9 @@
 	--muted: rgba(210, 220, 244, 0.62);
 
 	/* Fill Colors (Buttons, Controls) */
-	--fill-primary: rgba(88, 118, 192, 0.32);
-	--fill-secondary: rgba(82, 110, 180, 0.24);
-	--fill-tertiary: rgba(76, 104, 168, 0.18);
+	--fill-primary: rgba(80, 112, 196, 0.28);
+	--fill-secondary: rgba(68, 98, 178, 0.2);
+	--fill-tertiary: rgba(60, 86, 160, 0.16);
 
 	/* Apple System Colors - Dark Mode */
 	--blue: #0d8aff;
@@ -72,9 +72,9 @@
 	--selection-bg: rgba(10, 132, 255, 0.28);
 
 	/* Glass & Materials */
-	--glass-bg: rgba(18, 26, 44, 0.7);
-	--glass-blur-base: 40px;
-	--glass-saturation-base: 190%;
+	--glass-bg: rgba(14, 18, 28, 0.82);
+	--glass-blur-base: 36px;
+	--glass-saturation-base: 170%;
 
 	/* Vibrant Gradients */
 	--gradient-blue: linear-gradient(180deg, #409cff 0%, #0d8aff 100%);
