@@ -27,6 +27,11 @@
 	--surface-raised: #25262b;
 	--surface-translucent-2: rgba(28, 28, 32, 0.92);
 	--subtle: #212126;
+	--surface-card: color-mix(in srgb, var(--surface-elevated) 92%, #000000 8%);
+	--surface-card-hover: color-mix(in srgb, var(--surface-raised) 92%, #000000 8%);
+	--surface-card-active: color-mix(in srgb, var(--surface) 88%, #000000 12%);
+	--surface-card-border: rgba(255, 255, 255, 0.04);
+	--surface-card-border-strong: rgba(255, 255, 255, 0.08);
 
 	/* Borders & Separators */
 	--hairline: rgba(84, 84, 88, 0.18);
@@ -116,6 +121,11 @@
 	--surface-raised: rgba(255, 255, 255, 0.85);
 	--surface-translucent-2: rgba(236, 240, 255, 0.68);
 	--subtle: #f0f2fb;
+	--surface-card: rgba(255, 255, 255, 0.9);
+	--surface-card-hover: rgba(255, 255, 255, 0.96);
+	--surface-card-active: rgba(255, 255, 255, 0.88);
+	--surface-card-border: rgba(34, 48, 88, 0.08);
+	--surface-card-border-strong: rgba(34, 48, 88, 0.16);
 
 	--hairline: rgba(120, 130, 160, 0.08);
 	--panel-border: rgba(118, 140, 190, 0.14);

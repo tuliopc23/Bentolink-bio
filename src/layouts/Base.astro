@@ -42,8 +42,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     <!-- SF Mono (monospace for code) -->
     <link href="https://v1.fontapi.ir/css/SFMono" rel="stylesheet" />
 
-    <!-- Lottie Player for animations -->
-    <script is:inline src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+    <!-- DotLottie Player for animations -->
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -138,6 +137,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     <script>
       import '../scripts/theme.ts';
       import '../scripts/motion.ts';
+      import { DotLottieCommonPlayer } from '@lottiefiles/dotlottie-web';
     </script>
   </body>
 </html>
