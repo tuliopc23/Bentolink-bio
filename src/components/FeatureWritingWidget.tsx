@@ -1,4 +1,5 @@
-import { createResource, For, Show } from "solid-js";
+import { For, Show } from "solid-js";
+import type { SanityPost } from "../services/sanity";
 
 interface Article {
 	id: string;
@@ -11,69 +12,60 @@ interface Article {
 	isNew?: boolean;
 }
 
-const fetchArticles = async (): Promise<Article[]> => {
-	// Placeholder articles for demo
-	return [
-		{
-			id: "1",
-			title: "Building Scalable Architecture with Modern Tools",
-			date: "Jan 15, 2025",
-			readTime: "8 min read",
-			category: "Engineering",
-			url: "#",
-			excerpt:
-				"Foundations for resilient deployments: thread pools, observability budgets, and graceful degradation.",
-			isNew: true,
-		},
-		{
-			id: "2",
-			title: "The Art of Minimalist Design Systems",
-			date: "Jan 10, 2025",
-			readTime: "6 min read",
-			category: "Design",
-			url: "#",
-			excerpt:
-				"Crafting expressive UI kits without sacrificing velocity—lessons from building cross-platform surfaces.",
-		},
-		{
-			id: "3",
-			title: "Performance Optimization Strategies",
-			date: "Jan 5, 2025",
-			readTime: "10 min read",
-			category: "Performance",
-			url: "#",
-			excerpt:
-				"Profiling end-to-end latency and designing feedback loops that keep teams honest about budgets.",
-		},
-		{
-			id: "4",
-			title: "Type-Safe Development Workflows",
-			date: "Dec 28, 2024",
-			readTime: "7 min read",
-			category: "TypeScript",
-			url: "#",
-			excerpt:
-				"How strict typing, automated lint gates, and ergonomics-first DX unlock stable velocity at scale.",
-		},
-	];
-};
+interface Props {
+	posts: SanityPost[];
+}
 
-export default function FeatureWritingWidget() {
-	const [articles] = createResource(fetchArticles);
+function formatDate(dateString: string): string {
+	const date = new Date(dateString);
+	return date.toLocaleDateString("en-US", {
+		month: "short",
+		day: "numeric",
+		year: "numeric",
+	});
+}
+
+function isRecent(dateString: string): boolean {
+	const publishDate = new Date(dateString);
+	const now = new Date();
+	const daysDiff = (now.getTime() - publishDate.getTime()) / (1000 * 60 * 60 * 24);
+	return daysDiff <= 14; // Mark as new if published within 14 days
+}
+
+function estimateReadTime(summary?: string): string {
+	if (!summary) return "5 min read";
+	const wordCount = summary.split(/\s+/).length;
+	const minutes = Math.max(Math.ceil(wordCount / 200), 3);
+	return `${minutes} min read`;
+}
+
+function transformPosts(posts: SanityPost[]): Article[] {
+	return posts.map((post) => ({
+		id: post._id,
+		title: post.title,
+		date: formatDate(post.publishedAt),
+		readTime: estimateReadTime(post.summary),
+		category: post.category || "Article",
+		url: `/blog/${post.slug}`,
+		excerpt: post.summary || "Click to read more...",
+		isNew: isRecent(post.publishedAt),
+	}));
+}
+
+export default function FeatureWritingWidget(props: Props) {
+	const articles = () => transformPosts(props.posts);
 
 	return (
-		<Show
-			when={!articles.loading}
-			fallback={
-				<div class="articles-carousel articles-carousel--loading" aria-hidden="true">
-					<div class="article-card-skeleton"></div>
-					<div class="article-card-skeleton"></div>
-					<div class="article-card-skeleton"></div>
-				</div>
-			}
-		>
-			<div class="articles-carousel" role="list">
-				<div class="articles-track">
+		<div class="articles-carousel" role="list">
+			<div class="articles-track">
+				<Show
+					when={articles().length > 0}
+					fallback={
+						<div class="article-card">
+							<p class="article-card__excerpt">No articles available yet.</p>
+						</div>
+					}
+				>
 					<For each={articles()}>
 						{(article) => (
 							<a href={article.url} class="article-card" target="_blank" rel="noopener noreferrer">
@@ -98,8 +90,8 @@ export default function FeatureWritingWidget() {
 							</a>
 						)}
 					</For>
-				</div>
+				</Show>
 			</div>
-		</Show>
+		</div>
 	);
 }
