@@ -5,9 +5,12 @@ let cleanupScrollProgress: (() => void) | null = null;
 function initScrollReveal() {
 	if (typeof window === "undefined") return;
 
+	const root = document.documentElement;
+
 	// Check for reduced motion preference
 	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	if (prefersReducedMotion) {
+		root.classList.remove("motion-ready");
 		// Skip animations for users who prefer reduced motion
 		const revealElements = document.querySelectorAll("[data-reveal]");
 		revealElements.forEach((el) => {
@@ -15,6 +18,8 @@ function initScrollReveal() {
 		});
 		return;
 	}
+
+	root.classList.add("motion-ready");
 
 	// Intersection Observer for scroll reveals
 	const observerOptions = {

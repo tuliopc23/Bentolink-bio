@@ -176,9 +176,15 @@ export default function GitHubActivity(props: { username: string }) {
 								<div class="commit-item__content">
 									<p class="commit-item__message">{commit.commit.message}</p>
 									<div class="commit-item__meta">
-										<span class="commit-item__repo">{commit.repository?.name}</span>
+										<span class="commit-item__repo icon-text-group">
+											<i class="ph ph-git-branch" style="font-size: 10px;" aria-hidden="true"></i>
+											{commit.repository?.name}
+										</span>
 										<span class="commit-item__divider">•</span>
-										<span class="commit-item__time">{commit.commit.author.date}</span>
+										<span class="commit-item__time icon-text-group">
+											<i class="ph ph-clock" style="font-size: 10px;" aria-hidden="true"></i>
+											{commit.commit.author.date}
+										</span>
 										<span class="commit-item__sha">{commit.sha}</span>
 									</div>
 								</div>

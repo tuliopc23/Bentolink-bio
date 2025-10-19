@@ -7,25 +7,26 @@
 /* Scroll reveal animations */
 [data-reveal] {
 	--reveal-delay: 0ms;
-	opacity: 0;
-	transform: translateY(18px) scale(0.99);
+	--reveal-translate: 0px;
+	--reveal-scale: 1;
+	opacity: 1;
+	transform:
+		translateY(calc(var(--reveal-translate, 0px) + var(--hover-translate, 0px)))
+		scale(calc(var(--reveal-scale, 1) * var(--hover-scale, 1)));
 	transition:
 		opacity var(--motion-duration-spring-sm) var(--spring-smooth) var(--reveal-delay),
 		transform var(--motion-duration-spring-sm) var(--spring-smooth) var(--reveal-delay);
 	will-change: opacity, transform;
 }
 
-[data-reveal][data-reveal-type="scale"] {
-	transform: scale(0.98);
+html.motion-ready [data-reveal] {
+	opacity: 0;
+	--reveal-translate: 18px;
 }
 
-[data-reveal][data-reveal-type="slide-left"] {
-	transform: translateX(var(--motion-distance-md));
-}
-
-[data-reveal].is-visible {
+html.motion-ready [data-reveal].is-visible {
 	opacity: 1;
-	transform: translateY(0) scale(1);
+	--reveal-translate: 0px;
 }
 
 /* Staggered reveals */
@@ -56,7 +57,9 @@
 /* Reduced motion fallback */
 @media (prefers-reduced-motion: reduce) {
 	[data-reveal],
-	[data-reveal].is-visible {
+	html.motion-ready [data-reveal],
+	[data-reveal].is-visible,
+	html.motion-ready [data-reveal].is-visible {
 		opacity: 1;
 		transform: translateY(0) scale(1);
 		transition: none;

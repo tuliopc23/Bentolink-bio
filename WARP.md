@@ -120,6 +120,84 @@ The `PUBLIC_` prefix makes these available to the browser at build time via `imp
 - **Scroll-reveal animations:** Intersection Observer (`src/scripts/motion.ts`) with staggered `data-reveal` attributes on components
 - **Accessibility:** Respects `prefers-reduced-motion` (motion.ts:9-16); semantic HTML and ARIA labels throughout
 
+## Icon System (Phosphor Icons)
+
+**Library:** `@phosphor-icons/web` (v2.1.2) – SF Symbol-like web components
+
+**Apple HIG Compliance:**
+- ✅ Rounded strokes (stroke-linecap: round, stroke-linejoin: round)
+- ✅ 24×24px base grid with optical sizing
+- ✅ Weight system matching SF Symbols (Regular = 2px stroke)
+- ✅ Color inheritance via `currentColor`
+- ✅ Smooth antialiasing and transitions
+
+### Usage
+
+**Direct CSS classes (in .astro files):**
+```astro
+<!-- Regular weight (default) -->
+<i class="ph ph-github-logo" aria-hidden="true"></i>
+
+<!-- Bold weight -->
+<i class="ph-bold ph-heart" aria-hidden="true"></i>
+
+<!-- Fill style -->
+<i class="ph-fill ph-star" aria-hidden="true"></i>
+
+<!-- Custom size via font-size -->
+<i class="ph ph-arrow-right" style="font-size: 24px;" aria-hidden="true"></i>
+```
+
+**Icon wrapper component (recommended for consistency):**
+```astro
+---
+import Icon from '../components/Icon.astro';
+---
+<Icon name="arrow-up-right" size={20} weight="regular" />
+<Icon name="heart" size={24} weight="bold" color="var(--color-primary)" />
+```
+
+**Available weights:**
+- `thin` (1px stroke) – Delicate UI elements
+- `light` (1.5px stroke) – Secondary icons
+- `regular` (2px stroke) – **Primary/default** (SF Symbol Regular equivalent)
+- `bold` (2.5px stroke) – Emphasis
+- `fill` – Solid fills
+- `duotone` – Two-tone style
+
+**Size tokens** (`src/styles/theme.css`):
+```css
+--icon-size-xs: 16px;  /* Small inline icons */
+--icon-size-sm: 20px;  /* Body text level */
+--icon-size-md: 22px;  /* Heading level (title-2) */
+--icon-size-lg: 24px;  /* Large headings */
+--icon-size-xl: 28px;  /* Hero elements */
+```
+
+**Spacing tokens:**
+```css
+--icon-gap: 8px;        /* Standard icon-text gap (8px grid) */
+--icon-gap-tight: 6px;  /* Tight layouts */
+--icon-gap-loose: 12px; /* Loose layouts */
+```
+
+### Best Practices
+
+**✅ DO use Phosphor for:**
+- UI utility icons (arrows, chevrons, status indicators)
+- Navigation hints (external link arrows)
+- System icons (search, settings, info)
+- Inline decorative icons (like GitHub widget header)
+
+**❌ DON'T replace:**
+- Brand logos (Ghostty, Neovim, Xcode, etc.) – keep custom SVGs
+- Social media icons – maintain current assets
+- Profile imagery or illustrations
+
+**Global import:** Icons are auto-loaded in `src/layouts/Base.astro:4` – no per-component imports needed.
+
+**Browse icons:** https://phosphoricons.com/
+
 ## References
 
 **External Docs:**

@@ -14,7 +14,7 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
 ---
 
 <a 
-  class="card" 
+  class="card hover-elevate" 
   data-tint={tint}
   href={href}
   data-reveal
@@ -36,6 +36,10 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
     --card-accent-base: rgba(255, 255, 255, 0.06);
     --card-accent-hover: rgba(255, 255, 255, 0.12);
     --card-focus-ring: rgba(255, 255, 255, 0.14);
+    --hover-elevate-translate: -4px;
+    --hover-elevate-scale: 1.012;
+    --hover-shadow: var(--shadow-card-hover), var(--shadow-card-highlight);
+    --hover-border: var(--surface-card-border-strong);
     display: block;
     text-decoration: none;
     border-radius: var(--radius-card);
@@ -48,7 +52,6 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
       inset 0 1px 0 rgba(255, 255, 255, 0.04),
       0 12px 24px rgba(0, 0, 0, 0.32);
     transition:
-      transform var(--motion-duration-fast) var(--motion-ease-out),
       box-shadow var(--motion-duration-fast) var(--motion-ease-out),
       background-color var(--motion-duration-fast) var(--motion-ease-out),
       border-color var(--motion-duration-fast) var(--motion-ease-out);
@@ -80,12 +83,7 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
   }
   
   .card:hover {
-    transform: translateY(-2px);
     background: var(--surface-card-hover);
-    border-color: var(--surface-card-border-strong);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 16px 32px rgba(0, 0, 0, 0.4);
   }
 
   .card:hover::before {
@@ -95,7 +93,8 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
   }
   
   .card:active {
-    transform: translateY(0) scale(var(--motion-scale-active));
+    --hover-translate: var(--hover-elevate-translate);
+    --hover-scale: var(--motion-scale-active);
     background: var(--surface-card-active);
   }
 

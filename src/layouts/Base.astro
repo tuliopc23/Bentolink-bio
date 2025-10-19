@@ -1,6 +1,9 @@
 ---
 import "../styles/theme.css";
 import "../styles/motion.css";
+import "../styles/phosphor.css";
+import themeScriptUrl from "../scripts/theme.ts?url";
+import motionScriptUrl from "../scripts/motion.ts?url";
 
 interface Props {
 	title?: string;
@@ -41,8 +44,6 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
 
     <!-- SF Mono (monospace for code) -->
     <link href="https://v1.fontapi.ir/css/SFMono" rel="stylesheet" />
-
-    <!-- DotLottie Player for animations -->
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -119,7 +120,10 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
       <div class="footer__inner">
         <div class="footer__badge" aria-live="polite">
           <span class="footer__badge-pulse" aria-hidden="true"></span>
-          <span class="footer__badge-text">Last updated {_lastUpdated}</span>
+          <span class="footer__badge-text icon-text-group">
+            <i class="ph ph-arrow-clockwise icon--metadata" aria-hidden="true"></i>
+            Last updated {_lastUpdated}
+          </span>
         </div>
         <div class="footer__meta">
           <span class="footer__branding">Bentolink™ by Tulio Cunha</span>
@@ -128,17 +132,17 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
             <span class="footer__icon-dot footer__icon-dot--indigo"></span>
             <span class="footer__icon-dot footer__icon-dot--pink"></span>
           </div>
-          <span class="footer__engine">Built with Astro</span>
+          <span class="footer__engine icon-text-group">
+            Built with Astro
+            <i class="ph ph-rocket-launch icon--metadata" aria-hidden="true"></i>
+          </span>
         </div>
       </div>
     </footer>
 
     <!-- Theme controller and motion scripts -->
-    <script>
-      import '../scripts/theme.ts';
-      import '../scripts/motion.ts';
-      import { DotLottieCommonPlayer } from '@lottiefiles/dotlottie-web';
-    </script>
+    <script type="module" src={themeScriptUrl}></script>
+    <script type="module" src={motionScriptUrl}></script>
   </body>
 </html>
 

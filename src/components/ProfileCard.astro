@@ -52,12 +52,7 @@ const _contacts = [
 
     <div class="profile-card__content">
       <div class="profile-card__eyebrow" aria-hidden="true">
-        <dotlottie-player
-          src="/animations/hello.json"
-          autoplay
-          loop
-          class="lottie-animation"
-        ></dotlottie-player>
+        <span class="profile-card__eyebrow-badge">Hello there</span>
       </div>
       <h1 class="profile-card__name">{name}</h1>
       <p class="profile-card__title">{title}</p>
@@ -202,6 +197,9 @@ const _contacts = [
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 32px;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   .profile-card__content {
@@ -216,28 +214,22 @@ const _contacts = [
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    height: 1.5rem;
-    width: auto;
-    min-width: clamp(60px, 12vw, 120px);
-    max-width: clamp(100px, 20vw, 160px);
-    overflow: hidden;
+    height: 1.6rem;
   }
 
-  .profile-card__eyebrow lottie-player {
-    display: block;
-    object-fit: contain;
-    pointer-events: none;
-    transition: filter var(--motion-duration-base) var(--motion-ease-out);
-  }
-
-  /* Light mode - use dark/black version of animation */
-  [data-theme="light"] .profile-card__eyebrow lottie-player {
-    filter: brightness(0) saturate(100%);
-  }
-
-  /* Dark mode - use white version of animation */
-  [data-theme="dark"] .profile-card__eyebrow lottie-player {
-    filter: brightness(0) invert(1);
+  .profile-card__eyebrow-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface-card) 72%, transparent);
+    border: 1px solid var(--surface-card-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    font-size: var(--fs-footnote);
+    letter-spacing: var(--ls-caption);
+    text-transform: uppercase;
+    color: var(--text-secondary);
   }
 
   .profile-card__name {

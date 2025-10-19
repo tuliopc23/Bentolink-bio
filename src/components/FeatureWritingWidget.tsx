@@ -78,13 +78,24 @@ export default function FeatureWritingWidget(props: Props) {
 								<h3 class="article-card__title">{article.title}</h3>
 								<p class="article-card__excerpt">{article.excerpt}</p>
 								<footer class="article-card__footer">
-									<span class="article-card__meta">{article.date}</span>
+									<span class="article-card__meta icon-text-group">
+										<i class="ph ph-calendar-blank icon--metadata" aria-hidden="true"></i>
+										{article.date}
+									</span>
 									<span class="article-card__dot" aria-hidden="true">
 										•
 									</span>
-									<span class="article-card__meta">{article.readTime}</span>
-									<span class="article-card__cta" aria-hidden="true">
-										Read →
+									<span class="article-card__meta icon-text-group">
+										<i class="ph ph-clock icon--metadata" aria-hidden="true"></i>
+										{article.readTime}
+									</span>
+									<span class="article-card__cta icon-text-group" aria-hidden="true">
+										Read
+										<i
+											class="ph ph-arrow-up-right icon--interactive"
+											style="font-size: 14px;"
+											aria-hidden="true"
+										></i>
 									</span>
 								</footer>
 							</a>

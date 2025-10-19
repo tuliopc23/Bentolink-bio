@@ -1,0 +1,44 @@
+---
+interface Props {
+	name: string;
+	size?: number;
+	weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
+	color?: string;
+	class?: string;
+}
+
+const {
+	name,
+	size = 20,
+	weight = "regular",
+	color = "currentColor",
+	class: className = "",
+} = Astro.props;
+
+// Map weight to CSS class prefix
+const weightPrefix = weight === "regular" ? "ph" : `ph-${weight}`;
+---
+
+<i
+	class={`${weightPrefix} ph-${name} icon ${className}`}
+	style={`color: ${color}; font-size: ${size}px;`}
+	aria-hidden="true"
+></i>
+
+<style>
+	.icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		vertical-align: middle;
+		flex-shrink: 0;
+		color: currentColor;
+		transition:
+			all var(--motion-duration-sm) var(--motion-ease-out),
+			transform var(--motion-duration-sm) var(--motion-ease-out);
+
+		/* SF Symbol-like rendering */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+</style>
