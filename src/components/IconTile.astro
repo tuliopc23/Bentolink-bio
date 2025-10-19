@@ -45,7 +45,7 @@ const needsPadding =
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
     overflow: visible;
     flex-shrink: 0;
     transition:
@@ -53,7 +53,7 @@ const needsPadding =
       box-shadow var(--motion-duration-fast) var(--motion-ease-out);
     will-change: transform, box-shadow;
   }
-  
+
   /* Hover effects on parent card */
   .card:hover .icon-tile {
     transform: scale(1.05);
@@ -66,19 +66,19 @@ const needsPadding =
   .icon-tile--small {
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-sm);
+    border-radius: 12px;
   }
 
   .icon-tile--medium {
     width: 52px;
     height: 52px;
-    border-radius: var(--radius-md);
+    border-radius: 16px;
   }
 
   .icon-tile--large {
     width: 64px;
     height: 64px;
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
   }
   
   .icon-tile__image {

@@ -1,144 +1,555 @@
 ---
-import Base from '../layouts/Base.astro';
-import ProfileHeader from '../components/ProfileHeader.astro';
-import ContactWidget from '../components/ContactWidget.astro';
-import DockLink from '../components/DockLink.astro';
+import DockLink from "../components/DockLink.astro";
+import FeatureWritingWidget from "../components/FeatureWritingWidget";
+import GitHubActivity from "../components/GitHubActivity";
+import ProfileCard from "../components/ProfileCard.astro";
+import Base from "../layouts/Base.astro";
 
 const socialLinks = [
-  {
-    title: "My Website",
-    href: "#",
-    tint: "purple",
-    iconAsset: "/icons/website-placeholder.svg",
-  },
-  {
-    title: "My Portfolio",
-    href: "https://portfolio.tuliocunha.dev",
-    tint: "cyan",
-    iconAsset: "/icons/portfolio-macos.svg",
-  },
-  {
-    title: "Linkedin",
-    href: "https://linkedin.com/in/tuliocunha",
-    tint: "blue",
-    iconAsset: "/icons/linkedin-light.svg",
-  },
-  {
-    title: "Instagram",
-    href: "https://instagram.com/tuliopinheirocunha",
-    tint: "pink",
-    iconAsset: "/icons/instagram-light.svg",
-  },
-  {
-    title: "Fiverr",
-    href: "https://www.fiverr.com/tuliopc",
-    tint: "green",
-    iconAsset: "/icons/fiverr.svg",
-  },
-  {
-    title: "Book a meeting",
-    href: "https://cal.com/tuliopinheirocunha",
-    tint: "teal",
-    iconAsset: "/icons/calendar-light.svg",
-  },
+	{
+		title: "My Website",
+		href: "https://tuliocunha.dev",
+		tint: "teal",
+		iconAsset: "/icons/website-placeholder.webp",
+	},
+	{
+		title: "My Portfolio",
+		href: "https://portfolio.tuliocunha.dev",
+		tint: "cyan",
+		iconAsset: "/icons/portfolio-macos.svg",
+	},
+	{
+		title: "Linkedin",
+		href: "https://linkedin.com/in/tuliocunha",
+		tint: "blue",
+		iconAsset: "/icons/linkedin-light.svg",
+	},
+	{
+		title: "Instagram",
+		href: "https://instagram.com/tuliopinheirocunha",
+		tint: "pink",
+		iconAsset: "/icons/instagram-light.svg",
+	},
+	{
+		title: "Fiverr",
+		href: "https://www.fiverr.com/tuliopc",
+		tint: "green",
+		iconAsset: "/icons/fiverr.svg",
+	},
+	{
+		title: "Book a meeting",
+		href: "https://cal.com/tuliopinheirocunha",
+		tint: "orange",
+		iconAsset: "/icons/calendar-light.svg",
+	},
+];
+
+const toolLinks = [
+	{
+		title: "Ghostty",
+		href: "https://ghostty.org",
+		tint: "blue",
+		iconAsset: "/icons/Ghostty Dark_upscayl_2x_digital-art-4x_wrapped.svg",
+	},
+	{
+		title: "Neovim",
+		href: "https://neovim.io",
+		tint: "green",
+		iconAsset: "/icons/neovimlight_upscayl_2x_digital-art-4x_wrapped.svg",
+	},
+	{
+		title: "Xcode",
+		href: "https://developer.apple.com/xcode/",
+		tint: "blue",
+		iconAsset: "/icons/xcodelogh_upscayl_2x_digital-art-4x copy.svg",
+	},
+	{
+		title: "Containers",
+		href: "https://support.apple.com/guide/terminal/welcome/mac",
+		tint: "cyan",
+		iconAsset: "/icons/Apple Containerization_upscayl_2x_digital-art-4x.svg",
+	},
+	{
+		title: "Transmit",
+		href: "https://panic.com/transmit/",
+		tint: "yellow",
+		iconAsset: "/icons/Transmit_upscayl_2x_digital-art-4x.svg",
+	},
+	{
+		title: "Tower",
+		href: "https://www.git-tower.com",
+		tint: "orange",
+		iconAsset: "/icons/Tower.svg",
+	},
+	{
+		title: "CodeEdit",
+		href: "https://www.codeedit.app",
+		tint: "blue",
+		iconAsset: "/icons/Codeedit_upscayl_2x_digital-art-4x_wrapped.svg",
+	},
+	{
+		title: "OrbStack",
+		href: "https://orbstack.dev",
+		tint: "indigo",
+		iconAsset: "/icons/orbstack-icon.svg",
+	},
 ];
 ---
 
-<Base 
-  title="Tulio Cunha" 
+<Base
+  title="Tulio Cunha"
   description="Full Stack Developer - Building elegant solutions with code. Connect with me on GitHub, LinkedIn, and more."
 >
-  <ProfileHeader
-    name="Tulio Cunha"
-    title="Full Stack Developer"
-    bio="Building elegant solutions with code."
-    avatarSrc="/my photo.png"
-  />
-  
-  <ContactWidget />
-  
-  <section class="socials">
-    <h2 class="socials__heading" data-reveal data-reveal-order="2">Socials</h2>
-    <div class="socials__dock">
-      {socialLinks.map((link, index) => (
-        <DockLink
-          href={link.href}
-          title={link.title}
-          tint={link.tint}
-          iconAsset={link.iconAsset}
-          revealOrder={index + 3}
-        />
-      ))}
+  <section class="bento-grid">
+    <ProfileCard
+      name="Tulio Cunha"
+      title="Full Stack Developer"
+      bio=". Command Line Junkie . Mac Head . Unix Enthusiast . Tool Addict."
+      avatarSrc="/my photo.png"
+      email="contact@tuliocunha.dev"
+      location="Brazil"
+    >
+      <div class="socials-section">
+        <h2 class="socials-title">Socials</h2>
+        <div class="socials-grid">
+          {socialLinks.map((link, index) => (
+            <DockLink
+              href={link.href}
+              title={link.title}
+              tint={link.tint}
+              iconAsset={link.iconAsset}
+              revealOrder={0}
+            />
+          ))}
+        </div>
+      </div>
+    </ProfileCard>
+
+    <div class="widget-box widget-tools" data-reveal data-reveal-order="1">
+      <h2 class="widget-title">Tools</h2>
+      <div class="tools-grid">
+        {toolLinks.map((link, index) => (
+          <DockLink
+            href={link.href}
+            title={link.title}
+            tint={link.tint}
+            iconAsset={link.iconAsset}
+            revealOrder={1}
+          />
+        ))}
+      </div>
+    </div>
+
+    <div class="widget-box widget-github" data-reveal data-reveal-order="2">
+      <h2 class="widget-title">GitHub</h2>
+      <GitHubActivity username="tuliopc23" client:load />
+    </div>
+
+    <div class="widget-box widget-feature-writing" data-reveal data-reveal-order="3">
+      <h2 class="widget-title">Feature Writing</h2>
+      <FeatureWritingWidget client:load />
     </div>
   </section>
 </Base>
 
 <style>
-  .socials {
-    padding: var(--space-12) var(--container-padding-x) var(--space-24);
-    max-width: var(--container-xl);
+  .bento-grid {
+    padding: 24px var(--container-padding);
+    max-width: 1200px;
     margin: 0 auto;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .socials__heading {
-    font-size: var(--fs-title-3);
-    font-weight: var(--fw-semibold);
-    letter-spacing: var(--ls-title);
-    text-align: center;
-    margin: 0 0 var(--space-12) 0;
-    color: var(--text-primary);
-  }
-  
-  .socials__dock {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: auto;
-    gap: clamp(14px, 2vw, 20px) clamp(18px, 3vw, 28px);
-    width: clamp(560px, 65vw, 800px);
-    max-width: 800px;
-    margin: 0 auto;
-    padding: var(--space-4) var(--space-6);
+  .widget-box {
     background: var(--surface-elevated);
     backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
     -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
     border: 1px solid var(--panel-border);
-    border-radius: var(--radius-2xl);
+    border-radius: 36px;
+    padding: clamp(20px, 2.5vw, 28px);
     box-shadow: var(--shadow-card);
-    transition: all var(--motion-duration-base) var(--motion-ease-out);
+    z-index: 1;
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
   }
 
-  .socials__dock:hover {
+  .widget-box:hover {
     box-shadow: var(--shadow-card-hover);
     border-color: var(--panel-border-strong);
   }
-  
-  /* Tablet */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .socials__dock {
-      width: clamp(480px, 70vw, 600px);
-      gap: var(--space-3) var(--space-4);
-      padding: var(--space-3) var(--space-5);
+
+  .widget-title {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.024em;
+    margin: 0 0 16px 0;
+    color: var(--text);
+  }
+
+  .socials-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    background: var(--surface-elevated);
+    border: 1px solid var(--panel-border);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: var(--shadow-card);
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
+  }
+
+  .socials-section:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--panel-border-strong);
+  }
+
+  .socials-title {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    margin: 0 0 var(--space-xs) 0;
+    color: var(--text);
+  }
+
+  .socials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .github-widget {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .github-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid var(--panel-border);
+  }
+
+  .github-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxs);
+  }
+
+  .github-icon {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .github-stat-value {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .github-stat-label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .github-profile-link a {
+    font-size: 13px;
+    font-weight: 500;
+    color: #007AFF;
+    text-decoration: none;
+    transition: opacity var(--motion-duration-sm) var(--motion-ease-out);
+  }
+
+  .github-profile-link a:hover {
+    opacity: 0.7;
+  }
+
+  [data-theme="dark"] .github-profile-link a {
+    color: #0A84FF;
+  }
+
+  .github-commits {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .github-commit-item {
+    display: flex;
+    gap: var(--space-xs);
+    text-decoration: none;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    transition: background var(--motion-duration-sm) var(--motion-ease-out);
+  }
+
+  .github-commit-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  [data-theme="dark"] .github-commit-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .commit-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #007AFF;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  [data-theme="dark"] .commit-dot {
+    background: #0A84FF;
+  }
+
+  .commit-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .commit-message-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0 0 4px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .commit-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .commit-repo-name {
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .commit-dot-separator {
+    opacity: 0.5;
+  }
+
+  .commit-date-text {
+    opacity: 0.7;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .article-card {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--surface-elevated);
+    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
+    -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-card);
+    text-decoration: none;
+    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .article-card:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--panel-border-strong);
+  }
+
+  .article-card:focus-visible {
+    outline: 2px solid #007AFF;
+    outline-offset: 2px;
+  }
+
+  [data-theme="dark"] .article-card:focus-visible {
+    outline-color: #0A84FF;
+  }
+
+  .article-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .article-card__title {
+    font-size: clamp(15px, 1.5vw, 17px);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-card__metadata {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .article-card__separator {
+    opacity: 0.5;
+  }
+
+  .article-card__date,
+  .article-card__read-time,
+  .article-card__category {
+    white-space: nowrap;
+  }
+
+  .loading {
+    padding: 32px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(60, 60, 67, 0.6);
+  }
+
+  [data-theme="dark"] .loading {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .bento-grid {
+      gap: 20px;
+    }
+
+    .widget-tools {
+      grid-row: span 2;
+    }
+
+    .widget-github {
+      grid-row: span 2;
+    }
+
+    .articles-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .article-card {
+      padding: 18px;
+    }
+
+    .article-card__title {
+      font-size: 15px;
     }
   }
 
-
-  /* Mobile */
-  @media (max-width: 639px) {
-    .socials {
-      padding: var(--space-8) var(--space-4) var(--space-24);
+  @media (min-width: 1024px) {
+    .widget-tools {
+      grid-row: span 2;
     }
 
-    .socials__heading {
-      margin-bottom: var(--space-8);
-      font-size: clamp(1.2rem, 4vw, 1.5rem);
+    .widget-github {
+      grid-row: span 2;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 20px 16px;
     }
 
-    .socials__dock {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      width: 100%;
-      max-width: 400px;
-      gap: var(--space-3) var(--space-4);
-      padding: var(--space-3) var(--space-4);
+    .widget-box {
+      border-radius: 32px;
+      padding: 20px;
+    }
+
+    .widget-title {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .socials-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .socials-title {
+      font-size: 15px;
+    }
+
+    .tools-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .github-commit-item {
+      padding: var(--space-xxs);
+    }
+
+    .commit-message-text {
+      font-size: 13px;
+    }
+
+    .commit-meta {
+      font-size: 11px;
+    }
+
+    .article-card {
+      padding: 16px;
+    }
+
+    .article-card__title {
+      font-size: 14px;
+      -webkit-line-clamp: 2;
+    }
+
+    .article-card__metadata {
+      font-size: 11px;
+    }
+  }
+
+  /* Reduced motion compliance for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .article-card {
+      transition: none !important;
+    }
+
+    .article-card:hover {
+      transform: none;
     }
   }
 </style>
