@@ -119,7 +119,7 @@ export default function GitHubActivity(props: { username: string }) {
           </div>
         }
       >
-        <div class="github-commits-list" role="list">
+        <div class="github-commits-list">
           <For each={commits()}>
             {(commit, index) => (
               <a
@@ -127,7 +127,6 @@ export default function GitHubActivity(props: { username: string }) {
                 class="commit-item"
                 target="_blank"
                 rel="noopener noreferrer"
-                role="listitem"
                 style={{
                   "animation-delay": `${index() * 50}ms`,
                 }}
