@@ -5,95 +5,16 @@ interface GitHubCommit {
   commit: {
     message: string;
     author: {
-      name: string;
       date: string;
     };
   };
   html_url: string;
   repository?: {
     name: string;
-    full_name: string;
   };
 }
 
-interface GitHubStats {
-  totalCommits: number;
-  repositories: number;
-  lastCommitDate: string;
-}
-
-const fetchGitHubStats = async (
-  username: string,
-  token: string
-): Promise<GitHubStats> => {
-  const threeMonthsAgo = new Date();
-  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-
-  try {
-    // Fetch user's events (includes commits)
-    console.log("Fetching GitHub events for:", username);
-
-    const eventsResponse = await fetch(
-      `https://api.github.com/users/${username}/events?per_page=100`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/vnd.github.v3+json",
-        },
-      }
-    );
-
-    if (!eventsResponse.ok) {
-      const errorText = await eventsResponse.text();
-      console.error("GitHub API Error:", eventsResponse.status, errorText);
-      throw new Error(
-        `Failed to fetch GitHub events: ${eventsResponse.status}`
-      );
-    }
-
-    const events = await eventsResponse.json();
-
-    // Filter push events and count commits from last 3 months
-    const pushEvents = events.filter(
-      (event: any) =>
-        event.type === "PushEvent" &&
-        new Date(event.created_at) >= threeMonthsAgo
-    );
-
-    const totalCommits = pushEvents.reduce(
-      (sum: number, event: any) => sum + (event.payload?.commits?.length || 0),
-      0
-    );
-
-    const uniqueRepos = new Set(
-      pushEvents.map((event: any) => event.repo.name)
-    );
-
-    // Get last commit date
-    const lastCommitDate =
-      pushEvents.length > 0
-        ? new Date(pushEvents[0].created_at).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          })
-        : "N/A";
-
-    return {
-      totalCommits,
-      repositories: uniqueRepos.size,
-      lastCommitDate,
-    };
-  } catch (error) {
-    console.error("Error fetching GitHub stats:", error);
-    return {
-      totalCommits: 0,
-      repositories: 0,
-      lastCommitDate: "N/A",
-    };
-  }
-};
-
-const fetchLatestCommits = async (
+const fetchRecentCommits = async (
   username: string,
   token: string
 ): Promise<GitHubCommit[]> => {
@@ -109,13 +30,8 @@ const fetchLatestCommits = async (
     );
 
     if (!eventsResponse.ok) {
-      const errorText = await eventsResponse.text();
-      console.error(
-        "GitHub API Error (commits):",
-        eventsResponse.status,
-        errorText
-      );
-      throw new Error(`Failed to fetch commits: ${eventsResponse.status}`);
+      console.error("GitHub API Error:", eventsResponse.status);
+      return [];
     }
 
     const events = await eventsResponse.json();
@@ -126,30 +42,44 @@ const fetchLatestCommits = async (
       (event: any) => event.type === "PushEvent"
     );
 
-    for (const event of pushEvents.slice(0, 5)) {
+    for (const event of pushEvents) {
       const commitMessages = event.payload.commits || [];
       for (const commit of commitMessages.slice(0, 1)) {
-        // Get first commit per push
+        const commitDate = new Date(event.created_at);
+        const now = new Date();
+        const diffTime = Math.abs(now.getTime() - commitDate.getTime());
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        let timeAgo = "";
+        if (diffDays === 0) {
+          const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+          timeAgo = diffHours === 0 ? "Just now" : `${diffHours}h ago`;
+        } else if (diffDays === 1) {
+          timeAgo = "Yesterday";
+        } else if (diffDays < 7) {
+          timeAgo = `${diffDays}d ago`;
+        } else {
+          timeAgo = commitDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          });
+        }
+
         commits.push({
           sha: commit.sha.substring(0, 7),
           commit: {
             message: commit.message,
             author: {
-              name: event.actor.display_login,
-              date: new Date(event.created_at).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              }),
+              date: timeAgo,
             },
           },
           html_url: `https://github.com/${event.repo.name}/commit/${commit.sha}`,
           repository: {
             name: event.repo.name.split("/")[1],
-            full_name: event.repo.name,
           },
         });
       }
-      if (commits.length >= 3) break;
+      if (commits.length >= 5) break;
     }
 
     return commits;
@@ -161,128 +91,78 @@ const fetchLatestCommits = async (
 
 export default function GitHubActivity(props: { username: string }) {
   const token = import.meta.env.PUBLIC_GITHUB_TOKEN;
-
-  // Debug logging
-  console.log("GitHub Token exists:", !!token);
-  console.log("Username:", props.username);
-
   const [refreshTrigger, setRefreshTrigger] = createSignal(0);
 
-  const [stats] = createResource(refreshTrigger, () => {
-    console.log("Fetching stats with token:", token?.substring(0, 10) + "...");
-    return fetchGitHubStats(props.username, token);
-  });
-  const [commits] = createResource(refreshTrigger, () => {
-    console.log(
-      "Fetching commits with token:",
-      token?.substring(0, 10) + "..."
-    );
-    return fetchLatestCommits(props.username, token);
-  });
+  const [commits] = createResource(refreshTrigger, () =>
+    fetchRecentCommits(props.username, token)
+  );
 
   // Auto-refresh every 5 minutes
   onMount(() => {
     const interval = setInterval(() => {
       setRefreshTrigger((prev) => prev + 1);
-    }, 300000); // 5 minutes
+    }, 300000);
 
     return () => clearInterval(interval);
   });
 
   return (
-    <div class="github-widget" role="region" aria-label="GitHub activity">
+    <div class="github-widget" role="region" aria-label="GitHub commits">
       <Show
-        when={!stats.loading && !commits.loading}
+        when={!commits.loading && commits()}
         fallback={
-          <div class="github-card github-card--loading" aria-hidden="true">
-            <div class="github-card__skeleton-header"></div>
-            <div class="github-card__skeleton-line"></div>
-            <div class="github-card__skeleton-line"></div>
-            <div class="github-card__skeleton-line"></div>
+          <div class="github-loading">
+            <div class="github-skeleton"></div>
+            <div class="github-skeleton"></div>
+            <div class="github-skeleton"></div>
+            <div class="github-skeleton"></div>
           </div>
         }
       >
-        <div class="github-card">
-          <header class="github-card__header">
-            <div class="github-card__identity">
-              <div class="github-card__avatar" aria-hidden="true">
-                {props.username.slice(0, 1).toUpperCase()}
-              </div>
-              <div class="github-card__meta">
-                <span class="github-card__eyebrow">GitHub</span>
-                <a
-                  href={`https://github.com/${props.username}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="github-card__handle"
-                >
-                  @{props.username}
-                </a>
-              </div>
-            </div>
-            <ul class="github-card__stats">
-              <li class="github-card__stat">
-                <span class="github-card__stat-value">
-                  {stats()?.totalCommits ?? 0}
-                </span>
-                <span class="github-card__stat-label">3mo commits</span>
-              </li>
-              <li class="github-card__stat">
-                <span class="github-card__stat-value">
-                  {stats()?.repositories ?? 0}
-                </span>
-                <span class="github-card__stat-label">Active repos</span>
-              </li>
-              <li class="github-card__stat">
-                <span class="github-card__stat-value">
-                  {stats()?.lastCommitDate}
-                </span>
-                <span class="github-card__stat-label">Last commit</span>
-              </li>
-            </ul>
-          </header>
-
-          <div class="github-commits" role="list">
-            <For each={commits()}>
-              {(commit) => (
-                <a
-                  href={commit.html_url}
-                  class="github-commit"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="github-commit__accent" aria-hidden="true"></div>
-                  <div class="github-commit__body">
-                    <p class="github-commit__message">
-                      {commit.commit.message}
-                    </p>
-                    <div class="github-commit__meta">
-                      <span class="github-commit__repo">
-                        {commit.repository?.name}
-                      </span>
-                      <span class="github-commit__dot" aria-hidden="true">
-                        •
-                      </span>
-                      <span class="github-commit__date">
-                        {commit.commit.author.date}
-                      </span>
-                    </div>
+        <div class="github-commits-list" role="list">
+          <For each={commits()}>
+            {(commit, index) => (
+              <a
+                href={commit.html_url}
+                class="commit-item"
+                target="_blank"
+                rel="noopener noreferrer"
+                role="listitem"
+                style={{
+                  "animation-delay": `${index() * 50}ms`,
+                }}
+              >
+                <div class="commit-item__indicator"></div>
+                <div class="commit-item__content">
+                  <p class="commit-item__message">{commit.commit.message}</p>
+                  <div class="commit-item__meta">
+                    <span class="commit-item__repo">
+                      {commit.repository?.name}
+                    </span>
+                    <span class="commit-item__divider">•</span>
+                    <span class="commit-item__time">
+                      {commit.commit.author.date}
+                    </span>
+                    <span class="commit-item__sha">{commit.sha}</span>
                   </div>
-                  <div class="github-commit__arrow" aria-hidden="true">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M4 12L12 4M12 4H6M12 4V10"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </a>
-              )}
-            </For>
-          </div>
+                </div>
+                <div class="commit-item__arrow">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3.5 10.5L10.5 3.5M10.5 3.5H5.5M10.5 3.5V8.5" />
+                  </svg>
+                </div>
+              </a>
+            )}
+          </For>
         </div>
       </Show>
     </div>
