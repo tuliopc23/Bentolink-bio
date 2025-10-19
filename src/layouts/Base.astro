@@ -95,8 +95,9 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
             aria-label="Toggle theme"
             data-theme-toggle
           >
-            <span class="theme-toggle__icon theme-toggle__icon--sun">☀️</span>
-            <span class="theme-toggle__icon theme-toggle__icon--moon">🌙</span>
+            <span class="theme-toggle__track">
+              <span class="theme-toggle__thumb"></span>
+            </span>
           </button>
         </div>
       </div>
@@ -110,7 +111,10 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     <footer class="footer">
       <div class="footer__inner">
         <p class="footer__copy">
-          © {new Date().getFullYear()} Tulio Cunha. Built with Astro.
+          Bentolink™ by Tulio Cunha
+        </p>
+        <p class="footer__built">
+          Built with Astro
         </p>
       </div>
     </footer>
@@ -150,54 +154,56 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     align-items: center;
   }
   
-  /* Theme toggle */
+  /* iOS-style Theme Toggle */
   .theme-toggle {
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 51px;
+    height: 31px;
     border: none;
     background: transparent;
-    border-radius: var(--radius-sm);
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--motion-duration-fast) var(--motion-ease-out);
+    padding: 0;
+    transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
-  
-  .theme-toggle:hover {
-    background: var(--surface-elevated);
-    transform: scale(var(--motion-scale-sm));
-  }
-  
+
   .theme-toggle:active {
-    transform: scale(var(--motion-scale-active));
+    transform: scale(0.96);
   }
-  
-  .theme-toggle__icon {
+
+  .theme-toggle__track {
+    display: block;
+    width: 51px;
+    height: 31px;
+    background: rgba(60, 60, 67, 0.36);
+    border-radius: 31px;
+    position: relative;
+    transition: all var(--motion-duration-base) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-theme="light"] .theme-toggle__track {
+    background: #34C759;
+  }
+
+  .theme-toggle__thumb {
     position: absolute;
-    font-size: 20px;
-    transition: all var(--motion-duration-fast) var(--motion-ease-out);
+    top: 2px;
+    left: 2px;
+    width: 27px;
+    height: 27px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    box-shadow:
+      0 3px 8px rgba(0, 0, 0, 0.15),
+      0 3px 1px rgba(0, 0, 0, 0.06);
+    transition: all var(--motion-duration-base) cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
-  .theme-toggle__icon--sun {
-    opacity: 0;
-    transform: rotate(-90deg) scale(0.8);
+
+  [data-theme="light"] .theme-toggle__thumb {
+    transform: translateX(20px);
   }
-  
-  .theme-toggle__icon--moon {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-  }
-  
-  [data-theme="light"] .theme-toggle__icon--sun {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-  }
-  
-  [data-theme="light"] .theme-toggle__icon--moon {
-    opacity: 0;
-    transform: rotate(90deg) scale(0.8);
+
+  .theme-toggle:hover .theme-toggle__track {
+    opacity: 0.8;
   }
   
   /* Content */
@@ -221,8 +227,15 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
 
   .footer__copy {
     font-size: var(--fs-footnote);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-1) 0;
+  }
+
+  .footer__built {
+    font-size: var(--fs-caption-2);
     color: var(--text-tertiary);
     margin: 0;
+    opacity: 0.7;
   }
   
   /* Responsive adjustments */
