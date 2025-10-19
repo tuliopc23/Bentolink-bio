@@ -278,6 +278,60 @@ pre {
 }
 
 /* Focus styles */
+/* ======= Icon System ======= */
+
+/* Icon spacing */
+:root {
+	--icon-gap-tight: 6px;
+	--icon-gap: 8px;
+}
+
+/* Icon + Text Groups */
+.icon-text-group {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--icon-gap-tight);
+}
+
+/* Icon Size Utilities (8px grid) */
+.icon--metadata {
+	font-size: 12px;
+	line-height: 1;
+}
+
+.icon--label {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.icon--heading {
+	font-size: 22px;
+	line-height: 1;
+	transition: transform 0.18s var(--motion-ease-out), color 0.18s var(--motion-ease-out);
+}
+
+/* Icon Color Utilities */
+.icon--decorative {
+	color: var(--text-tertiary);
+	opacity: 0.6;
+}
+
+.icon--interactive {
+	color: var(--link);
+	opacity: 1;
+}
+
+.icon--subtle {
+	color: var(--text-quaternary);
+	opacity: 0.5;
+}
+
+/* Hover effects for heading icons */
+.widget-box:hover .icon--heading {
+	transform: scale(1.08);
+	color: var(--color-primary);
+}
+
 :focus-visible {
 	outline: none;
 	box-shadow: var(--focus-ring);

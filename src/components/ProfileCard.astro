@@ -51,8 +51,8 @@ const _contacts = [
     </div>
 
     <div class="profile-card__content">
-      <div class="profile-card__eyebrow" aria-hidden="true">
-        <span class="profile-card__eyebrow-indicator" aria-hidden="true"></span>
+      <div class="profile-card__eyebrow icon-text-group" aria-hidden="true">
+        <i class="ph ph-hand-waving icon--decorative icon--label" aria-hidden="true"></i>
         <span class="profile-card__eyebrow-label">Hello</span>
       </div>
       <h1 class="profile-card__name">{name}</h1>
@@ -93,8 +93,14 @@ const _contacts = [
 
   <div class="profile-card__socials-section">
     <div class="widget-header">
-      <span class="widget-eyebrow">Connect</span>
-      <h2 class="widget-title">Socials</h2>
+      <span class="widget-eyebrow icon-text-group">
+        <i class="ph ph-share-network icon--decorative icon--label" aria-hidden="true"></i>
+        Connect
+      </span>
+      <h2 class="widget-title icon-text-group">
+        Socials
+        <i class="ph ph-users-three icon--heading" aria-hidden="true"></i>
+      </h2>
       <p class="widget-caption">Connect across the ecosystem</p>
     </div>
     <div class="profile-socials__grid" role="list" aria-label="Social links">
@@ -139,8 +145,9 @@ const _contacts = [
     inset: -40% -35% auto auto;
     height: 120%;
     width: 80%;
-    background: radial-gradient(circle at 30% 30%, rgba(72, 132, 244, 0.24), transparent 65%);
-    opacity: 0.7;
+    background:
+      radial-gradient(circle at 26% 32%, rgba(108, 168, 255, 0.2), transparent 65%);
+    opacity: 0.45;
     pointer-events: none;
     mix-blend-mode: screen;
     z-index: -1;
@@ -212,10 +219,6 @@ const _contacts = [
   }
 
   .profile-card__eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: clamp(8px, 1vw, 12px);
-    min-height: 1.4rem;
     font-size: var(--fs-eyebrow);
     letter-spacing: var(--ls-eyebrow);
     font-weight: var(--fw-medium);
@@ -223,20 +226,18 @@ const _contacts = [
     color: var(--text-tertiary);
   }
 
-  .profile-card__eyebrow-indicator {
-    width: clamp(18px, 2.4vw, 28px);
-    height: 2px;
-    border-radius: 999px;
-    background: linear-gradient(120deg, rgba(10, 132, 255, 0.75), rgba(136, 112, 255, 0.55));
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 0 12px rgba(10, 132, 255, 0.25);
+  .profile-card__eyebrow .icon--decorative {
+    animation: wave 2.5s ease-in-out infinite;
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    40%, 100% { transform: rotate(0deg); }
   }
 
   .profile-card__eyebrow-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
     color: inherit;
   }
 
@@ -435,7 +436,8 @@ const _contacts = [
 
     .profile-card::after {
       inset: auto -40% -30% -40%;
-      background: radial-gradient(circle at 50% 50%, rgba(68, 128, 240, 0.2), transparent 65%);
+      background: radial-gradient(circle at 50% 50%, rgba(102, 160, 255, 0.2), transparent 68%);
+      opacity: 0.42;
     }
 
     .profile-card__identity {
@@ -450,12 +452,6 @@ const _contacts = [
 
     .profile-card__eyebrow {
       justify-content: center;
-      min-width: auto;
-      max-width: none;
-    }
-
-    .profile-card__eyebrow-indicator {
-      width: clamp(22px, 12vw, 34px);
     }
 
     .profile-card__contact-bar {
@@ -477,6 +473,24 @@ const _contacts = [
     .profile-card__socials-section .profile-socials__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-2);
+    }
+  }
+
+  :global(html[data-theme="dark"] .profile-card::after) {
+    background:
+      radial-gradient(circle at 28% 30%, rgba(112, 172, 255, 0.22), transparent 62%),
+      radial-gradient(circle at 78% 18%, rgba(164, 128, 255, 0.16), transparent 70%);
+    opacity: 0.36;
+    mix-blend-mode: soft-light;
+  }
+
+  @media (max-width: 767px) {
+    :global(html[data-theme="dark"] .profile-card::after) {
+      inset: auto -36% -26% -36%;
+      background:
+        radial-gradient(circle at 52% 44%, rgba(112, 172, 255, 0.2), transparent 70%),
+        radial-gradient(circle at 48% 78%, rgba(152, 120, 255, 0.12), transparent 76%);
+      opacity: 0.38;
     }
   }
 

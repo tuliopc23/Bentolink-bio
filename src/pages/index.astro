@@ -117,8 +117,14 @@ const toolLinks = [
 
     <div class="widget-box widget-tools hover-elevate" data-reveal data-reveal-order="1">
       <div class="widget-header">
-        <span class="widget-eyebrow">Toolkit</span>
-        <h2 class="widget-title">Tools</h2>
+        <span class="widget-eyebrow icon-text-group">
+          <i class="ph ph-wrench icon--decorative icon--label" aria-hidden="true"></i>
+          Toolkit
+        </span>
+        <h2 class="widget-title icon-text-group">
+          Tools
+          <i class="ph ph-toolbox icon--heading" aria-hidden="true"></i>
+        </h2>
         <p class="widget-caption">macOS utilities that stay docked.</p>
       </div>
       <div class="tools-grid" role="list" aria-label="Tools">
@@ -136,8 +142,14 @@ const toolLinks = [
 
     <div class="widget-box widget-github hover-elevate" data-reveal data-reveal-order="2">
       <div class="widget-header">
-        <span class="widget-eyebrow">Activity</span>
-        <h2 class="widget-title">GitHub</h2>
+        <span class="widget-eyebrow icon-text-group">
+          <i class="ph ph-chart-bar icon--decorative icon--label" aria-hidden="true"></i>
+          Activity
+        </span>
+        <h2 class="widget-title icon-text-group">
+          GitHub
+          <i class="ph ph-github-logo icon--heading" aria-hidden="true"></i>
+        </h2>
         <p class="widget-caption">Latest commits and streaks.</p>
       </div>
       <GitHubActivity username="tuliopc23" client:load />
@@ -145,8 +157,14 @@ const toolLinks = [
 
     <div class="widget-box widget-feature-writing hover-elevate" data-reveal data-reveal-order="3">
       <div class="widget-header">
-        <span class="widget-eyebrow">Writing</span>
-        <h2 class="widget-title">Feature Writing</h2>
+        <span class="widget-eyebrow icon-text-group">
+          <i class="ph ph-article icon--decorative icon--label" aria-hidden="true"></i>
+          Writing
+        </span>
+        <h2 class="widget-title icon-text-group">
+          Feature Writing
+          <i class="ph ph-newspaper icon--heading" aria-hidden="true"></i>
+        </h2>
         <p class="widget-caption">Fresh perspectives from the lab.</p>
       </div>
       <FeatureWritingWidget posts={blogPosts} client:load />
@@ -228,6 +246,10 @@ const toolLinks = [
     letter-spacing: var(--ls-title);
     margin: 0;
     color: var(--text-primary);
+  }
+
+  .widget-title .ph-github-logo {
+    font-size: 28px;
   }
 
   .widget-caption {

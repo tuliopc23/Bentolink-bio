@@ -93,23 +93,18 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
   <body>
     <a href="#main" class="sr-only">Skip to content</a>
 
-    <!-- Minimal topbar with theme toggle -->
-    <header class="topbar">
-      <div class="topbar__inner">
-        <div class="topbar__toggle">
-          <button
-            type="button"
-            class="theme-toggle"
-            aria-label="Toggle theme"
-            data-theme-toggle
-          >
-            <span class="theme-toggle__track">
-              <span class="theme-toggle__thumb"></span>
-            </span>
-          </button>
-        </div>
-      </div>
-    </header>
+    <div class="theme-toggle-container">
+      <button
+        type="button"
+        class="theme-toggle"
+        aria-label="Toggle theme"
+        data-theme-toggle
+      >
+        <span class="theme-toggle__track">
+          <span class="theme-toggle__thumb"></span>
+        </span>
+      </button>
+    </div>
 
     <main id="main" class="content">
       <slot />
@@ -184,32 +179,27 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     filter: none;
   }
 
-  /* Topbar styles */
-  .topbar {
+  /* Theme toggle container */
+  .theme-toggle-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: clamp(var(--space-sm), 4vw, var(--space-xl));
+    right: clamp(var(--space-sm), 4vw, var(--space-xl));
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 6px;
+    border-radius: 999px;
     backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
     background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
-    border-bottom: 1px solid var(--panel-border);
+    border: 1px solid var(--panel-border);
     box-shadow: var(--shadow-0);
     transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
 
-  [data-theme="light"] .topbar {
+  [data-theme="light"] .theme-toggle-container {
     background: color-mix(in srgb, var(--surface-elevated) 82%, transparent);
-    border-bottom-color: rgba(120, 140, 200, 0.2);
-  }
-
-  .topbar__inner {
-    max-width: var(--container-xl);
-    margin: 0 auto;
-    padding: var(--topbar-padding) var(--container-padding-x);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    border-color: rgba(120, 140, 200, 0.2);
   }
 
   /* iOS-style Theme Toggle */
@@ -266,7 +256,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
 
   /* Content */
   .content {
-    padding-top: 80px;
+    padding-top: clamp(var(--space-xl), 12vw, var(--space-3xl));
     padding-bottom: var(--space-24);
     min-height: 100vh;
     position: relative;
@@ -395,11 +385,13 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .content {
-      padding-top: 72px;
+      padding-top: clamp(var(--space-lg), 18vw, var(--space-2xl));
     }
 
-    .topbar__inner {
-      padding: var(--space-2) var(--space-4);
+    .theme-toggle-container {
+      top: var(--space-md);
+      right: var(--space-md);
+      padding: 4px;
     }
 
     .footer {
