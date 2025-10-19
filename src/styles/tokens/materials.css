@@ -4,39 +4,39 @@
 	/* Glass Material Properties */
 	--glass-blur-ultra-thin: 18px;
 	--glass-blur-thin: 28px;
-	--glass-blur-base: 32px;
+	--glass-blur-base: 34px;
 	--glass-blur-thick: 60px;
 	--glass-blur-ultra-thick: 80px;
 
 	/* Saturation Values */
-	--glass-saturation-subtle: 130%;
-	--glass-saturation-base: 170%;
-	--glass-saturation-vibrant: 210%;
+	--glass-saturation-subtle: 140%;
+	--glass-saturation-base: 180%;
+	--glass-saturation-vibrant: 220%;
 
 	/* Vibrancy Effects - Dark Mode */
-	--glass-ultra-thin: rgba(8, 8, 8, 0.6);
-	--glass-thin: rgba(10, 10, 10, 0.7);
-	--glass-base: rgba(12, 12, 12, 0.82);
-	--glass-thick: rgba(14, 14, 14, 0.9);
-	--glass-ultra-thick: rgba(16, 16, 16, 0.95);
+	--glass-ultra-thin: rgba(10, 16, 28, 0.6);
+	--glass-thin: rgba(12, 20, 34, 0.72);
+	--glass-base: rgba(14, 24, 40, 0.84);
+	--glass-thick: rgba(16, 26, 44, 0.9);
+	--glass-ultra-thick: rgba(18, 30, 50, 0.95);
 
 	/* Tinted Glass Materials */
-	--glass-tinted-blue: rgba(255, 255, 255, 0.08);
-	--glass-tinted-purple: rgba(255, 255, 255, 0.08);
-	--glass-tinted-pink: rgba(255, 255, 255, 0.08);
-	--glass-tinted-green: rgba(255, 255, 255, 0.08);
-	--glass-tinted-orange: rgba(255, 255, 255, 0.08);
+	--glass-tinted-blue: rgba(76, 140, 255, 0.22);
+	--glass-tinted-purple: rgba(148, 120, 255, 0.2);
+	--glass-tinted-pink: rgba(234, 128, 255, 0.18);
+	--glass-tinted-green: rgba(92, 214, 156, 0.18);
+	--glass-tinted-orange: rgba(252, 182, 88, 0.18);
 
 	/* Frosted Glass Overlays */
-	--frosted-light: rgba(255, 255, 255, 0.04);
-	--frosted-medium: rgba(255, 255, 255, 0.08);
-	--frosted-heavy: rgba(255, 255, 255, 0.12);
+	--frosted-light: rgba(112, 156, 240, 0.06);
+	--frosted-medium: rgba(92, 142, 226, 0.1);
+	--frosted-heavy: rgba(72, 120, 210, 0.16);
 
 	/* Material Elevation Shadows */
-	--elevation-sm: 0 1px 2px rgba(0, 0, 0, 0.7), 0 6px 14px rgba(0, 0, 0, 0.4);
-	--elevation-md: 0 4px 10px rgba(0, 0, 0, 0.55), 0 18px 28px rgba(0, 0, 0, 0.38);
-	--elevation-lg: 0 12px 26px rgba(0, 0, 0, 0.52), 0 32px 56px rgba(0, 0, 0, 0.36);
-	--elevation-xl: 0 26px 52px rgba(0, 0, 0, 0.5), 0 60px 96px rgba(0, 0, 0, 0.34);
+	--elevation-sm: 0 1px 2px rgba(4, 10, 24, 0.6), 0 8px 16px rgba(6, 14, 30, 0.34);
+	--elevation-md: 0 4px 12px rgba(6, 16, 34, 0.5), 0 20px 30px rgba(10, 20, 42, 0.32);
+	--elevation-lg: 0 14px 28px rgba(10, 22, 46, 0.42), 0 36px 60px rgba(12, 26, 52, 0.3);
+	--elevation-xl: 0 28px 56px rgba(12, 26, 52, 0.4), 0 64px 100px rgba(16, 30, 58, 0.28);
 
 	/* Backdrop Filter Utilities */
 	--backdrop-blur-sm: blur(20px);
@@ -45,10 +45,10 @@
 	--backdrop-blur-xl: blur(80px);
 
 	/* Overlay Materials */
-	--overlay-subtle: rgba(0, 0, 0, 0.2);
-	--overlay-medium: rgba(0, 0, 0, 0.32);
-	--overlay-heavy: rgba(0, 0, 0, 0.5);
-	--overlay-modal: rgba(0, 0, 0, 0.72);
+	--overlay-subtle: rgba(4, 10, 20, 0.26);
+	--overlay-medium: rgba(6, 14, 30, 0.42);
+	--overlay-heavy: rgba(8, 18, 38, 0.58);
+	--overlay-modal: rgba(8, 18, 42, 0.76);
 }
 
 /* Light Mode Materials */

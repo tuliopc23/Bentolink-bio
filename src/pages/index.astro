@@ -4,6 +4,10 @@ import FeatureWritingWidget from "../components/FeatureWritingWidget";
 import GitHubActivity from "../components/GitHubActivity";
 import ProfileCard from "../components/ProfileCard.astro";
 import Base from "../layouts/Base.astro";
+import { fetchLatestPosts } from "../services/sanity";
+
+// Fetch blog posts server-side
+const blogPosts = await fetchLatestPosts(3);
 
 const socialLinks = [
 	{
@@ -145,7 +149,7 @@ const toolLinks = [
         <h2 class="widget-title">Feature Writing</h2>
         <p class="widget-caption">Fresh perspectives from the lab.</p>
       </div>
-      <FeatureWritingWidget client:load />
+      <FeatureWritingWidget posts={blogPosts} client:load />
     </div>
   </section>
 </Base>
