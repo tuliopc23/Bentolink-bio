@@ -275,7 +275,7 @@ const toolLinks = [
     border-radius: 32px;
     background: var(--surface-translucent-2);
     background: color-mix(in srgb, var(--surface-translucent-2) 94%, transparent);
-    border: 1px solid rgba(140, 170, 240, 0.18);
+    border: 1px solid var(--panel-border);
     overflow: hidden;
     box-shadow: var(--shadow-0), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
@@ -289,7 +289,7 @@ const toolLinks = [
     gap: var(--space-3);
     padding: 14px 16px 14px 12px;
     text-decoration: none;
-    border-bottom: 1px solid rgba(140, 170, 240, 0.12);
+    border-bottom: 1px solid color-mix(in srgb, var(--panel-border) 65%, transparent);
     background: transparent;
     transition: background-color var(--motion-duration-sm) var(--motion-ease-out),
                 transform var(--motion-duration-spring-xs) var(--spring-snappy);
@@ -315,14 +315,14 @@ const toolLinks = [
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(120, 175, 255, 0.08), transparent 40%);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--accent-soft) 55%, transparent) 0%, transparent 40%);
     opacity: 0;
     transition: opacity var(--motion-duration-sm) var(--motion-ease-out);
     pointer-events: none;
   }
 
   .commit-item:hover {
-    background: rgba(120, 175, 255, 0.04);
+    background: color-mix(in srgb, var(--accent-soft) 35%, transparent);
   }
 
   .commit-item:hover::before {
@@ -337,15 +337,15 @@ const toolLinks = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(64, 156, 255, 0.9), rgba(10, 132, 255, 0.7));
-    box-shadow: 0 0 8px rgba(64, 156, 255, 0.4), 0 0 16px rgba(64, 156, 255, 0.2);
+    background: linear-gradient(135deg, var(--accent-tint-strong), var(--color-primary));
+    box-shadow: 0 0 8px var(--accent-soft), 0 0 16px color-mix(in srgb, var(--accent-soft) 60%, transparent);
     flex-shrink: 0;
     transition: all var(--motion-duration-sm) var(--motion-ease-out);
   }
 
   .commit-item:hover .commit-item__indicator {
     transform: scale(1.3);
-    box-shadow: 0 0 12px rgba(64, 156, 255, 0.6), 0 0 24px rgba(64, 156, 255, 0.3);
+    box-shadow: 0 0 12px var(--accent-glow), 0 0 24px color-mix(in srgb, var(--accent-glow) 60%, transparent);
   }
 
   .commit-item__content {
@@ -391,7 +391,7 @@ const toolLinks = [
     font-size: 10px;
     padding: 2px 6px;
     border-radius: 6px;
-    background: rgba(120, 175, 255, 0.08);
+    background: color-mix(in srgb, var(--accent-soft) 28%, transparent);
   }
 
   .commit-item__divider {
@@ -418,7 +418,7 @@ const toolLinks = [
     width: 24px;
     height: 24px;
     border-radius: 8px;
-    background: rgba(120, 175, 255, 0.08);
+    background: color-mix(in srgb, var(--accent-soft) 28%, transparent);
     color: var(--text-tertiary);
     flex-shrink: 0;
     opacity: 0;
@@ -429,7 +429,7 @@ const toolLinks = [
   .commit-item:hover .commit-item__arrow {
     opacity: 1;
     transform: translateX(0);
-    background: rgba(120, 175, 255, 0.15);
+    background: color-mix(in srgb, var(--accent-soft) 48%, transparent);
     color: var(--color-primary);
   }
 
@@ -445,20 +445,20 @@ const toolLinks = [
     border-radius: 32px;
     overflow: hidden;
     background: var(--surface-translucent-2);
-    border: 1px solid rgba(140, 170, 240, 0.16);
+    border: 1px solid color-mix(in srgb, var(--panel-border) 75%, transparent);
   }
 
   .github-skeleton {
     height: 64px;
     background: linear-gradient(
       90deg,
-      rgba(120, 140, 200, 0.08) 0%,
-      rgba(200, 210, 240, 0.16) 50%,
-      rgba(120, 140, 200, 0.08) 100%
+      color-mix(in srgb, var(--surface-elevated) 88%, #ffffff 12%) 0%,
+      color-mix(in srgb, var(--surface-elevated) 72%, #ffffff 28%) 50%,
+      color-mix(in srgb, var(--surface-elevated) 88%, #ffffff 12%) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 1.8s ease-in-out infinite;
-    border-bottom: 1px solid rgba(140, 170, 240, 0.08);
+    border-bottom: 1px solid color-mix(in srgb, var(--panel-border) 45%, transparent);
   }
 
   .github-skeleton:last-child {
@@ -512,7 +512,7 @@ const toolLinks = [
     border-radius: inherit;
     background: radial-gradient(
       circle at 50% 0%,
-      rgba(90, 150, 255, 0.12),
+      color-mix(in srgb, var(--accent-soft) 40%, transparent),
       transparent 60%
     );
     opacity: 0;

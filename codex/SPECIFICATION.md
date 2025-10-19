@@ -83,7 +83,7 @@ Based on `tulio-personal-website/src/styles/tokens/colors.css`:
 - `--panel-border`: rgba(255, 255, 255, 0.12) (subtle borders)
 
 **Apple system colors (vibrant):**
-- `--blue`: #0d8aff
+- `--blue`: #0a84ff
 - `--green`: #30d948
 - `--indigo`: #5e5ce8
 - `--teal`: #5fd4ff

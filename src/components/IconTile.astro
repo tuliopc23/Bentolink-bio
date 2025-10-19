@@ -28,6 +28,9 @@ const _needsPadding =
 
 <style>
   .icon-tile {
+    --icon-color: var(--accent-tint);
+    --icon-border: var(--accent-border);
+    --icon-highlight: var(--icon-border);
     position: relative;
     display: flex;
     align-items: center;
@@ -35,6 +38,8 @@ const _needsPadding =
     border-radius: 16px;
     overflow: visible;
     flex-shrink: 0;
+    background: var(--icon-color);
+    border: 1px solid var(--icon-border);
     transition:
       transform var(--motion-duration-fast) var(--motion-ease-out),
       box-shadow var(--motion-duration-fast) var(--motion-ease-out);
@@ -88,60 +93,70 @@ const _needsPadding =
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    border: 1px solid rgba(124, 182, 255, 0.26);
+    border: 1px solid color-mix(in srgb, var(--icon-highlight) 55%, transparent);
     pointer-events: none;
-    mix-blend-mode: screen;
+    mix-blend-mode: soft-light;
   }
   
-  /* Tint backgrounds - Dark mode - 95% opacity solid colors */
+  /* Tint backgrounds - Dark mode */
   .icon-tile--blue {
-    background: rgba(13, 138, 255, 0.95);
-    border: 1px solid rgba(13, 138, 255, 1);
+    --icon-color: rgba(10, 132, 255, 0.95);
+    --icon-border: rgba(10, 132, 255, 0.95);
+    --icon-highlight: rgba(10, 132, 255, 0.95);
   }
 
   .icon-tile--green {
-    background: rgba(48, 217, 72, 0.95);
-    border: 1px solid rgba(48, 217, 72, 1);
+    --icon-color: rgba(48, 217, 72, 0.95);
+    --icon-border: rgba(48, 217, 72, 0.95);
+    --icon-highlight: rgba(48, 217, 72, 0.95);
   }
 
   .icon-tile--indigo {
-    background: rgba(94, 92, 232, 0.95);
-    border: 1px solid rgba(94, 92, 232, 1);
+    --icon-color: rgba(94, 92, 232, 0.95);
+    --icon-border: rgba(94, 92, 232, 0.95);
+    --icon-highlight: rgba(94, 92, 232, 0.95);
   }
 
   .icon-tile--teal {
-    background: rgba(95, 212, 255, 0.95);
-    border: 1px solid rgba(95, 212, 255, 1);
+    --icon-color: rgba(95, 212, 255, 0.95);
+    --icon-border: rgba(95, 212, 255, 0.95);
+    --icon-highlight: rgba(95, 212, 255, 0.95);
   }
 
   .icon-tile--orange {
-    background: rgba(255, 160, 13, 0.95);
-    border: 1px solid rgba(255, 160, 13, 1);
+    --icon-color: rgba(255, 160, 13, 0.95);
+    --icon-border: rgba(255, 160, 13, 0.95);
+    --icon-highlight: rgba(255, 160, 13, 0.95);
   }
 
   .icon-tile--pink {
-    background: rgba(255, 56, 97, 0.95);
-    border: 1px solid rgba(255, 56, 97, 1);
+    --icon-color: rgba(255, 56, 97, 0.95);
+    --icon-border: rgba(255, 56, 97, 0.95);
+    --icon-highlight: rgba(255, 56, 97, 0.95);
   }
 
   .icon-tile--purple {
-    background: rgba(194, 91, 244, 0.95);
-    border: 1px solid rgba(194, 91, 244, 1);
+    --icon-color: rgba(194, 91, 244, 0.95);
+    --icon-border: rgba(194, 91, 244, 0.95);
+    --icon-highlight: rgba(194, 91, 244, 0.95);
   }
 
   .icon-tile--red {
-    background: rgba(255, 71, 60, 0.95);
-    border: 1px solid rgba(255, 71, 60, 1);
+    --icon-color: rgba(255, 71, 60, 0.95);
+    --icon-border: rgba(255, 71, 60, 0.95);
+    --icon-highlight: rgba(255, 71, 60, 0.95);
   }
 
   .icon-tile--yellow {
-    background: rgba(255, 215, 13, 0.95);
-    border: 1px solid rgba(255, 215, 13, 1);
+    --icon-color: rgba(255, 215, 13, 0.95);
+    --icon-border: rgba(255, 215, 13, 0.95);
+    --icon-highlight: rgba(255, 215, 13, 0.95);
   }
 
   .icon-tile--cyan {
-    background: rgba(90, 200, 250, 0.95);
-    border: 1px solid rgba(90, 200, 250, 1);
+    --icon-color: rgba(90, 200, 250, 0.95);
+    --icon-border: rgba(90, 200, 250, 0.95);
+    --icon-highlight: rgba(90, 200, 250, 0.95);
   }
 
   /* Light mode adjustments - 95% opacity solid colors */
@@ -154,52 +169,52 @@ const _needsPadding =
   }
 
   [data-theme="light"] .icon-tile--blue {
-    background: rgba(0, 122, 255, 0.95);
-    border-color: rgba(0, 122, 255, 1);
+    --icon-color: rgba(0, 122, 255, 0.95);
+    --icon-border: rgba(0, 122, 255, 1);
   }
 
   [data-theme="light"] .icon-tile--green {
-    background: rgba(52, 199, 89, 0.95);
-    border-color: rgba(52, 199, 89, 1);
+    --icon-color: rgba(52, 199, 89, 0.95);
+    --icon-border: rgba(52, 199, 89, 1);
   }
 
   [data-theme="light"] .icon-tile--indigo {
-    background: rgba(88, 86, 214, 0.95);
-    border-color: rgba(88, 86, 214, 1);
+    --icon-color: rgba(88, 86, 214, 0.95);
+    --icon-border: rgba(88, 86, 214, 1);
   }
 
   [data-theme="light"] .icon-tile--teal {
-    background: rgba(90, 200, 250, 0.95);
-    border-color: rgba(90, 200, 250, 1);
+    --icon-color: rgba(90, 200, 250, 0.95);
+    --icon-border: rgba(90, 200, 250, 1);
   }
 
   [data-theme="light"] .icon-tile--orange {
-    background: rgba(255, 149, 0, 0.95);
-    border-color: rgba(255, 149, 0, 1);
+    --icon-color: rgba(255, 149, 0, 0.95);
+    --icon-border: rgba(255, 149, 0, 1);
   }
 
   [data-theme="light"] .icon-tile--pink {
-    background: rgba(255, 45, 85, 0.95);
-    border-color: rgba(255, 45, 85, 1);
+    --icon-color: rgba(255, 45, 85, 0.95);
+    --icon-border: rgba(255, 45, 85, 1);
   }
 
   [data-theme="light"] .icon-tile--purple {
-    background: rgba(175, 82, 222, 0.95);
-    border-color: rgba(175, 82, 222, 1);
+    --icon-color: rgba(175, 82, 222, 0.95);
+    --icon-border: rgba(175, 82, 222, 1);
   }
 
   [data-theme="light"] .icon-tile--red {
-    background: rgba(255, 59, 48, 0.95);
-    border-color: rgba(255, 59, 48, 1);
+    --icon-color: rgba(255, 59, 48, 0.95);
+    --icon-border: rgba(255, 59, 48, 1);
   }
 
   [data-theme="light"] .icon-tile--yellow {
-    background: rgba(255, 204, 0, 0.95);
-    border-color: rgba(255, 204, 0, 1);
+    --icon-color: rgba(255, 204, 0, 0.95);
+    --icon-border: rgba(255, 204, 0, 1);
   }
 
   [data-theme="light"] .icon-tile--cyan {
-    background: rgba(80, 200, 240, 0.95);
-    border-color: rgba(80, 200, 240, 1);
+    --icon-color: rgba(80, 200, 240, 0.95);
+    --icon-border: rgba(80, 200, 240, 1);
   }
 </style>
