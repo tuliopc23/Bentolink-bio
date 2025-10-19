@@ -108,25 +108,8 @@ const toolLinks = [
       avatarSrc="/my photo.png"
       email="contact@tuliocunha.dev"
       location="Brazil"
-    >
-      <div class="profile-socials">
-        <div class="profile-socials__header">
-          <span class="profile-socials__eyebrow">Socials</span>
-          <p class="profile-socials__caption">Connect across the ecosystem</p>
-        </div>
-        <div class="profile-socials__grid" role="list" aria-label="Social links">
-          {socialLinks.map((link, index) => (
-            <DockLink
-              href={link.href}
-              title={link.title}
-              tint={link.tint}
-              iconAsset={link.iconAsset}
-              revealOrder={0.2 + index * 0.05}
-            />
-          ))}
-        </div>
-      </div>
-    </ProfileCard>
+      socialLinks={socialLinks}
+    />
 
     <div class="widget-box widget-tools" data-reveal data-reveal-order="1">
       <div class="widget-header">
@@ -679,4 +662,3 @@ const toolLinks = [
     }
   }
 </style>
-

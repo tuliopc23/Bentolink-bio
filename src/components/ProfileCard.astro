@@ -1,5 +1,6 @@
 ---
 import IconTile from "./IconTile.astro";
+import DockLink from "./DockLink.astro";
 
 interface Props {
 	name: string;
@@ -8,6 +9,12 @@ interface Props {
 	avatarSrc?: string;
 	email?: string;
 	location?: string;
+	socialLinks?: Array<{
+		title: string;
+		href: string;
+		tint: string;
+		iconAsset: string;
+	}>;
 }
 
 const {
@@ -17,6 +24,7 @@ const {
 	avatarSrc = "/avatar-placeholder.svg",
 	email = "contact@tuliocunha.dev",
 	location = "Brazil",
+	socialLinks = [],
 } = Astro.props;
 
 const _contacts = [
@@ -84,7 +92,23 @@ const _contacts = [
   </div>
 
   <div class="profile-card__socials-section">
-    <slot />
+    <div class="profile-socials">
+      <div class="profile-socials__header">
+        <span class="profile-socials__eyebrow">Socials</span>
+        <p class="profile-socials__caption">Connect across the ecosystem</p>
+      </div>
+      <div class="profile-socials__grid" role="list" aria-label="Social links">
+        {socialLinks.map((link, index) => (
+          <DockLink
+            href={link.href}
+            title={link.title}
+            tint={link.tint}
+            iconAsset={link.iconAsset}
+            revealOrder={0.2 + index * 0.05}
+          />
+        ))}
+      </div>
+    </div>
   </div>
 </section>
 
@@ -92,7 +116,7 @@ const _contacts = [
   .profile-card {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 320px);
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 340px);
     gap: clamp(var(--space-4), 2vw, var(--space-5));
     align-items: start;
     padding: clamp(28px, 3.5vw, 40px);
@@ -325,10 +349,17 @@ const _contacts = [
     background: var(--surface-translucent-2);
     background: color-mix(in srgb, var(--surface-translucent-2) 92%, transparent);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    min-width: min(320px, 100%);
-    max-width: 360px;
+    min-width: min(280px, 100%);
+    max-width: 340px;
     justify-self: end;
-    align-self: stretch;
+    align-self: start;
+  }
+
+  .profile-card__socials-section :global(.profile-socials) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
   }
 
   .profile-card__socials-section .profile-socials__header {
@@ -354,9 +385,9 @@ const _contacts = [
   }
 
   .profile-card__socials-section .profile-socials__grid {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(var(--space-2), 1vw, var(--space-3));
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-3), 1.4vw, var(--space-4));
     width: 100%;
   }
 
