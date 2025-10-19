@@ -1,4 +1,4 @@
-import { createResource, createSignal, For, onMount, Show } from "solid-js";
+import { createSignal, For, onMount, Show } from "solid-js";
 
 interface GitHubCommit {
 	sha: string;
@@ -23,6 +23,9 @@ interface GitHubRepo {
 
 const fetchRecentCommits = async (username: string, token: string): Promise<GitHubCommit[]> => {
 	try {
+		console.log("[GitHubActivity] Fetching commits for:", username);
+		console.log("[GitHubActivity] Token exists:", !!token);
+
 		if (!token) {
 			console.warn("GitHub token not found. Please add PUBLIC_GITHUB_TOKEN to your .env file");
 			return [];
@@ -40,11 +43,17 @@ const fetchRecentCommits = async (username: string, token: string): Promise<GitH
 		);
 
 		if (!reposResponse.ok) {
-			console.error("GitHub API Error:", reposResponse.status);
+			console.error("[GitHubActivity] GitHub API Error:", reposResponse.status);
 			return [];
 		}
 
 		const repos: GitHubRepo[] = await reposResponse.json();
+		console.log(
+			"[GitHubActivity] Fetched repos:",
+			repos.length,
+			repos.map((r) => r.name),
+		);
+
 		const commits: GitHubCommit[] = [];
 
 		// Fetch the most recent commit from each repo
@@ -104,6 +113,7 @@ const fetchRecentCommits = async (username: string, token: string): Promise<GitH
 			}
 		}
 
+		console.log("[GitHubActivity] Final commits:", commits.length);
 		return commits;
 	} catch (error) {
 		console.error("Error fetching commits:", error);
@@ -113,14 +123,26 @@ const fetchRecentCommits = async (username: string, token: string): Promise<GitH
 
 export default function GitHubActivity(props: { username: string }) {
 	const token = import.meta.env.PUBLIC_GITHUB_TOKEN;
-	const [refreshTrigger, setRefreshTrigger] = createSignal(0);
 
-	const [commits] = createResource(refreshTrigger, () => fetchRecentCommits(props.username, token));
+	// Fetch data immediately for SSR
+	const initialData = fetchRecentCommits(props.username, token);
+	const [commits, setCommits] = createSignal<GitHubCommit[]>([]);
+	const [loading, setLoading] = createSignal(true);
 
-	// Auto-refresh every 5 minutes
+	// Initialize with data
+	initialData.then((data) => {
+		setCommits(data);
+		setLoading(false);
+	});
+
+	// Load on mount for client-side hydration
 	onMount(() => {
-		const interval = setInterval(() => {
-			setRefreshTrigger((prev) => prev + 1);
+		// Auto-refresh every 5 minutes
+		const interval = setInterval(async () => {
+			setLoading(true);
+			const data = await fetchRecentCommits(props.username, token);
+			setCommits(data);
+			setLoading(false);
 		}, 300000);
 
 		return () => clearInterval(interval);
@@ -129,7 +151,7 @@ export default function GitHubActivity(props: { username: string }) {
 	return (
 		<div class="github-widget">
 			<Show
-				when={!commits.loading && commits()}
+				when={!loading() && commits().length > 0}
 				fallback={
 					<div class="github-loading">
 						<div class="github-skeleton"></div>
