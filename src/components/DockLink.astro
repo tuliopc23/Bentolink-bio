@@ -25,6 +25,7 @@ const {
   href={href}
   data-reveal
   data-reveal-order={revealOrder}
+  role="listitem"
   target={href.startsWith('http') ? '_blank' : undefined}
   rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
 >
@@ -40,16 +41,41 @@ const {
     justify-content: center;
     gap: var(--space-2);
     text-decoration: none;
-    padding: var(--space-1);
-    border-radius: var(--radius-md);
-    transition: all var(--motion-duration-fast) var(--motion-ease-out);
+    padding: var(--space-2);
+    border-radius: 20px;
+    transition: transform var(--motion-duration-spring-xs) var(--spring-snappy),
+                box-shadow var(--motion-duration-sm) var(--motion-ease-out),
+                background-color var(--motion-duration-sm) var(--motion-ease-out);
     min-height: 0;
     width: 100%;
+    position: relative;
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    border: 1px solid rgba(140, 170, 240, 0.16);
+    box-shadow: var(--shadow-0), var(--shadow-card);
+    backdrop-filter: blur(var(--glass-ultra-thin-blur)) saturate(150%);
+    -webkit-backdrop-filter: blur(var(--glass-ultra-thin-blur)) saturate(150%);
+  }
+
+  .dock-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+    opacity: 0.6;
+    pointer-events: none;
   }
   
   .dock-link:hover {
-    background: var(--surface-elevated);
-    transform: translateY(-4px) scale(var(--motion-scale-sm));
+    transform: translateY(-4px) scale(var(--motion-scale-card));
+    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight);
+    border-color: rgba(120, 175, 255, 0.38);
+  }
+  
+  .dock-link:focus-visible {
+    box-shadow: var(--shadow-card-hover), var(--focus-ring);
+    outline: none;
   }
   
   .dock-link:active {
@@ -57,7 +83,7 @@ const {
   }
   
   .dock-link__name {
-    font-size: var(--fs-caption-2);
+    font-size: var(--fs-caption);
     font-weight: var(--fw-semibold);
     color: var(--text-primary);
     text-align: center;
@@ -70,12 +96,12 @@ const {
   /* Responsive */
   @media (max-width: 639px) {
     .dock-link {
-      padding: var(--space-1);
+      padding: var(--space-1) var(--space-2);
       gap: var(--space-1);
     }
 
     .dock-link__name {
-      font-size: 11px;
+      font-size: var(--fs-footnote);
     }
   }
 </style>

@@ -52,6 +52,7 @@ const needsPadding =
       transform var(--motion-duration-fast) var(--motion-ease-out),
       box-shadow var(--motion-duration-fast) var(--motion-ease-out);
     will-change: transform, box-shadow;
+    box-shadow: var(--shadow-symbol-dark);
   }
 
   /* Hover effects on parent card */
@@ -93,6 +94,16 @@ const needsPadding =
     width: 85%;
     height: 85%;
     object-fit: contain;
+  }
+
+  .icon-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    pointer-events: none;
+    mix-blend-mode: screen;
   }
   
   /* Tint backgrounds - Dark mode - 95% opacity solid colors */
@@ -147,6 +158,14 @@ const needsPadding =
   }
 
   /* Light mode adjustments - 95% opacity solid colors */
+  [data-theme="light"] .icon-tile {
+    box-shadow: var(--shadow-symbol-light);
+  }
+
+  [data-theme="light"] .icon-tile::after {
+    border-color: rgba(255, 255, 255, 0.45);
+  }
+
   [data-theme="light"] .icon-tile--blue {
     background: rgba(0, 122, 255, 0.95);
     border-color: rgba(0, 122, 255, 1);

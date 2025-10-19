@@ -13,6 +13,11 @@ const {
 } = Astro.props;
 
 const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
+const lastUpdated = new Date().toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 ---
 
 <!doctype html>
@@ -110,12 +115,19 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     <!-- Simple footer -->
     <footer class="footer">
       <div class="footer__inner">
-        <p class="footer__copy">
-          Bentolink™ by Tulio Cunha
-        </p>
-        <p class="footer__built">
-          Built with Astro
-        </p>
+        <div class="footer__badge" aria-live="polite">
+          <span class="footer__badge-pulse" aria-hidden="true"></span>
+          <span class="footer__badge-text">Last updated {lastUpdated}</span>
+        </div>
+        <div class="footer__meta">
+          <span class="footer__branding">Bentolink™ by Tulio Cunha</span>
+          <div class="footer__icon-strip" aria-hidden="true">
+            <span class="footer__icon-dot footer__icon-dot--blue"></span>
+            <span class="footer__icon-dot footer__icon-dot--indigo"></span>
+            <span class="footer__icon-dot footer__icon-dot--pink"></span>
+          </div>
+          <span class="footer__engine">Built with Astro</span>
+        </div>
       </div>
     </footer>
     
@@ -128,6 +140,43 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
 </html>
 
 <style>
+  body {
+    background: var(--bg-gradient, var(--bg-base));
+    color: var(--text);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    isolation: isolate;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+  }
+
+  body::before {
+    background: var(--bg-gradient, var(--bg-base));
+    opacity: 1;
+  }
+
+  body::after {
+    z-index: -1;
+    background-image:
+      var(--bg-radial-primary),
+      var(--bg-radial-secondary),
+      url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABYUlEQVR4Xu3XwQ0CMRCF4S8EES4EESwYERwQcfZxP2e6tWET1dZf7awAAAAAAAAAAP8MmkVoeAQMtk0iAqF0EYBKaEUBOYEoAaSZSBLDVEgTgFJgSgBpJlIEsNUSBOAUmBKAOEGSmPrbr30PmAcpI+/63HgFIZ7PGmCVG0IXUmAFV0oAG2up9AEpJgAqrTBu0k0AO7yhughpJkAou4bt9JNADu8obooaSZAKLuG7fSTQA7vKG6KGkmQCj7pyGJ9BygCcxJIAtUkgB5AyQBLbVEgD5AyQBLYVEwD5AyQBLYVEwD5AuTgAAAAD8DN1/5wDUAEgzLGrwC0gzLG7wC0gzLG7wC0g7eX38J0g9vl98C0g7vV7wC0g7vV7wC0g7eX38J0g9vl98C0g3WfXwLSDe49PAtIN7j08C0g3WfXwLSDe49PAtINn9+4+zhuZx7+7nJHmhMAAAAAAAAAAP4BMMI9A9QSbTgAAAAASUVORK5CYII=");
+    background-repeat: no-repeat, no-repeat, repeat;
+    background-size: 140% 140%, 160% 160%, 256px 256px;
+    background-position: 20% 0%, 80% 10%, 0 0;
+    mix-blend-mode: screen;
+    opacity: 0.82;
+    filter: saturate(118%);
+  }
+
   /* Topbar styles */
   .topbar {
     position: fixed;
@@ -136,13 +185,15 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     right: 0;
     z-index: 100;
     backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
-    background: rgba(22, 22, 24, 0.72);
-    border-bottom: 1px solid var(--panel-border);
+    background: color-mix(in srgb, var(--surface-elevated) 90%, transparent);
+    border-bottom: 1px solid rgba(140, 170, 240, 0.18);
+    box-shadow: var(--shadow-0);
     transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
   
   [data-theme="light"] .topbar {
-    background: rgba(248, 248, 251, 0.72);
+    background: color-mix(in srgb, var(--surface-elevated) 82%, transparent);
+    border-bottom-color: rgba(120, 140, 200, 0.2);
   }
   
   .topbar__inner {
@@ -211,31 +262,128 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
     padding-top: 80px;
     padding-bottom: var(--space-24);
     min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content::before {
+    content: "";
+    position: absolute;
+    inset: -40vh -32vw;
+    background: var(--bg-radial-tertiary);
+    opacity: clamp(0.2, calc(0.2 + var(--scroll-progress, 0) * 0.7), 0.75);
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(0.5px);
   }
   
   /* Footer */
   .footer {
-    padding: var(--space-12) var(--container-padding-x);
-    border-top: 1px solid var(--hairline);
+    padding: clamp(24px, 4vw, 40px) var(--container-padding);
+    border-top: 1px solid rgba(140, 170, 240, 0.16);
+    backdrop-filter: blur(var(--glass-ultra-thin-blur)) saturate(160%);
+    -webkit-backdrop-filter: blur(var(--glass-ultra-thin-blur)) saturate(160%);
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 82%, transparent 18%);
   }
 
   .footer__inner {
-    max-width: var(--container-xl);
+    max-width: 960px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
     text-align: center;
   }
 
-  .footer__copy {
-    font-size: var(--fs-footnote);
-    color: var(--text-secondary);
-    margin: 0 0 var(--space-1) 0;
+  .footer__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(140, 170, 240, 0.22);
+    background: var(--surface-translucent-2);
+    background: color-mix(in srgb, var(--surface-translucent-2) 90%, transparent);
+    box-shadow: var(--shadow-0);
   }
 
-  .footer__built {
-    font-size: var(--fs-caption-2);
+  .footer__badge-pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    box-shadow: 0 0 0 0 rgba(13, 138, 255, 0.45);
+    animation: footer-pulse 2.4s ease-out infinite;
+  }
+
+  .footer__badge-text {
+    font-size: var(--fs-footnote);
+    letter-spacing: var(--ls-caption);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .footer__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
     color: var(--text-tertiary);
-    margin: 0;
-    opacity: 0.7;
+    font-size: var(--fs-subheadline);
+  }
+
+  .footer__branding {
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
+  }
+
+  .footer__icon-strip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer__icon-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(4, 12, 30, 0.24);
+  }
+
+  [data-theme="light"] .footer__icon-dot {
+    box-shadow: 0 4px 12px rgba(34, 48, 88, 0.16);
+  }
+
+  .footer__icon-dot--blue {
+    background: var(--blue);
+  }
+
+  .footer__icon-dot--indigo {
+    background: var(--indigo);
+  }
+
+  .footer__icon-dot--pink {
+    background: var(--pink);
+  }
+
+  .footer__engine {
+    font-size: var(--fs-footnote);
+    letter-spacing: var(--ls-caption);
+  }
+
+  @keyframes footer-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(13, 138, 255, 0.45);
+    }
+    70% {
+      box-shadow: 0 0 0 12px rgba(13, 138, 255, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(13, 138, 255, 0);
+    }
   }
   
   /* Responsive adjustments */
@@ -250,6 +398,11 @@ const fullTitle = title === "Tulio Cunha" ? title : `${title} • Tulio Cunha`;
 
     .footer {
       padding: var(--space-8) var(--space-4);
+    }
+
+    .footer__meta {
+      flex-direction: column;
+      gap: var(--space-2);
     }
   }
 </style>

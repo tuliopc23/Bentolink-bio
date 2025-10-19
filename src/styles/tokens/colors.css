@@ -2,32 +2,37 @@
 
 :root {
 	/* Primary Background Hierarchy */
-	--bg: #000000;
-	--bg-base: #000000;
-	--bg-elevated: rgba(28, 28, 30, 0.85);
-	--bg-grouped: #1c1c1e;
-	--surface: #1c1c1e;
-	--surface-elevated: rgba(28, 28, 30, 0.9);
-	--surface-raised: #2c2c2e;
-	--subtle: #0a0a0b;
+	--bg: #03050d;
+	--bg-base: #03050d;
+	--bg-gradient: linear-gradient(180deg, #03050d 0%, #040710 60%, #020308 100%);
+	--bg-radial-primary: radial-gradient(120% 120% at 30% 5%, rgba(84, 134, 255, 0.32) 0%, rgba(4, 10, 24, 0) 55%);
+	--bg-radial-secondary: radial-gradient(140% 120% at 75% 15%, rgba(12, 42, 112, 0.28) 0%, rgba(2, 4, 10, 0) 65%);
+	--bg-radial-tertiary: radial-gradient(180% 120% at 50% 120%, rgba(12, 36, 110, 0.18) 0%, rgba(2, 4, 10, 0) 70%);
+	--bg-elevated: rgba(12, 18, 32, 0.86);
+	--bg-grouped: #090c14;
+	--surface: rgba(16, 22, 36, 0.88);
+	--surface-elevated: rgba(28, 36, 52, 0.78);
+	--surface-raised: rgba(36, 48, 72, 0.82);
+	--surface-translucent-2: rgba(18, 26, 44, 0.62);
+	--subtle: #070910;
 
 	/* Borders & Separators */
-	--hairline: rgba(255, 255, 255, 0.08);
-	--panel-border: rgba(255, 255, 255, 0.12);
-	--panel-border-strong: rgba(255, 255, 255, 0.18);
-	--separator-opaque: rgba(84, 84, 88, 0.65);
+	--hairline: rgba(255, 255, 255, 0.06);
+	--panel-border: rgba(142, 168, 232, 0.18);
+	--panel-border-strong: rgba(162, 190, 255, 0.28);
+	--separator-opaque: rgba(96, 116, 170, 0.32);
 
 	/* Text Hierarchy */
-	--text: rgba(255, 255, 255, 0.85);
-	--text-primary: rgba(255, 255, 255, 0.85);
-	--text-secondary: rgba(235, 235, 245, 0.6);
-	--text-tertiary: rgba(235, 235, 245, 0.4);
-	--muted: rgba(235, 235, 245, 0.6);
+	--text: rgba(255, 255, 255, 0.92);
+	--text-primary: rgba(255, 255, 255, 0.92);
+	--text-secondary: rgba(210, 220, 244, 0.68);
+	--text-tertiary: rgba(196, 208, 232, 0.45);
+	--muted: rgba(210, 220, 244, 0.62);
 
 	/* Fill Colors (Buttons, Controls) */
-	--fill-primary: rgba(120, 120, 128, 0.36);
-	--fill-secondary: rgba(120, 120, 128, 0.32);
-	--fill-tertiary: rgba(118, 118, 128, 0.28);
+	--fill-primary: rgba(88, 118, 192, 0.32);
+	--fill-secondary: rgba(82, 110, 180, 0.24);
+	--fill-tertiary: rgba(76, 104, 168, 0.18);
 
 	/* Apple System Colors - Dark Mode */
 	--blue: #0d8aff;
@@ -52,12 +57,12 @@
 	/* Interactive States */
 	--link: var(--blue);
 	--link-hover: #3ea4ff;
-	--selection-bg: rgba(10, 132, 255, 0.3);
+	--selection-bg: rgba(10, 132, 255, 0.28);
 
 	/* Glass & Materials */
-	--glass-bg: rgba(28, 28, 30, 0.7);
+	--glass-bg: rgba(18, 26, 44, 0.7);
 	--glass-blur-base: 40px;
-	--glass-saturation-base: 180%;
+	--glass-saturation-base: 190%;
 
 	/* Vibrant Gradients */
 	--gradient-blue: linear-gradient(180deg, #409cff 0%, #0d8aff 100%);
@@ -67,29 +72,34 @@
 
 /* Light Mode */
 [data-theme="light"] {
-	--bg: #ffffff;
-	--bg-base: #ffffff;
-	--bg-elevated: rgba(255, 255, 255, 0.7);
-	--bg-grouped: #f2f2f7;
-	--surface: #f8f8fb;
-	--surface-elevated: rgba(255, 255, 255, 0.9);
-	--surface-raised: #f0f0f5;
-	--subtle: #f5f5f5;
+	--bg: #f6f7fb;
+	--bg-base: #f6f7fb;
+	--bg-gradient: linear-gradient(180deg, #f6f7fb 0%, #eef2ff 70%, #e6ecff 100%);
+	--bg-radial-primary: radial-gradient(120% 120% at 25% 0%, rgba(124, 164, 255, 0.24) 0%, rgba(255, 255, 255, 0) 60%);
+	--bg-radial-secondary: radial-gradient(140% 120% at 82% 8%, rgba(148, 188, 255, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+	--bg-radial-tertiary: radial-gradient(160% 140% at 50% 120%, rgba(168, 200, 255, 0.12) 0%, rgba(255, 255, 255, 0) 75%);
+	--bg-elevated: rgba(255, 255, 255, 0.82);
+	--bg-grouped: #eef0fa;
+	--surface: rgba(246, 248, 255, 0.88);
+	--surface-elevated: rgba(255, 255, 255, 0.75);
+	--surface-raised: rgba(255, 255, 255, 0.85);
+	--surface-translucent-2: rgba(236, 240, 255, 0.68);
+	--subtle: #f0f2fb;
 
-	--hairline: rgba(60, 60, 67, 0.08);
-	--panel-border: rgba(60, 60, 67, 0.12);
-	--panel-border-strong: rgba(60, 60, 67, 0.18);
-	--separator-opaque: rgba(60, 60, 67, 0.29);
+	--hairline: rgba(120, 130, 160, 0.08);
+	--panel-border: rgba(118, 140, 190, 0.14);
+	--panel-border-strong: rgba(94, 124, 200, 0.22);
+	--separator-opaque: rgba(110, 130, 172, 0.26);
 
-	--text: rgba(0, 0, 0, 0.85);
-	--text-primary: rgba(0, 0, 0, 0.85);
-	--text-secondary: rgba(0, 0, 0, 0.6);
-	--text-tertiary: rgba(0, 0, 0, 0.4);
-	--muted: rgba(60, 60, 67, 0.6);
+	--text: rgba(18, 23, 38, 0.92);
+	--text-primary: rgba(18, 23, 38, 0.92);
+	--text-secondary: rgba(34, 48, 88, 0.62);
+	--text-tertiary: rgba(64, 82, 120, 0.42);
+	--muted: rgba(50, 66, 104, 0.6);
 
-	--fill-primary: rgba(120, 120, 128, 0.2);
-	--fill-secondary: rgba(120, 120, 128, 0.16);
-	--fill-tertiary: rgba(118, 118, 128, 0.12);
+	--fill-primary: rgba(120, 144, 208, 0.16);
+	--fill-secondary: rgba(120, 144, 208, 0.12);
+	--fill-tertiary: rgba(118, 140, 190, 0.08);
 
 	--blue: #007aff;
 	--green: #34c759;
@@ -105,7 +115,7 @@
 
 	--color-primary: var(--blue);
 	--link-hover: #0055d4;
-	--selection-bg: rgba(0, 122, 255, 0.2);
+	--selection-bg: rgba(0, 122, 255, 0.16);
 	--glass-bg: rgba(255, 255, 255, 0.7);
 }
 

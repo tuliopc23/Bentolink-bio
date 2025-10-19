@@ -7,6 +7,8 @@ interface Article {
 	readTime: string;
 	category: string;
 	url: string;
+	excerpt: string;
+	isNew?: boolean;
 }
 
 const fetchArticles = async (): Promise<Article[]> => {
@@ -19,6 +21,9 @@ const fetchArticles = async (): Promise<Article[]> => {
 			readTime: "8 min read",
 			category: "Engineering",
 			url: "#",
+			excerpt:
+				"Foundations for resilient deployments: thread pools, observability budgets, and graceful degradation.",
+			isNew: true,
 		},
 		{
 			id: "2",
@@ -27,6 +32,8 @@ const fetchArticles = async (): Promise<Article[]> => {
 			readTime: "6 min read",
 			category: "Design",
 			url: "#",
+			excerpt:
+				"Crafting expressive UI kits without sacrificing velocity—lessons from building cross-platform surfaces.",
 		},
 		{
 			id: "3",
@@ -35,6 +42,8 @@ const fetchArticles = async (): Promise<Article[]> => {
 			readTime: "10 min read",
 			category: "Performance",
 			url: "#",
+			excerpt:
+				"Profiling end-to-end latency and designing feedback loops that keep teams honest about budgets.",
 		},
 		{
 			id: "4",
@@ -43,6 +52,8 @@ const fetchArticles = async (): Promise<Article[]> => {
 			readTime: "7 min read",
 			category: "TypeScript",
 			url: "#",
+			excerpt:
+				"How strict typing, automated lint gates, and ergonomics-first DX unlock stable velocity at scale.",
 		},
 	];
 };
@@ -53,33 +64,47 @@ export default function FeatureWritingWidget() {
 	return (
 		<Show
 			when={!articles.loading}
-			fallback={<div class="loading">Loading articles...</div>}
+			fallback={
+				<div class="articles-carousel articles-carousel--loading" aria-hidden="true">
+					<div class="article-card-skeleton"></div>
+					<div class="article-card-skeleton"></div>
+					<div class="article-card-skeleton"></div>
+				</div>
+			}
 		>
-			<div class="articles-grid">
+			<div class="articles-carousel" role="list">
+				<div class="articles-track">
 				<For each={articles()}>
 					{(article) => (
-						<a
-							href={article.url}
-							class="article-card"
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label={`Read article: ${article.title}`}
-						>
-							<div class="article-card__content">
+							<a
+								href={article.url}
+								class="article-card"
+								target="_blank"
+								rel="noopener noreferrer"
+								role="listitem"
+							>
+								<header class="article-card__header">
+									<span class="article-card__eyebrow">{article.category}</span>
+									<Show when={article.isNew}>
+										<span class="article-card__badge">NEW</span>
+									</Show>
+								</header>
 								<h3 class="article-card__title">{article.title}</h3>
-								<div class="article-card__metadata">
-									<span class="article-card__date">{article.date}</span>
-									<span class="article-card__separator">·</span>
-									<span class="article-card__read-time">
-										{article.readTime}
+								<p class="article-card__excerpt">{article.excerpt}</p>
+								<footer class="article-card__footer">
+									<span class="article-card__meta">{article.date}</span>
+									<span class="article-card__dot" aria-hidden="true">
+										•
 									</span>
-									<span class="article-card__separator">·</span>
-									<span class="article-card__category">{article.category}</span>
-								</div>
-							</div>
-						</a>
+									<span class="article-card__meta">{article.readTime}</span>
+									<span class="article-card__cta" aria-hidden="true">
+										Read →
+									</span>
+								</footer>
+							</a>
 					)}
 				</For>
+				</div>
 			</div>
 		</Show>
 	);

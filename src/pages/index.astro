@@ -109,16 +109,19 @@ const toolLinks = [
       email="contact@tuliocunha.dev"
       location="Brazil"
     >
-      <div class="socials-section">
-        <h2 class="socials-title">Socials</h2>
-        <div class="socials-grid">
+      <div class="profile-socials">
+        <div class="profile-socials__header">
+          <span class="profile-socials__eyebrow">Socials</span>
+          <p class="profile-socials__caption">Connect across the ecosystem</p>
+        </div>
+        <div class="profile-socials__grid" role="list" aria-label="Social links">
           {socialLinks.map((link, index) => (
             <DockLink
               href={link.href}
               title={link.title}
               tint={link.tint}
               iconAsset={link.iconAsset}
-              revealOrder={0}
+              revealOrder={0.2 + index * 0.05}
             />
           ))}
         </div>
@@ -126,27 +129,39 @@ const toolLinks = [
     </ProfileCard>
 
     <div class="widget-box widget-tools" data-reveal data-reveal-order="1">
-      <h2 class="widget-title">Tools</h2>
-      <div class="tools-grid">
+      <div class="widget-header">
+        <span class="widget-eyebrow">Toolkit</span>
+        <h2 class="widget-title">Tools</h2>
+        <p class="widget-caption">macOS utilities that stay docked.</p>
+      </div>
+      <div class="tools-grid" role="list" aria-label="Tools">
         {toolLinks.map((link, index) => (
           <DockLink
             href={link.href}
             title={link.title}
             tint={link.tint}
             iconAsset={link.iconAsset}
-            revealOrder={1}
+            revealOrder={1 + index * 0.08}
           />
         ))}
       </div>
     </div>
 
     <div class="widget-box widget-github" data-reveal data-reveal-order="2">
-      <h2 class="widget-title">GitHub</h2>
+      <div class="widget-header">
+        <span class="widget-eyebrow">Activity</span>
+        <h2 class="widget-title">GitHub</h2>
+        <p class="widget-caption">Latest commits and streaks.</p>
+      </div>
       <GitHubActivity username="tuliopc23" client:load />
     </div>
 
     <div class="widget-box widget-feature-writing" data-reveal data-reveal-order="3">
-      <h2 class="widget-title">Feature Writing</h2>
+      <div class="widget-header">
+        <span class="widget-eyebrow">Writing</span>
+        <h2 class="widget-title">Feature Writing</h2>
+        <p class="widget-caption">Fresh perspectives from the lab.</p>
+      </div>
       <FeatureWritingWidget client:load />
     </div>
   </section>
@@ -154,402 +169,514 @@ const toolLinks = [
 
 <style>
   .bento-grid {
-    padding: 24px var(--container-padding);
-    max-width: 1200px;
+    padding: clamp(32px, 6vw, 60px) var(--container-padding);
+    max-width: 1280px;
     margin: 0 auto;
     display: grid;
-    gap: 24px;
-    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(20px, 2.6vw, 32px);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .bento-grid > [data-reveal]:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  .bento-grid > [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
+                opacity var(--motion-duration-sm) var(--motion-ease-out);
   }
 
   .widget-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(var(--space-4), 2vw, var(--space-5));
+    padding: clamp(24px, 2.8vw, 32px);
     background: var(--surface-elevated);
-    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
-    -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
+    background: color-mix(in srgb, var(--surface-elevated) 96%, transparent);
     border: 1px solid var(--panel-border);
     border-radius: 36px;
-    padding: clamp(20px, 2.5vw, 28px);
-    box-shadow: var(--shadow-card);
-    z-index: 1;
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
+    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
+    backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
+    -webkit-backdrop-filter: blur(var(--glass-regular-blur)) saturate(var(--glass-saturation-base));
+    overflow: hidden;
+    z-index: 0;
+    transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
+                border-color var(--motion-duration-sm) var(--motion-ease-out),
+                box-shadow var(--motion-duration-sm) var(--motion-ease-out);
+    grid-column: span 6;
+  }
+
+  .widget-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 80%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    opacity: 0.6;
   }
 
   .widget-box:hover {
-    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-6px);
     border-color: var(--panel-border-strong);
+    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+  }
+
+  .widget-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .widget-eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
   }
 
   .widget-title {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-    font-size: 20px;
+    font-size: var(--fs-title-2);
     font-weight: 700;
-    letter-spacing: -0.024em;
-    margin: 0 0 16px 0;
-    color: var(--text);
+    letter-spacing: var(--ls-title);
+    margin: 0;
+    color: var(--text-primary);
   }
 
-  .socials-section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    background: var(--surface-elevated);
-    border: 1px solid var(--panel-border);
-    border-radius: 36px;
-    padding: 20px;
-    box-shadow: var(--shadow-card);
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
-    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
+  .widget-caption {
+    font-size: var(--fs-subheadline);
+    color: var(--text-tertiary);
+    letter-spacing: var(--ls-caption);
+    margin: 0;
+    max-width: 42ch;
   }
 
-  .socials-section:hover {
-    box-shadow: var(--shadow-card-hover);
-    border-color: var(--panel-border-strong);
+  .widget-tools {
+    grid-column: span 6;
   }
 
-  .socials-title {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.022em;
-    margin: 0 0 var(--space-xs) 0;
-    color: var(--text);
+  .widget-github {
+    grid-column: span 6;
   }
 
-  .socials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-sm);
+  .widget-feature-writing {
+    grid-column: 1 / -1;
   }
 
   .tools-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(var(--space-3), 1.4vw, var(--space-4));
   }
 
   .github-widget {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-4);
   }
 
-  .github-stats {
+  .github-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: clamp(20px, 2.2vw, 28px);
+    border-radius: 28px;
+    border: 1px solid rgba(140, 170, 240, 0.18);
+    background: var(--surface-translucent-2);
+    background: color-mix(in srgb, var(--surface-translucent-2) 92%, transparent);
+    box-shadow: var(--shadow-0), var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .github-card__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-xs) 0;
-    border-bottom: 1px solid var(--panel-border);
+    gap: var(--space-4);
+    flex-wrap: wrap;
   }
 
-  .github-stat {
+  .github-card__identity {
     display: flex;
     align-items: center;
-    gap: var(--space-xxs);
+    gap: var(--space-3);
+    min-width: 0;
   }
 
-  .github-icon {
-    color: var(--muted);
-    opacity: 0.7;
+  .github-card__avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    background: var(--gradient-blue);
+    display: grid;
+    place-items: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: var(--shadow-symbol-dark);
   }
 
-  .github-stat-value {
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text);
+  .github-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .github-stat-label {
-    font-size: 13px;
-    color: var(--muted);
+  .github-card__eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
   }
 
-  .github-profile-link a {
-    font-size: 13px;
-    font-weight: 500;
-    color: #007AFF;
+  .github-card__handle {
+    font-size: var(--fs-subheadline);
+    color: var(--text-primary);
+    font-weight: var(--fw-semibold);
     text-decoration: none;
-    transition: opacity var(--motion-duration-sm) var(--motion-ease-out);
   }
 
-  .github-profile-link a:hover {
-    opacity: 0.7;
+  .github-card__handle:hover {
+    color: var(--link-hover);
   }
 
-  [data-theme="dark"] .github-profile-link a {
-    color: #0A84FF;
+  .github-card__stats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 12px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(140, 170, 240, 0.22);
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 86%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .github-card__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 72px;
+  }
+
+  .github-card__stat-value {
+    font-size: var(--fs-title-3);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .github-card__stat-label {
+    font-size: var(--fs-footnote);
+    color: var(--text-tertiary);
+    letter-spacing: var(--ls-caption);
+    text-transform: uppercase;
   }
 
   .github-commits {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: clamp(var(--space-3), 1.2vw, var(--space-4));
   }
 
-  .github-commit-item {
+  .github-commit {
+    position: relative;
     display: flex;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: var(--space-3);
+    padding: 18px 22px 18px 42px;
+    border-radius: 24px;
+    border: 1px solid rgba(140, 170, 240, 0.16);
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    box-shadow: var(--shadow-0), var(--shadow-card);
     text-decoration: none;
-    padding: var(--space-xs);
-    border-radius: var(--radius-sm);
-    transition: background var(--motion-duration-sm) var(--motion-ease-out);
+    transition: transform var(--motion-duration-spring-xs) var(--spring-snappy),
+                border-color var(--motion-duration-sm) var(--motion-ease-out),
+                box-shadow var(--motion-duration-sm) var(--motion-ease-out);
   }
 
-  .github-commit-item:hover {
-    background: rgba(0, 0, 0, 0.03);
+  .github-commit__accent {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    bottom: 16px;
+    width: 6px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(64, 156, 255, 0.9), rgba(10, 132, 255, 0.3));
+    box-shadow: 0 0 18px rgba(64, 156, 255, 0.45);
   }
 
-  [data-theme="dark"] .github-commit-item:hover {
-    background: rgba(255, 255, 255, 0.03);
+  .github-commit:hover {
+    transform: translateY(-4px);
+    border-color: rgba(120, 175, 255, 0.4);
+    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight);
   }
 
-  .commit-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #007AFF;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-
-  [data-theme="dark"] .commit-dot {
-    background: #0A84FF;
-  }
-
-  .commit-content {
-    flex: 1;
+  .github-commit__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     min-width: 0;
   }
 
-  .commit-message-text {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin: 0 0 4px 0;
-    line-height: 1.4;
+  .github-commit__message {
+    font-size: var(--fs-subheadline);
+    font-weight: var(--fw-semibold);
+    color: var(--text-primary);
+    margin: 0;
+    line-height: var(--lh-tight);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .commit-meta {
+  .github-commit__meta {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--muted);
+    gap: var(--space-2);
+    font-size: var(--fs-footnote);
+    color: var(--text-tertiary);
+    letter-spacing: var(--ls-caption);
   }
 
-  .commit-repo-name {
+  .github-commit__repo {
     font-family: var(--font-mono);
-    font-weight: 500;
+    font-weight: var(--fw-medium);
   }
 
-  .commit-dot-separator {
-    opacity: 0.5;
+  .github-commit__arrow {
+    margin-left: auto;
+    font-size: 1.3rem;
+    color: var(--text-tertiary);
+    transition: transform var(--motion-duration-sm) var(--motion-ease-out);
   }
 
-  .commit-date-text {
-    opacity: 0.7;
+  .github-commit:hover .github-commit__arrow {
+    transform: translateX(4px);
   }
 
-  .articles-grid {
+  .github-card--loading {
+    gap: var(--space-3);
+    animation: shimmer 1.6s linear infinite;
+    background: var(--surface-translucent-2);
+    background: color-mix(in srgb, var(--surface-translucent-2) 88%, transparent);
+  }
+
+  .github-card__skeleton-header,
+  .github-card__skeleton-line {
+    height: 16px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(120, 140, 200, 0.18) 0%, rgba(200, 210, 240, 0.26) 50%, rgba(120, 140, 200, 0.18) 100%);
+  }
+
+  .github-card__skeleton-header {
+    width: 45%;
+    height: 20px;
+  }
+
+  .articles-carousel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(var(--space-4), 1.6vw, var(--space-5));
+  }
+
+  .articles-track {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-4), 1.8vw, var(--space-5));
   }
 
   .article-card {
-    aspect-ratio: 1;
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: var(--surface-elevated);
-    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
-    -webkit-backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
-    border: 1px solid var(--panel-border);
-    border-radius: 16px;
-    box-shadow: var(--shadow-card);
+    gap: var(--space-3);
+    padding: clamp(22px, 2.1vw, 28px);
+    border-radius: 36px;
+    border: 1px solid rgba(140, 170, 240, 0.18);
+    background: var(--surface-translucent-2);
+    background: color-mix(in srgb, var(--surface-translucent-2) 92%, transparent);
+    box-shadow: var(--shadow-card), var(--shadow-card-highlight);
     text-decoration: none;
-    transition: all var(--motion-duration-sm) var(--motion-ease-out);
-    text-align: center;
-    overflow: hidden;
+    min-height: 100%;
+    transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
+                border-color var(--motion-duration-sm) var(--motion-ease-out),
+                box-shadow var(--motion-duration-sm) var(--motion-ease-out);
+  }
+
+  .article-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(120% 120% at 30% 0%, rgba(90, 150, 255, 0.18), transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--motion-duration-sm) var(--motion-ease-out);
   }
 
   .article-card:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-card-hover);
-    border-color: var(--panel-border-strong);
+    transform: translateY(-6px);
+    border-color: rgba(120, 175, 255, 0.35);
+    box-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
   }
 
-  .article-card:focus-visible {
-    outline: 2px solid #007AFF;
-    outline-offset: 2px;
+  .article-card:hover::before {
+    opacity: 1;
   }
 
-  [data-theme="dark"] .article-card:focus-visible {
-    outline-color: #0A84FF;
-  }
-
-  .article-card__content {
+  .article-card__header {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .article-card__eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .article-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: var(--fs-footnote);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-caption);
+    background: rgba(64, 156, 255, 0.18);
+    color: var(--color-primary);
   }
 
   .article-card__title {
-    font-size: clamp(15px, 1.5vw, 17px);
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--text);
+    font-size: var(--fs-title-3);
+    font-weight: 700;
+    letter-spacing: var(--ls-title);
+    line-height: var(--lh-heading);
     margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: var(--text-primary);
   }
 
-  .article-card__metadata {
+  .article-card__excerpt {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--lh-base);
+  }
+
+  .article-card__footer {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--muted);
+    gap: var(--space-2);
+    font-size: var(--fs-footnote);
+    color: var(--text-tertiary);
+    letter-spacing: var(--ls-caption);
+    margin-top: auto;
   }
 
-  .article-card__separator {
-    opacity: 0.5;
+  .article-card__cta {
+    margin-left: auto;
+    font-weight: var(--fw-semibold);
+    color: var(--link);
   }
 
-  .article-card__date,
-  .article-card__read-time,
-  .article-card__category {
-    white-space: nowrap;
+  .articles-carousel--loading {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(var(--space-4), 1.8vw, var(--space-5));
   }
 
-  .loading {
-    padding: 32px;
-    text-align: center;
-    font-size: 13px;
-    color: rgba(60, 60, 67, 0.6);
+  .article-card-skeleton {
+    height: 220px;
+    border-radius: 36px;
+    background: linear-gradient(90deg, rgba(120, 140, 200, 0.16) 0%, rgba(200, 210, 240, 0.24) 50%, rgba(120, 140, 200, 0.16) 100%);
+    animation: shimmer 1.5s linear infinite;
   }
 
-  [data-theme="dark"] .loading {
-    color: rgba(235, 235, 245, 0.6);
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
 
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (max-width: 1199px) {
     .bento-grid {
-      gap: 20px;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
     }
 
-    .widget-tools {
-      grid-row: span 2;
-    }
-
+    .widget-tools,
     .widget-github {
-      grid-row: span 2;
+      grid-column: span 8;
     }
 
-    .articles-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+    .tools-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .articles-track {
+      display: flex;
+      gap: var(--space-4);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 12px;
+      margin-inline: -12px;
+      padding-inline: 12px;
     }
 
     .article-card {
-      padding: 18px;
-    }
-
-    .article-card__title {
-      font-size: 15px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .widget-tools {
-      grid-row: span 2;
-    }
-
-    .widget-github {
-      grid-row: span 2;
+      flex: 0 0 82%;
+      scroll-snap-align: start;
     }
   }
 
   @media (max-width: 767px) {
     .bento-grid {
       grid-template-columns: 1fr;
-      gap: 16px;
-      padding: 20px 16px;
+      gap: 18px;
+      padding: 24px 16px 80px;
     }
 
     .widget-box {
-      border-radius: 32px;
-      padding: 20px;
+      grid-column: 1 / -1;
+      padding: 24px;
     }
 
-    .widget-title {
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-
-    .socials-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .socials-title {
-      font-size: 15px;
+    .widget-header {
+      gap: var(--space-1);
     }
 
     .tools-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .articles-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .github-commit-item {
-      padding: var(--space-xxs);
-    }
-
-    .commit-message-text {
-      font-size: 13px;
-    }
-
-    .commit-meta {
-      font-size: 11px;
-    }
-
-    .article-card {
-      padding: 16px;
-    }
-
-    .article-card__title {
-      font-size: 14px;
-      -webkit-line-clamp: 2;
-    }
-
-    .article-card__metadata {
-      font-size: 11px;
+    .github-card__stats {
+      width: 100%;
+      justify-content: space-between;
     }
   }
 
-  /* Reduced motion compliance for accessibility */
   @media (prefers-reduced-motion: reduce) {
+    .widget-box,
+    .github-card,
+    .github-commit,
     .article-card {
       transition: none !important;
-    }
-
-    .article-card:hover {
-      transform: none;
+      transform: none !important;
     }
   }
 </style>
+
