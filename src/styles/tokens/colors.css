@@ -2,49 +2,49 @@
 
 :root {
 	/* Primary Background Hierarchy */
-	--bg: #050506;
-	--bg-base: #050506;
-	--bg-gradient: linear-gradient(180deg, #050506 0%, #040407 58%, #020203 100%);
+	--bg: #000;
+	--bg-base: #000;
+	--bg-gradient: linear-gradient(180deg, #000 0%, #050505 100%);
 	--bg-radial-primary: radial-gradient(
 		120% 120% at 28% 4%,
-		rgba(44, 96, 190, 0.2) 0%,
-		rgba(5, 6, 10, 0) 58%
+		rgba(255, 255, 255, 0.06) 0%,
+		rgba(0, 0, 0, 0) 58%
 	);
 	--bg-radial-secondary: radial-gradient(
 		140% 120% at 74% 12%,
-		rgba(32, 74, 168, 0.16) 0%,
-		rgba(4, 6, 12, 0) 64%
+		rgba(255, 255, 255, 0.04) 0%,
+		rgba(0, 0, 0, 0) 64%
 	);
 	--bg-radial-tertiary: radial-gradient(
 		180% 120% at 50% 118%,
-		rgba(30, 72, 168, 0.1) 0%,
-		rgba(4, 6, 12, 0) 70%
+		rgba(255, 255, 255, 0.03) 0%,
+		rgba(0, 0, 0, 0) 70%
 	);
-	--bg-elevated: #0b0d12;
-	--bg-grouped: #08090d;
-	--surface: #10131b;
-	--surface-elevated: #151923;
-	--surface-raised: #1a1f2c;
-	--surface-translucent-2: rgba(20, 24, 34, 0.92);
-	--subtle: #090b10;
+	--bg-elevated: #050505;
+	--bg-grouped: #060606;
+	--surface: #0c0c0c;
+	--surface-elevated: #121212;
+	--surface-raised: #181818;
+	--surface-translucent-2: rgba(26, 26, 26, 0.98);
+	--subtle: #101010;
 
 	/* Borders & Separators */
-	--hairline: rgba(255, 255, 255, 0.05);
-	--panel-border: rgba(112, 140, 212, 0.18);
-	--panel-border-strong: rgba(138, 168, 238, 0.28);
-	--separator-opaque: rgba(86, 112, 182, 0.32);
+	--hairline: rgba(255, 255, 255, 0.12);
+	--panel-border: rgba(255, 255, 255, 0.1);
+	--panel-border-strong: rgba(255, 255, 255, 0.16);
+	--separator-opaque: rgba(255, 255, 255, 0.2);
 
 	/* Text Hierarchy */
 	--text: rgba(255, 255, 255, 0.92);
 	--text-primary: rgba(255, 255, 255, 0.92);
-	--text-secondary: rgba(210, 220, 244, 0.68);
-	--text-tertiary: rgba(196, 208, 232, 0.45);
-	--muted: rgba(210, 220, 244, 0.62);
+	--text-secondary: rgba(255, 255, 255, 0.68);
+	--text-tertiary: rgba(255, 255, 255, 0.48);
+	--muted: rgba(255, 255, 255, 0.58);
 
 	/* Fill Colors (Buttons, Controls) */
-	--fill-primary: rgba(80, 112, 196, 0.28);
-	--fill-secondary: rgba(68, 98, 178, 0.2);
-	--fill-tertiary: rgba(60, 86, 160, 0.16);
+	--fill-primary: rgba(255, 255, 255, 0.12);
+	--fill-secondary: rgba(255, 255, 255, 0.08);
+	--fill-tertiary: rgba(255, 255, 255, 0.06);
 
 	/* Apple System Colors - Dark Mode */
 	--blue: #0d8aff;
@@ -72,14 +72,14 @@
 	--selection-bg: rgba(10, 132, 255, 0.28);
 
 	/* Glass & Materials */
-	--glass-bg: rgba(14, 18, 28, 0.82);
-	--glass-blur-base: 36px;
-	--glass-saturation-base: 170%;
+	--glass-bg: rgba(16, 16, 16, 0.94);
+	--glass-blur-base: 32px;
+	--glass-saturation-base: 140%;
 
 	/* Vibrant Gradients */
-	--gradient-blue: linear-gradient(180deg, #409cff 0%, #0d8aff 100%);
-	--gradient-purple: linear-gradient(180deg, #bf5af2 0%, #5e5ce8 100%);
-	--gradient-pink: linear-gradient(180deg, #ff6482 0%, #ff3861 100%);
+	--gradient-blue: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0) 100%);
+	--gradient-purple: var(--gradient-blue);
+	--gradient-pink: var(--gradient-blue);
 }
 
 /* Light Mode */
