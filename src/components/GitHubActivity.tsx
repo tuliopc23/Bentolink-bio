@@ -31,6 +31,8 @@ const fetchGitHubStats = async (
 
   try {
     // Fetch user's events (includes commits)
+    console.log("Fetching GitHub events for:", username);
+
     const eventsResponse = await fetch(
       `https://api.github.com/users/${username}/events?per_page=100`,
       {
@@ -42,7 +44,11 @@ const fetchGitHubStats = async (
     );
 
     if (!eventsResponse.ok) {
-      throw new Error("Failed to fetch GitHub events");
+      const errorText = await eventsResponse.text();
+      console.error("GitHub API Error:", eventsResponse.status, errorText);
+      throw new Error(
+        `Failed to fetch GitHub events: ${eventsResponse.status}`
+      );
     }
 
     const events = await eventsResponse.json();
@@ -103,7 +109,13 @@ const fetchLatestCommits = async (
     );
 
     if (!eventsResponse.ok) {
-      throw new Error("Failed to fetch commits");
+      const errorText = await eventsResponse.text();
+      console.error(
+        "GitHub API Error (commits):",
+        eventsResponse.status,
+        errorText
+      );
+      throw new Error(`Failed to fetch commits: ${eventsResponse.status}`);
     }
 
     const events = await eventsResponse.json();
@@ -149,14 +161,24 @@ const fetchLatestCommits = async (
 
 export default function GitHubActivity(props: { username: string }) {
   const token = import.meta.env.PUBLIC_GITHUB_TOKEN;
+
+  // Debug logging
+  console.log("GitHub Token exists:", !!token);
+  console.log("Username:", props.username);
+
   const [refreshTrigger, setRefreshTrigger] = createSignal(0);
 
-  const [stats] = createResource(refreshTrigger, () =>
-    fetchGitHubStats(props.username, token)
-  );
-  const [commits] = createResource(refreshTrigger, () =>
-    fetchLatestCommits(props.username, token)
-  );
+  const [stats] = createResource(refreshTrigger, () => {
+    console.log("Fetching stats with token:", token?.substring(0, 10) + "...");
+    return fetchGitHubStats(props.username, token);
+  });
+  const [commits] = createResource(refreshTrigger, () => {
+    console.log(
+      "Fetching commits with token:",
+      token?.substring(0, 10) + "..."
+    );
+    return fetchLatestCommits(props.username, token);
+  });
 
   // Auto-refresh every 5 minutes
   onMount(() => {
