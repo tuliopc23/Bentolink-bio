@@ -143,9 +143,9 @@ Touch event handling MUST be optimized for performance and battery life.
 **And** the handler MUST not cause frame drops
 **And** the handler MUST use `requestAnimationFrame` for visual updates
 
-### Requirement: Haptic Feedback (Optional Enhancement)
+### Requirement: Haptic Feedback Support
 
-The application MAY provide haptic feedback for key interactions on supported devices.
+The application MUST support optional haptic feedback for key interactions on devices that provide haptic APIs.
 
 #### Scenario: Haptic feedback on widget snap
 
