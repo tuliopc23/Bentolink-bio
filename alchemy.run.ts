@@ -9,8 +9,9 @@ export const worker = await Astro("website", {
     command: "bun run build",
   },
   
-  // Custom domain
-  domains: ["linkinbio.tuliocunha.dev"],
+  // Custom domain - commented out until zone is configured in Cloudflare
+  // You can add this domain later through Cloudflare Pages dashboard
+  // domains: ["linkinbio.tuliocunha.dev"],
   
   // Environment variables for the worker
   env: {
@@ -30,7 +31,7 @@ export const worker = await Astro("website", {
 
 console.log({
   url: worker.url,
-  domain: "linkinbio.tuliocunha.dev",
+  // Custom domain can be added later via Cloudflare dashboard
 });
 
 await app.finalize();
