@@ -170,66 +170,78 @@ const _needsPadding =
   }
 
   /* Light mode adjustments - 95% opacity solid colors */
-  [data-theme="light"] .icon-tile {
+  :global([data-theme="light"]) .icon-tile {
     border: 1px solid color-mix(in srgb, var(--icon-border) 45%, rgba(34, 48, 88, 0.2));
-    box-shadow: var(--shadow-symbol-light);
+    box-shadow:
+      var(--shadow-symbol-light),
+      0 0 20px color-mix(in srgb, var(--icon-border) 12%, transparent);
   }
 
-  [data-theme="light"] .icon-tile::before {
+  :global([data-theme="light"]) .card:hover .icon-tile,
+  :global([data-theme="light"]) .dock-link:hover .icon-tile {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 2px 4px rgba(31, 35, 53, 0.24),
+      0 10px 20px rgba(31, 35, 53, 0.28),
+      0 24px 44px rgba(31, 35, 53, 0.32),
+      0 0 30px color-mix(in srgb, var(--icon-border) 18%, transparent);
+  }
+
+  :global([data-theme="light"]) .icon-tile::before {
     opacity: 0.18;
   }
 
-  [data-theme="light"] .icon-tile::after {
+  :global([data-theme="light"]) .icon-tile::after {
     border-color: rgba(255, 255, 255, 0.45);
     mix-blend-mode: normal;
   }
 
-  [data-theme="light"] .icon-tile--blue {
+  :global([data-theme="light"]) .icon-tile--blue {
     --icon-color: rgba(0, 122, 255, 0.95);
     --icon-border: rgba(0, 122, 255, 1);
   }
 
-  [data-theme="light"] .icon-tile--green {
+  :global([data-theme="light"]) .icon-tile--green {
     --icon-color: rgba(52, 199, 89, 0.95);
     --icon-border: rgba(52, 199, 89, 1);
   }
 
-  [data-theme="light"] .icon-tile--indigo {
+  :global([data-theme="light"]) .icon-tile--indigo {
     --icon-color: rgba(88, 86, 214, 0.95);
     --icon-border: rgba(88, 86, 214, 1);
   }
 
-  [data-theme="light"] .icon-tile--teal {
+  :global([data-theme="light"]) .icon-tile--teal {
     --icon-color: rgba(90, 200, 250, 0.95);
     --icon-border: rgba(90, 200, 250, 1);
   }
 
-  [data-theme="light"] .icon-tile--orange {
+  :global([data-theme="light"]) .icon-tile--orange {
     --icon-color: rgba(255, 149, 0, 0.95);
     --icon-border: rgba(255, 149, 0, 1);
   }
 
-  [data-theme="light"] .icon-tile--pink {
+  :global([data-theme="light"]) .icon-tile--pink {
     --icon-color: rgba(255, 45, 85, 0.95);
     --icon-border: rgba(255, 45, 85, 1);
   }
 
-  [data-theme="light"] .icon-tile--purple {
+  :global([data-theme="light"]) .icon-tile--purple {
     --icon-color: rgba(175, 82, 222, 0.95);
     --icon-border: rgba(175, 82, 222, 1);
   }
 
-  [data-theme="light"] .icon-tile--red {
+  :global([data-theme="light"]) .icon-tile--red {
     --icon-color: rgba(255, 59, 48, 0.95);
     --icon-border: rgba(255, 59, 48, 1);
   }
 
-  [data-theme="light"] .icon-tile--yellow {
+  :global([data-theme="light"]) .icon-tile--yellow {
     --icon-color: rgba(255, 204, 0, 0.95);
     --icon-border: rgba(255, 204, 0, 1);
   }
 
-  [data-theme="light"] .icon-tile--cyan {
+  :global([data-theme="light"]) .icon-tile--cyan {
     --icon-color: rgba(80, 200, 240, 0.95);
     --icon-border: rgba(80, 200, 240, 1);
   }

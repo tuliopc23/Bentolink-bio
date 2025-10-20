@@ -95,6 +95,12 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
   
   .dock-link:hover {
     background: var(--surface-card-hover);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.65),
+      0 6px 12px rgba(0, 0, 0, 0.52),
+      0 16px 32px rgba(0, 0, 0, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 40px rgba(0, 0, 0, 0.18);
   }
 
   .dock-link:hover::before {
@@ -206,16 +212,25 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
     line-height: var(--lh-tight);
     margin: 0;
   }
-  [data-theme="light"] .dock-link {
+  :global([data-theme="light"]) .dock-link {
     background: var(--surface-card);
     border-color: var(--surface-card-border);
     box-shadow:
+      0 1px 2px rgba(31, 35, 53, 0.22),
+      0 4px 8px rgba(31, 35, 53, 0.2),
+      0 12px 24px rgba(31, 35, 53, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.6),
-      0 6px 14px rgba(34, 48, 88, 0.14);
+      0 0 30px rgba(31, 35, 53, 0.16);
   }
 
-  [data-theme="light"] .dock-link:hover {
+  :global([data-theme="light"]) .dock-link:hover {
     border-color: var(--surface-card-border-strong);
+    box-shadow:
+      0 2px 4px rgba(31, 35, 53, 0.24),
+      0 6px 12px rgba(31, 35, 53, 0.22),
+      0 16px 32px rgba(31, 35, 53, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 0 40px rgba(31, 35, 53, 0.18);
   }
   
   

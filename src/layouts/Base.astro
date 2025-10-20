@@ -207,7 +207,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
 
-  [data-theme="light"] .theme-toggle-container {
+  :global([data-theme="light"]) .theme-toggle-container {
     background: color-mix(in srgb, var(--surface-elevated) 82%, transparent);
     border-color: rgba(120, 140, 200, 0.2);
   }
@@ -238,7 +238,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
-  [data-theme="light"] .theme-toggle__track {
+  :global([data-theme="light"]) .theme-toggle__track {
     background: #34C759;
   }
 
@@ -257,7 +257,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     transition: all var(--motion-duration-base) var(--motion-ease-smooth);
   }
 
-  [data-theme="light"] .theme-toggle__thumb {
+  :global([data-theme="light"]) .theme-toggle__thumb {
     transform: translateX(20px);
   }
 
@@ -360,8 +360,8 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
   }
 
-  [data-theme="light"] .footer__icon-dot {
-    box-shadow: 0 4px 12px rgba(34, 48, 88, 0.16);
+  :global(:global([data-theme="light"])) .footer__icon-dot {
+    box-shadow: 0 4px 12px rgba(34, 48, 88, 0.26);
   }
 
   .footer__icon-dot--blue {

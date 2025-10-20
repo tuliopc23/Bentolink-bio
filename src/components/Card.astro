@@ -48,9 +48,7 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
     overflow: hidden;
     background: var(--surface-card);
     border: 1px solid var(--surface-card-border);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 12px 24px rgba(0, 0, 0, 0.32);
+    box-shadow: var(--shadow-card);
     transition:
       box-shadow var(--motion-duration-fast) var(--motion-ease-out),
       background-color var(--motion-duration-fast) var(--motion-ease-out),
@@ -188,15 +186,12 @@ const { href, title, body, tint = "blue", iconAsset, revealOrder } = Astro.props
   }
   
   /* Light mode adjustments */
-  [data-theme="light"] .card {
+  :global([data-theme="light"]) .card {
     background: var(--surface-card);
     border-color: var(--surface-card-border);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.6),
-      0 8px 18px rgba(34, 48, 88, 0.14);
   }
   
-  [data-theme="light"] .card:hover {
+  :global([data-theme="light"]) .card:hover {
     background: var(--surface-card-hover);
     border-color: var(--surface-card-border-strong);
   }
