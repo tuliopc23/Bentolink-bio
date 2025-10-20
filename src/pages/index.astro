@@ -3,6 +3,8 @@ import DockLink from "../components/DockLink.astro";
 import FeatureWritingWidget from "../components/FeatureWritingWidget";
 import GitHubActivity from "../components/GitHubActivity";
 import ProfileCard from "../components/ProfileCard.astro";
+import ScrollCTA from "../components/ScrollCTA.astro";
+import ScrollIndicator from "../components/ScrollIndicator.astro";
 import Base from "../layouts/Base.astro";
 import { fetchLatestPosts } from "../services/sanity";
 
@@ -115,70 +117,80 @@ const toolLinks = [
       socialLinks={socialLinks}
     />
 
-    <div class="widget-box widget-tools hover-elevate" data-reveal data-reveal-order="1">
-      <div class="widget-header">
-        <span class="widget-eyebrow icon-text-group">
-          <i class="ph ph-wrench icon--decorative icon--label" aria-hidden="true"></i>
-          Toolkit
-        </span>
-        <h2 class="widget-title icon-text-group">
-          Tools
-          <i class="ph ph-toolbox icon--heading" aria-hidden="true"></i>
-        </h2>
-        <p class="widget-caption">macOS utilities that stay docked.</p>
+    <ScrollCTA />
+
+    <div class="widget-carousel" role="region" aria-label="Widget carousel">
+      <div class="widget-box widget-tools hover-elevate" data-reveal data-reveal-order="1">
+        <div class="widget-header">
+          <span class="widget-eyebrow icon-text-group">
+            <i class="ph ph-wrench icon--decorative icon--label" aria-hidden="true"></i>
+            Toolkit
+          </span>
+          <h2 class="widget-title icon-text-group">
+            Tools
+            <i class="ph ph-toolbox icon--heading" aria-hidden="true"></i>
+          </h2>
+          <p class="widget-caption">macOS utilities that stay docked.</p>
+        </div>
+        <div class="tools-grid" role="list" aria-label="Tools">
+          {toolLinks.map((link, index) => (
+            <DockLink
+              href={link.href}
+              title={link.title}
+              tint={link.tint}
+              iconAsset={link.iconAsset}
+              revealOrder={1 + index * 0.08}
+            />
+          ))}
+        </div>
       </div>
-      <div class="tools-grid" role="list" aria-label="Tools">
-        {toolLinks.map((link, index) => (
-          <DockLink
-            href={link.href}
-            title={link.title}
-            tint={link.tint}
-            iconAsset={link.iconAsset}
-            revealOrder={1 + index * 0.08}
-          />
-        ))}
+
+      <div class="widget-box widget-github hover-elevate" data-reveal data-reveal-order="2">
+        <div class="widget-header">
+          <span class="widget-eyebrow icon-text-group">
+            <i class="ph ph-chart-bar icon--decorative icon--label" aria-hidden="true"></i>
+            Activity
+          </span>
+          <h2 class="widget-title icon-text-group">
+            <a
+              href="https://github.com/tuliopc23"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open GitHub profile (new tab)"
+              style="text-decoration: none; color: inherit; cursor: pointer; transition: all var(--motion-duration-base) var(--motion-ease-smooth);"
+            >
+              GitHub
+            </a>
+            <i class="ph ph-github-logo icon--heading" aria-hidden="true"></i>
+          </h2>
+          <p class="widget-caption">Latest commits and streaks.</p>
+        </div>
+        <GitHubActivity username="tuliopc23" client:load />
+      </div>
+
+      <div class="widget-box widget-feature-writing hover-elevate" data-reveal data-reveal-order="3">
+        <div class="widget-header">
+          <span class="widget-eyebrow icon-text-group">
+            <i class="ph ph-article icon--decorative icon--label" aria-hidden="true"></i>
+            Writing
+          </span>
+          <h2 class="widget-title icon-text-group">
+            Feature Writing
+            <i class="ph ph-newspaper icon--heading" aria-hidden="true"></i>
+          </h2>
+          <p class="widget-caption">Fresh perspectives from the lab.</p>
+        </div>
+        <FeatureWritingWidget posts={blogPosts} client:load />
       </div>
     </div>
 
-    <div class="widget-box widget-github hover-elevate" data-reveal data-reveal-order="2">
-      <div class="widget-header">
-        <span class="widget-eyebrow icon-text-group">
-          <i class="ph ph-chart-bar icon--decorative icon--label" aria-hidden="true"></i>
-          Activity
-        </span>
-        <h2 class="widget-title icon-text-group">
-          <a
-            href="https://github.com/tuliopc23"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open GitHub profile (new tab)"
-            style="text-decoration: none; color: inherit; cursor: pointer; transition: all var(--motion-duration-base) var(--motion-ease-smooth);"
-          >
-            GitHub
-          </a>
-          <i class="ph ph-github-logo icon--heading" aria-hidden="true"></i>
-        </h2>
-        <p class="widget-caption">Latest commits and streaks.</p>
-      </div>
-      <GitHubActivity username="tuliopc23" client:load />
-    </div>
-
-    <div class="widget-box widget-feature-writing hover-elevate" data-reveal data-reveal-order="3">
-      <div class="widget-header">
-        <span class="widget-eyebrow icon-text-group">
-          <i class="ph ph-article icon--decorative icon--label" aria-hidden="true"></i>
-          Writing
-        </span>
-        <h2 class="widget-title icon-text-group">
-          Feature Writing
-          <i class="ph ph-newspaper icon--heading" aria-hidden="true"></i>
-        </h2>
-        <p class="widget-caption">Fresh perspectives from the lab.</p>
-      </div>
-      <FeatureWritingWidget posts={blogPosts} client:load />
-    </div>
+    <ScrollIndicator widgetCount={3} />
   </section>
 </Base>
+
+<script>
+  import '../scripts/carousel-handler';
+</script>
 
 <style is:global>
   .bento-grid {
@@ -196,6 +208,12 @@ const toolLinks = [
     transform: translateY(0);
     transition: transform var(--motion-duration-spring-sm) var(--spring-smooth),
                 opacity var(--motion-duration-sm) var(--motion-ease-out);
+  }
+
+  /* Widget carousel container - desktop acts as grid container */
+  .widget-carousel {
+    display: contents;
+    grid-column: 1 / -1;
   }
 
   .widget-box {
@@ -870,6 +888,97 @@ const toolLinks = [
     .commit-item {
       padding: 14px 16px 14px 12px;
     }
+
+    /* Mobile Carousel Foundation */
+    .widget-carousel {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: visible;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 18px;
+      padding: 0 16px;
+      margin: 0 -16px;
+      /* Ensure smooth scrolling performance */
+      will-change: scroll-position;
+    }
+
+    .widget-carousel .widget-box {
+      flex: 0 0 85vw;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      grid-column: auto;
+    }
+
+    /* Touch Optimizations */
+
+    /* Touch-specific CSS properties */
+    .widget-carousel {
+      touch-action: pan-x;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .scroll-cta,
+    .scroll-indicator__dot,
+    .widget-box a,
+    .widget-box button {
+      touch-action: manipulation;
+    }
+
+    /* Remove tap highlight */
+    .widget-box,
+    .scroll-cta,
+    .scroll-indicator__dot {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent image dragging */
+    .widget-box img {
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
+    /* GPU-accelerated animations */
+    .widget-box,
+    .scroll-cta,
+    .scroll-indicator__dot-inner {
+      will-change: transform;
+    }
+
+    /* Universal touch feedback */
+    .widget-box:active,
+    .commit-item:active,
+    .article-card:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+      transition-duration: 50ms;
+    }
+  }
+
+  /* Touch device focus rings */
+  @media (hover: none) and (pointer: coarse) {
+    .widget-box:focus-visible,
+    .scroll-cta:focus-visible,
+    .scroll-indicator__dot:focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+      outline-width: 3px;
+      outline-offset: 4px;
+      outline-color: var(--blue);
+    }
+  }
+
+  /* Pointer device focus rings (standard) */
+  @media (hover: hover) and (pointer: fine) {
+    .widget-box:focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+      outline-width: 2px;
+      outline-offset: 2px;
+      outline-color: var(--blue);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -879,6 +988,10 @@ const toolLinks = [
     .article-card {
       transition: none !important;
       transform: none !important;
+    }
+
+    .widget-carousel {
+      scroll-behavior: auto;
     }
   }
 </style>

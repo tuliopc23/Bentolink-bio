@@ -1,0 +1,261 @@
+---
+/**
+ * ScrollIndicator Component
+ * Apple HIG-compliant progress indicator for carousel navigation
+ * Features:
+ * - Dots showing current position
+ * - Real-time tracking with Intersection Observer
+ * - Interactive tap-to-navigate
+ * - Full accessibility support
+ * - Mobile-only display
+ */
+
+interface Props {
+  widgetCount?: number;
+}
+
+const { widgetCount = 3 } = Astro.props;
+---
+
+<div
+  class="scroll-indicator"
+  role="tablist"
+  aria-label="Widget navigation"
+  data-scroll-indicator
+>
+  {Array.from({ length: widgetCount }, (_, i) => (
+    <button
+      class="scroll-indicator__dot"
+      role="tab"
+      aria-selected={i === 0 ? "true" : "false"}
+      aria-label={`View widget ${i + 1} of ${widgetCount}`}
+      data-widget-index={i}
+    >
+      <span class="scroll-indicator__dot-inner"></span>
+    </button>
+  ))}
+</div>
+
+<script>
+  function initScrollIndicator() {
+    const indicator = document.querySelector('[data-scroll-indicator]') as HTMLElement;
+    if (!indicator) return;
+
+    const carousel = document.querySelector('.widget-carousel') as HTMLElement;
+    if (!carousel) return;
+
+    const widgets = Array.from(carousel.querySelectorAll('.widget-box')) as HTMLElement[];
+    const dots = Array.from(indicator.querySelectorAll('.scroll-indicator__dot')) as HTMLButtonElement[];
+
+    if (widgets.length === 0 || dots.length === 0) return;
+
+    let isScrolling = false;
+
+    // Set up Intersection Observer for scroll tracking
+    const observerOptions = {
+      root: carousel,
+      threshold: 0.5,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          const widgetIndex = widgets.indexOf(entry.target as HTMLElement);
+          if (widgetIndex !== -1) {
+            updateActiveDot(widgetIndex);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all widgets
+    widgets.forEach(widget => observer.observe(widget));
+
+    function updateActiveDot(activeIndex: number) {
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        dot.classList.toggle('is-active', isActive);
+      });
+    }
+
+    // Click/tap to navigate
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        if (index >= 0 && index < widgets.length) {
+          isScrolling = true;
+
+          widgets[index].scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center'
+          });
+
+          updateActiveDot(index);
+
+          // Reset scrolling flag after animation
+          setTimeout(() => {
+            isScrolling = false;
+          }, 500);
+        }
+      });
+
+      // Keyboard support
+      dot.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dot.click();
+        }
+      });
+    });
+
+    // Debounced scroll handler as fallback
+    let scrollTimeout: number;
+    carousel.addEventListener('scroll', () => {
+      if (isScrolling) return;
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => {
+        // Find the most centered widget
+        const carouselRect = carousel.getBoundingClientRect();
+        const carouselCenter = carouselRect.left + carouselRect.width / 2;
+
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        widgets.forEach((widget, index) => {
+          const widgetRect = widget.getBoundingClientRect();
+          const widgetCenter = widgetRect.left + widgetRect.width / 2;
+          const distance = Math.abs(widgetCenter - carouselCenter);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        updateActiveDot(closestIndex);
+      }, 100);
+    }, { passive: true });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollIndicator);
+  } else {
+    initScrollIndicator();
+  }
+</script>
+
+<style>
+  .scroll-indicator {
+    /* Display - mobile only */
+    display: none;
+
+    /* Layout */
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 767px) {
+    .scroll-indicator {
+      display: flex;
+    }
+  }
+
+  .scroll-indicator__dot {
+    /* Layout */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+
+    /* Reset button styles */
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    /* Interaction */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+
+    /* Animation */
+    transition: all 200ms var(--motion-ease-out);
+  }
+
+  .scroll-indicator__dot-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+    opacity: 0.4;
+    transition: all 250ms var(--motion-ease-out);
+  }
+
+  /* Active state */
+  .scroll-indicator__dot.is-active .scroll-indicator__dot-inner,
+  .scroll-indicator__dot[aria-selected="true"] .scroll-indicator__dot-inner {
+    width: 10px;
+    height: 10px;
+    background: var(--blue);
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(10, 132, 255, 0.4);
+  }
+
+  /* Hover state (pointer devices only) */
+  @media (hover: hover) and (pointer: fine) {
+    .scroll-indicator__dot:hover .scroll-indicator__dot-inner {
+      transform: scale(1.3);
+      opacity: 0.7;
+    }
+
+    .scroll-indicator__dot.is-active:hover .scroll-indicator__dot-inner {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  /* Focus state */
+  .scroll-indicator__dot:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  /* Touch device focus */
+  @media (hover: none) and (pointer: coarse) {
+    .scroll-indicator__dot:focus-visible {
+      outline-width: 3px;
+      outline-offset: 4px;
+    }
+  }
+
+  /* Active/pressed state */
+  .scroll-indicator__dot:active .scroll-indicator__dot-inner {
+    transform: scale(0.9);
+    transition-duration: 50ms;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-indicator__dot,
+    .scroll-indicator__dot-inner {
+      transition: none;
+    }
+  }
+
+  /* Theme adaptation */
+  :global(html[data-theme="dark"]) .scroll-indicator__dot.is-active .scroll-indicator__dot-inner {
+    box-shadow:
+      0 0 8px rgba(10, 132, 255, 0.5),
+      0 0 16px rgba(10, 132, 255, 0.3);
+  }
+</style>

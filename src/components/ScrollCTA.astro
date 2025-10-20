@@ -1,0 +1,208 @@
+---
+/**
+ * ScrollCTA Component
+ * Apple HIG-compliant call-to-action for horizontal carousel scrolling
+ * Features:
+ * - Phosphor icon with pulse animation
+ * - Smart dismissal after interaction
+ * - Touch feedback and accessibility
+ * - Mobile-only display
+ */
+---
+
+<button
+  class="scroll-cta"
+  role="button"
+  aria-label="Scroll left to view more widgets"
+  data-scroll-cta
+>
+  <span class="scroll-cta__text">Swipe to explore</span>
+  <i class="ph ph-arrow-right scroll-cta__icon" aria-hidden="true"></i>
+</button>
+
+<script>
+  function initScrollCTA() {
+    const cta = document.querySelector('[data-scroll-cta]') as HTMLButtonElement;
+    if (!cta) return;
+
+    // Check if CTA was already dismissed in this session
+    const dismissed = sessionStorage.getItem('carousel-cta-dismissed');
+    if (dismissed) {
+      cta.remove();
+      return;
+    }
+
+    const carousel = document.querySelector('.widget-carousel') as HTMLElement;
+    if (!carousel) return;
+
+    let autoHideTimeout: number;
+
+    function dismissCTA() {
+      cta.style.opacity = '0';
+      cta.style.transform = 'translateY(-8px)';
+
+      setTimeout(() => {
+        cta.remove();
+      }, 300);
+
+      sessionStorage.setItem('carousel-cta-dismissed', 'true');
+    }
+
+    // Dismiss on carousel scroll
+    carousel.addEventListener('scroll', () => {
+      dismissCTA();
+    }, { once: true, passive: true });
+
+    // Dismiss on CTA click - scroll to next widget
+    cta.addEventListener('click', () => {
+      const firstWidget = carousel.querySelector('.widget-box:nth-child(2)') as HTMLElement;
+      if (firstWidget) {
+        firstWidget.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      }
+      dismissCTA();
+    });
+
+    // Auto-dismiss after 5 seconds
+    autoHideTimeout = window.setTimeout(() => {
+      dismissCTA();
+    }, 5000);
+
+    // Keyboard support
+    cta.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        cta.click();
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollCTA);
+  } else {
+    initScrollCTA();
+  }
+</script>
+
+<style>
+  .scroll-cta {
+    /* Display - mobile only */
+    display: none;
+
+    /* Layout */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px 20px;
+    margin: 0 auto 16px;
+
+    /* Apple HIG styling */
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    box-shadow: var(--shadow-2);
+
+    /* Typography */
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+
+    /* Interaction */
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+
+    /* Animation */
+    transition: all 300ms var(--motion-ease-out);
+    will-change: transform, opacity;
+  }
+
+  @media (max-width: 767px) {
+    .scroll-cta {
+      display: flex;
+    }
+  }
+
+  .scroll-cta__text {
+    line-height: 1.2;
+  }
+
+  .scroll-cta__icon {
+    font-size: 18px;
+    animation: ctaPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes ctaPulse {
+    0%, 100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translateX(4px);
+      opacity: 0.85;
+    }
+  }
+
+  /* Hover state (for devices with pointer) */
+  @media (hover: hover) and (pointer: fine) {
+    .scroll-cta:hover {
+      background: color-mix(in srgb, var(--blue) 90%, white);
+      transform: translateY(-2px);
+      box-shadow:
+        0 4px 12px rgba(10, 132, 255, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .scroll-cta:hover .scroll-cta__icon {
+      animation-play-state: paused;
+      transform: translateX(6px);
+    }
+  }
+
+  /* Touch feedback */
+  .scroll-cta:active {
+    transform: scale(0.96);
+    opacity: 0.85;
+    transition-duration: 50ms;
+  }
+
+  /* Focus state */
+  .scroll-cta:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 4px;
+  }
+
+  /* Touch device focus */
+  @media (hover: none) and (pointer: coarse) {
+    .scroll-cta:focus-visible {
+      outline-width: 3px;
+      outline-offset: 4px;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cta__icon {
+      animation: none;
+    }
+
+    .scroll-cta {
+      transition: opacity 300ms ease-out;
+    }
+  }
+
+  /* Theme adaptation */
+  :global(html[data-theme="dark"]) .scroll-cta {
+    box-shadow:
+      var(--shadow-2),
+      0 0 20px rgba(10, 132, 255, 0.3);
+  }
+</style>
