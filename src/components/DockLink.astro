@@ -117,10 +117,10 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
   }
   
   .dock-link:active {
-    --hover-translate: var(--hover-elevate-translate);
+    --hover-translate: calc(var(--hover-elevate-translate) / 2);
     --hover-scale: var(--motion-scale-active);
     background: var(--surface-card-active);
-    transform: translateY(-2px) scale(0.97);
+    transform: translateY(-2px) scale(0.98);
     transition-duration: var(--motion-duration-instant);
   }
   .dock-link[data-tint="blue"] {

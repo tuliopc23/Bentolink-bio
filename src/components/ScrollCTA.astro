@@ -2,22 +2,29 @@
 /**
  * ScrollCTA Component
  * Apple HIG-compliant call-to-action for horizontal carousel scrolling
+ * 
  * Features:
- * - Phosphor icon with pulse animation
- * - Smart dismissal after interaction
- * - Touch feedback and accessibility
- * - Mobile-only display
+ * - Sophisticated bounce entrance animation
+ * - Haptic feedback on iOS devices
+ * - Smart dismissal after first interaction
+ * - Ambient pulse animation with icon
+ * - Touch-optimized with 44x44pt minimum
+ * - Glassmorphism and multi-layer shadows
+ * - Mobile-only display (<= 767px)
  */
 ---
 
 <button
   class="scroll-cta"
   role="button"
-  aria-label="Scroll left to view more widgets"
+  aria-label="Swipe right to explore more widgets"
   data-scroll-cta
 >
-  <span class="scroll-cta__text">Swipe to explore</span>
-  <i class="ph ph-arrow-right scroll-cta__icon" aria-hidden="true"></i>
+  <span class="scroll-cta__glow" aria-hidden="true"></span>
+  <span class="scroll-cta__content">
+    <span class="scroll-cta__text">Swipe to explore</span>
+    <i class="ph ph-arrow-right scroll-cta__icon" aria-hidden="true"></i>
+  </span>
 </button>
 
 <script>
@@ -35,13 +42,34 @@
     const carousel = document.querySelector('.widget-carousel') as HTMLElement;
     if (!carousel) return;
 
-    function dismissCTA() {
-      cta.style.opacity = '0';
-      cta.style.transform = 'translateY(-8px)';
+    let hasInteracted = false;
+
+    // Haptic feedback helper
+    function triggerHaptic(style: 'light' | 'medium' | 'heavy' = 'light') {
+      // iOS Haptic Engine
+      if ('vibrate' in navigator) {
+        const patterns = {
+          light: [10],
+          medium: [20],
+          heavy: [30]
+        };
+        navigator.vibrate(patterns[style]);
+      }
+    }
+
+    function dismissCTA(animated = true) {
+      if (hasInteracted) return;
+      hasInteracted = true;
+
+      if (animated) {
+        cta.style.opacity = '0';
+        cta.style.transform = 'translateY(-12px) scale(0.9)';
+        cta.style.transition = 'all 400ms var(--motion-ease-out)';
+      }
 
       setTimeout(() => {
         cta.remove();
-      }, 300);
+      }, animated ? 400 : 0);
 
       sessionStorage.setItem('carousel-cta-dismissed', 'true');
     }
@@ -51,8 +79,10 @@
       dismissCTA();
     }, { once: true, passive: true });
 
-    // Dismiss on CTA click - scroll to next widget
+    // Enhanced click handler with haptics
     cta.addEventListener('click', () => {
+      triggerHaptic('medium');
+
       const firstWidget = carousel.querySelector('.widget-box:nth-child(2)') as HTMLElement;
       if (firstWidget) {
         firstWidget.scrollIntoView({
@@ -61,18 +91,32 @@
           inline: 'center'
         });
       }
-      dismissCTA();
+
+      // Delay dismissal slightly so user sees the press feedback
+      setTimeout(() => dismissCTA(), 100);
     });
 
-    // Auto-dismiss after 5 seconds
+    // Subtle haptic on hover (pointer devices)
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      cta.addEventListener('mouseenter', () => {
+        triggerHaptic('light');
+      }, { once: true });
+    }
+
+    // Auto-dismiss after 6 seconds with fade warning
     window.setTimeout(() => {
-      dismissCTA();
+      cta.style.animation = 'ctaFadeWarning 1s ease-out';
     }, 5000);
 
-    // Keyboard support
+    window.setTimeout(() => {
+      dismissCTA();
+    }, 6000);
+
+    // Enhanced keyboard support
     cta.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        triggerHaptic('medium');
         cta.click();
       }
     });
@@ -92,25 +136,41 @@
     display: none;
 
     /* Layout */
+    position: relative;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     min-width: 44px;
     min-height: 44px;
-    padding: 12px 20px;
-    margin: 0 auto 16px;
+    padding: 14px 24px;
+    
+    /* Positioned between ProfileCard and carousel */
+    margin: 16px auto 20px;
+    grid-column: 1 / -1;
 
-    /* Apple HIG styling */
-    background: var(--blue);
+    /* Apple HIG Button Styling */
+    background: linear-gradient(180deg, 
+      color-mix(in srgb, var(--blue) 100%, white 8%) 0%, 
+      var(--blue) 100%
+    );
     color: white;
     border: none;
-    border-radius: 14px;
-    box-shadow: var(--shadow-2);
+    border-radius: 16px;
+    overflow: visible;
+    isolation: isolate;
 
-    /* Typography */
+    /* Multi-layer shadows matching your design system */
+    box-shadow:
+      0 2px 4px rgba(10, 132, 255, 0.3),
+      0 6px 12px rgba(10, 132, 255, 0.25),
+      0 12px 24px rgba(10, 132, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 0 40px rgba(10, 132, 255, 0.15);
+
+    /* Typography matching your system */
     font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.01em;
+    font-family: var(--font-display);
 
     /* Interaction */
     cursor: pointer;
@@ -118,8 +178,17 @@
     -webkit-tap-highlight-color: transparent;
     user-select: none;
 
-    /* Animation */
-    transition: all 300ms var(--motion-ease-out);
+    /* Sophisticated entrance animation */
+    animation: ctaBounceIn 0.7s var(--spring-smooth) backwards;
+    animation-delay: 0.3s;
+
+    /* Smooth transitions */
+    transition:
+      transform var(--motion-duration-base) var(--motion-ease-out),
+      box-shadow var(--motion-duration-base) var(--motion-ease-out),
+      opacity var(--motion-duration-base) var(--motion-ease-out),
+      background var(--motion-duration-fast) var(--motion-ease-out);
+    
     will-change: transform, opacity;
   }
 
@@ -129,78 +198,218 @@
     }
   }
 
+  /* Ambient glow layer */
+  .scroll-cta__glow {
+    position: absolute;
+    inset: -8px;
+    border-radius: 20px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(10, 132, 255, 0.4),
+      transparent 70%
+    );
+    opacity: 0.6;
+    animation: ctaGlowPulse 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Content wrapper for proper alignment */
+  .scroll-cta__content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
   .scroll-cta__text {
     line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   .scroll-cta__icon {
     font-size: 18px;
-    animation: ctaPulse 2.5s ease-in-out infinite;
+    animation: ctaArrowPulse 2.5s ease-in-out infinite;
+    display: flex;
+    align-items: center;
   }
 
-  @keyframes ctaPulse {
+  /* Entrance animation - sophisticated bounce */
+  @keyframes ctaBounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.7) translateY(30px);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1.08) translateY(-4px);
+    }
+    60% {
+      transform: scale(0.96) translateY(2px);
+    }
+    80% {
+      transform: scale(1.02) translateY(-1px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* Arrow pulse animation */
+  @keyframes ctaArrowPulse {
     0%, 100% {
       transform: translateX(0);
       opacity: 1;
     }
     50% {
-      transform: translateX(4px);
-      opacity: 0.85;
+      transform: translateX(5px);
+      opacity: 0.7;
     }
   }
 
-  /* Hover state (for devices with pointer) */
+  /* Ambient glow pulse */
+  @keyframes ctaGlowPulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Fade warning animation (before auto-dismiss) */
+  @keyframes ctaFadeWarning {
+    0%, 60% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Hover state (for pointer devices) */
   @media (hover: hover) and (pointer: fine) {
     .scroll-cta:hover {
-      background: color-mix(in srgb, var(--blue) 90%, white);
-      transform: translateY(-2px);
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--blue) 95%, white 15%) 0%,
+        color-mix(in srgb, var(--blue) 95%, white 5%) 100%
+      );
+      transform: translateY(-3px) scale(1.02);
       box-shadow:
-        0 4px 12px rgba(10, 132, 255, 0.3),
-        0 2px 4px rgba(0, 0, 0, 0.2);
+        0 4px 8px rgba(10, 132, 255, 0.35),
+        0 8px 16px rgba(10, 132, 255, 0.3),
+        0 16px 32px rgba(10, 132, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 0 50px rgba(10, 132, 255, 0.25);
+    }
+
+    .scroll-cta:hover .scroll-cta__glow {
+      opacity: 0.9;
+      animation: none;
+      transform: scale(1.15);
     }
 
     .scroll-cta:hover .scroll-cta__icon {
       animation-play-state: paused;
-      transform: translateX(6px);
+      transform: translateX(7px);
     }
   }
 
-  /* Touch feedback */
+  /* Active/pressed state - precise touch feedback */
   .scroll-cta:active {
-    transform: scale(0.96);
-    opacity: 0.85;
+    transform: translateY(-1px) scale(0.97);
+    opacity: 0.9;
     transition-duration: 50ms;
+    box-shadow:
+      0 1px 2px rgba(10, 132, 255, 0.4),
+      0 3px 6px rgba(10, 132, 255, 0.3),
+      0 6px 12px rgba(10, 132, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 0 30px rgba(10, 132, 255, 0.2);
   }
 
-  /* Focus state */
+  .scroll-cta:active .scroll-cta__icon {
+    transform: translateX(3px);
+  }
+
+  /* Focus state - matching your accessibility patterns */
   .scroll-cta:focus-visible {
-    outline: 3px solid var(--blue);
-    outline-offset: 4px;
+    outline: none;
+    box-shadow:
+      0 2px 4px rgba(10, 132, 255, 0.3),
+      0 6px 12px rgba(10, 132, 255, 0.25),
+      0 12px 24px rgba(10, 132, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 0 0 3px rgba(10, 132, 255, 0.5),
+      0 0 0 5px rgba(10, 132, 255, 0.2);
   }
 
-  /* Touch device focus */
+  /* Touch device focus - thicker ring */
   @media (hover: none) and (pointer: coarse) {
     .scroll-cta:focus-visible {
-      outline-width: 3px;
-      outline-offset: 4px;
+      box-shadow:
+        0 2px 4px rgba(10, 132, 255, 0.3),
+        0 6px 12px rgba(10, 132, 255, 0.25),
+        0 12px 24px rgba(10, 132, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 0 0 4px rgba(10, 132, 255, 0.6),
+        0 0 0 7px rgba(10, 132, 255, 0.25);
     }
   }
 
-  /* Reduced motion */
+  /* Reduced motion - respect user preferences */
   @media (prefers-reduced-motion: reduce) {
-    .scroll-cta__icon {
+    .scroll-cta {
+      animation: none;
+      animation-delay: 0s;
+      opacity: 1;
+    }
+
+    .scroll-cta__icon,
+    .scroll-cta__glow {
       animation: none;
     }
 
-    .scroll-cta {
-      transition: opacity 300ms ease-out;
+    .scroll-cta:hover {
+      transform: none;
     }
   }
 
-  /* Theme adaptation */
-  :global(html[data-theme="dark"]) .scroll-cta {
+  /* Light mode adaptation */
+  :global([data-theme="light"]) .scroll-cta {
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--blue) 100%, white 12%) 0%,
+      color-mix(in srgb, var(--blue) 100%, black 8%) 100%
+    );
     box-shadow:
-      var(--shadow-2),
-      0 0 20px rgba(10, 132, 255, 0.3);
+      0 2px 4px rgba(0, 122, 255, 0.25),
+      0 6px 12px rgba(0, 122, 255, 0.2),
+      0 12px 24px rgba(0, 122, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 0 40px rgba(0, 122, 255, 0.12);
+  }
+
+  :global([data-theme="light"]) .scroll-cta:hover {
+    box-shadow:
+      0 4px 8px rgba(0, 122, 255, 0.3),
+      0 8px 16px rgba(0, 122, 255, 0.25),
+      0 16px 32px rgba(0, 122, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 0 50px rgba(0, 122, 255, 0.18);
+  }
+
+  :global([data-theme="light"]) .scroll-cta__glow {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(0, 122, 255, 0.3),
+      transparent 70%
+    );
   }
 </style>

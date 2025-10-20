@@ -139,9 +139,9 @@ const _contacts = [
     isolation: isolate;
     overflow: hidden;
     transition:
+      transform var(--motion-duration-base) var(--spring-smooth),
       box-shadow var(--motion-duration-base) var(--motion-ease-out),
-      border-color var(--motion-duration-fast) var(--motion-ease-out),
-      transform var(--motion-duration-base) var(--motion-ease-out);
+      border-color var(--motion-duration-fast) var(--motion-ease-out);
   }
 
   .profile-card::after {

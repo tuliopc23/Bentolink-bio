@@ -7,11 +7,10 @@ export interface SanityPost {
 	category?: string;
 }
 
-const SANITY_PROJECT_ID = "61249gtj";
-const SANITY_DATASET = "production";
-const SANITY_API_VERSION = "2023-05-03";
-const SANITY_TOKEN =
-	"sk2xsJxoY37VA2MHz9G2ugtRzl8SoBlqhl4WHwlt1FkRYYPn4LG80OR1SlUl3l48YJSCsyhyrzDaTgL62uVeMbH7rhHo3TH7ZA8opHF6v0j8Z4ifl1CHqcMRazotXMUTOTdUv9TP85KWRwG32oJQmyAwoW74lBAoBPd9Kzo4S1RYnOtOde1p";
+const SANITY_PROJECT_ID = import.meta.env.PUBLIC_SANITY_PROJECT_ID || "61249gtj";
+const SANITY_DATASET = import.meta.env.PUBLIC_SANITY_DATASET || "production";
+const SANITY_API_VERSION = import.meta.env.PUBLIC_SANITY_API_VERSION || "2023-05-03";
+const SANITY_TOKEN = import.meta.env.SANITY_TOKEN || "";
 
 const SANITY_QUERY_URL = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}`;
 

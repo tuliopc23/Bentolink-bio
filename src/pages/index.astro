@@ -245,9 +245,10 @@ const toolLinks = [
     overflow: hidden;
     z-index: 0;
     transition:
-      transform var(--motion-duration-base) var(--motion-ease-out),
+      transform var(--motion-duration-base) var(--spring-smooth),
       border-color var(--motion-duration-fast) var(--motion-ease-out),
-      box-shadow var(--motion-duration-base) var(--motion-ease-out);
+      box-shadow var(--motion-duration-base) var(--motion-ease-out),
+      opacity var(--motion-duration-fast) var(--motion-ease-out);
     grid-column: span 6;
   }
 
@@ -348,7 +349,11 @@ const toolLinks = [
     text-decoration: none;
     border-bottom: 0.5px solid var(--hairline);
     background: transparent;
-    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
+    transition: 
+      transform var(--motion-duration-base) var(--spring-smooth),
+      background var(--motion-duration-base) var(--motion-ease-smooth),
+      border-color var(--motion-duration-base) var(--motion-ease-smooth),
+      opacity var(--motion-duration-fast) var(--motion-ease-out);
     animation: slideIn 0.4s var(--spring-smooth) backwards;
     isolation: isolate;
   }
@@ -394,8 +399,8 @@ const toolLinks = [
   }
 
   .commit-item:active {
-    transform: translateX(1px) scale(0.998);
-    transition-duration: 0.15s;
+    transform: translateX(1px) scale(0.98);
+    transition-duration: var(--motion-duration-instant);
   }
 
   .commit-item__indicator {
@@ -666,7 +671,12 @@ const toolLinks = [
       0 0 40px rgba(10, 132, 255, 0.025);
     text-decoration: none;
     min-height: 100%;
-    transition: all var(--motion-duration-base) var(--motion-ease-smooth);
+    transition: 
+      transform var(--motion-duration-base) var(--spring-smooth),
+      border-color var(--motion-duration-fast) var(--motion-ease-out),
+      background var(--motion-duration-base) var(--motion-ease-out),
+      box-shadow var(--motion-duration-base) var(--motion-ease-out),
+      opacity var(--motion-duration-fast) var(--motion-ease-out);
     cursor: pointer;
   }
 
@@ -704,7 +714,7 @@ const toolLinks = [
   }
 
   .article-card:active {
-    transform: translateY(-2px) scale(1.005);
+    transform: translateY(-2px) scale(0.99);
     transition-duration: var(--motion-duration-instant);
   }
 
@@ -900,8 +910,23 @@ const toolLinks = [
       gap: 18px;
       padding: 0 16px;
       margin: 0 -16px;
+      
       /* Ensure smooth scrolling performance */
       will-change: scroll-position;
+      
+      /* Hide scrollbars while maintaining functionality */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+      
+      /* Prevent over-scrolling with scroll padding */
+      scroll-padding: 0 calc((100vw - 85vw) / 2);
+    }
+    
+    /* Hide scrollbar for WebKit browsers */
+    .widget-carousel::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
     }
 
     .widget-carousel .widget-box {
@@ -952,8 +977,8 @@ const toolLinks = [
     .commit-item:active,
     .article-card:active {
       transform: scale(0.98);
-      opacity: 0.9;
-      transition-duration: 50ms;
+      opacity: 0.95;
+      transition-duration: var(--motion-duration-instant);
     }
   }
 

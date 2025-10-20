@@ -23,9 +23,6 @@ interface GitHubRepo {
 
 const fetchRecentCommits = async (username: string, token: string): Promise<GitHubCommit[]> => {
 	try {
-		console.log("[GitHubActivity] Fetching commits for:", username);
-		console.log("[GitHubActivity] Token exists:", !!token);
-
 		if (!token) {
 			console.warn("GitHub token not found. Please add PUBLIC_GITHUB_TOKEN to your .env file");
 			return [];
@@ -48,11 +45,6 @@ const fetchRecentCommits = async (username: string, token: string): Promise<GitH
 		}
 
 		const repos: GitHubRepo[] = await reposResponse.json();
-		console.log(
-			"[GitHubActivity] Fetched repos:",
-			repos.length,
-			repos.map((r) => r.name),
-		);
 
 		const commits: GitHubCommit[] = [];
 
@@ -113,7 +105,6 @@ const fetchRecentCommits = async (username: string, token: string): Promise<GitH
 			}
 		}
 
-		console.log("[GitHubActivity] Final commits:", commits.length);
 		return commits;
 	} catch (error) {
 		console.error("Error fetching commits:", error);
