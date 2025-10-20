@@ -46,7 +46,7 @@ function transformPosts(posts: SanityPost[]): Article[] {
 		date: formatDate(post.publishedAt),
 		readTime: estimateReadTime(post.summary),
 		category: post.category || "Article",
-		url: `/blog/${post.slug}`,
+		url: `https://tuliocunha.dev/blog/${post.slug}`,
 		excerpt: post.summary || "Click to read more...",
 		isNew: isRecent(post.publishedAt),
 	}));

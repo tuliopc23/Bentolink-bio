@@ -328,7 +328,7 @@ const linkCards = [
   {
     title: "LinkedIn",
     body: "Connect professionally.",
-    href: "https://linkedin.com/in/tuliocunha",
+    href: "https://www.linkedin.com/in/tulio-pinheiro-ba1b0b38a/",
     tint: "blue",
     iconAsset: "/linkedin-light.svg",
   },
