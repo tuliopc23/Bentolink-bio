@@ -1,0 +1,15 @@
+name = "bentolink-bio"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "./dist"
+
+# Environment variables for production
+# Note: Set these in Cloudflare dashboard under Settings > Environment variables
+[env.production]
+# PUBLIC_GITHUB_TOKEN = "your-github-token"
+# PUBLIC_SANITY_PROJECT_ID = "61249gtj"
+# PUBLIC_SANITY_DATASET = "production"
+# PUBLIC_SANITY_API_VERSION = "2023-05-03"
+# SANITY_TOKEN = "your-sanity-token"
+
+[build]
+command = "npm run build"

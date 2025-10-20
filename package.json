@@ -10,7 +10,8 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"check": "biome check --write .",
-		"deploy": "alchemy deploy",
+		"deploy": "bun alchemy.run.ts",
+		"deploy:pages": "npm run build && wrangler pages deploy dist",
 		"destroy": "alchemy destroy",
 		"alchemy:dev": "alchemy dev"
 	},
@@ -27,7 +28,7 @@
 		"@biomejs/biome": "^2.2.6",
 		"typescript": "^5.9.3",
 		"alchemy": "0.75.1",
-		"@astrojs/cloudflare": "^12.6.0",
-		"@cloudflare/workers-types": "^4.20250805.0"
+		"@astrojs/cloudflare": "^12.6.10",
+		"@cloudflare/workers-types": "^4.20251011.0"
 	}
 }
