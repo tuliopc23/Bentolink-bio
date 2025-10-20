@@ -35,8 +35,6 @@
     const carousel = document.querySelector('.widget-carousel') as HTMLElement;
     if (!carousel) return;
 
-    let autoHideTimeout: number;
-
     function dismissCTA() {
       cta.style.opacity = '0';
       cta.style.transform = 'translateY(-8px)';
@@ -67,7 +65,7 @@
     });
 
     // Auto-dismiss after 5 seconds
-    autoHideTimeout = window.setTimeout(() => {
+    window.setTimeout(() => {
       dismissCTA();
     }, 5000);
 
