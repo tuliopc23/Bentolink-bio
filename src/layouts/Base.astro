@@ -189,16 +189,15 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
-    isolation: isolate;
+    
+    /* Enhanced touch scrolling */
+    touch-action: pan-y pinch-zoom;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: contain;
+    
     transition:
       background-color 400ms var(--motion-ease-smooth),
-      color 400ms var(--motion-ease-smooth);
-  }
-
-  body * {
-    transition:
-      background-color 400ms var(--motion-ease-smooth),
-      border-color 400ms var(--motion-ease-smooth),
       color 400ms var(--motion-ease-smooth);
   }
 
@@ -313,12 +312,16 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     min-height: 100vh;
     position: relative;
     z-index: 1;
+    
+    /* Touch optimization */
+    touch-action: pan-y pinch-zoom;
+    -webkit-overflow-scrolling: touch;
   }
 
   .content::before {
     content: "";
-    position: absolute;
-    inset: -40vh -32vw;
+    position: fixed;
+    inset: 0;
     background: var(--bg-radial-tertiary);
     opacity: clamp(0.2, calc(0.2 + var(--scroll-progress, 0) * 0.7), 0.75);
     pointer-events: none;
@@ -436,14 +439,38 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
+    /* Enhanced HTML/Body for smooth mobile scrolling */
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      /* Prevent rubber-band bounce on edges */
+      overscroll-behavior: contain;
+      /* iOS momentum scrolling */
+      -webkit-overflow-scrolling: touch;
+    }
+
     .content {
       padding-top: clamp(var(--space-lg), 18vw, var(--space-2xl));
+      /* Ensure content doesn't block touch */
+      isolation: auto;
     }
 
     .theme-toggle-container {
       top: var(--space-md);
       right: var(--space-md);
       padding: 4px;
+      /* Ensure toggle is tappable */
+      touch-action: manipulation;
+      z-index: 1000;
+    }
+
+    .theme-toggle {
+      /* Ensure minimum tap target */
+      min-width: 51px;
+      min-height: 31px;
     }
 
     .footer {
@@ -453,6 +480,14 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     .footer__meta {
       flex-direction: column;
       gap: var(--space-2);
+    }
+
+    /* Prevent background layers from interfering with touch */
+    body::before,
+    body::after,
+    .content::before {
+      pointer-events: none;
+      touch-action: none;
     }
   }
 </style>

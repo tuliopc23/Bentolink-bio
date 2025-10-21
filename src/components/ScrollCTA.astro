@@ -32,17 +32,8 @@
     const cta = document.querySelector('[data-scroll-cta]') as HTMLButtonElement;
     if (!cta) return;
 
-    // Check if CTA was already dismissed in this session
-    const dismissed = sessionStorage.getItem('carousel-cta-dismissed');
-    if (dismissed) {
-      cta.remove();
-      return;
-    }
-
     const carousel = document.querySelector('.widget-carousel') as HTMLElement;
     if (!carousel) return;
-
-    let hasInteracted = false;
 
     // Haptic feedback helper
     function triggerHaptic(style: 'light' | 'medium' | 'heavy' = 'light') {
@@ -57,29 +48,7 @@
       }
     }
 
-    function dismissCTA(animated = true) {
-      if (hasInteracted) return;
-      hasInteracted = true;
-
-      if (animated) {
-        cta.style.opacity = '0';
-        cta.style.transform = 'translateY(-12px) scale(0.9)';
-        cta.style.transition = 'all 400ms var(--motion-ease-out)';
-      }
-
-      setTimeout(() => {
-        cta.remove();
-      }, animated ? 400 : 0);
-
-      sessionStorage.setItem('carousel-cta-dismissed', 'true');
-    }
-
-    // Dismiss on carousel scroll
-    carousel.addEventListener('scroll', () => {
-      dismissCTA();
-    }, { once: true, passive: true });
-
-    // Enhanced click handler with haptics
+    // Enhanced click handler with haptics - scroll to first widget
     cta.addEventListener('click', () => {
       triggerHaptic('medium');
 
@@ -91,9 +60,6 @@
           inline: 'center'
         });
       }
-
-      // Delay dismissal slightly so user sees the press feedback
-      setTimeout(() => dismissCTA(), 100);
     });
 
     // Subtle haptic on hover (pointer devices)
@@ -102,15 +68,6 @@
         triggerHaptic('light');
       }, { once: true });
     }
-
-    // Auto-dismiss after 6 seconds with fade warning
-    window.setTimeout(() => {
-      cta.style.animation = 'ctaFadeWarning 1s ease-out';
-    }, 5000);
-
-    window.setTimeout(() => {
-      dismissCTA();
-    }, 6000);
 
     // Enhanced keyboard support
     cta.addEventListener('keydown', (e: KeyboardEvent) => {

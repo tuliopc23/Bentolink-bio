@@ -458,6 +458,8 @@ const _contacts = [
       justify-items: center;
       text-align: center;
       padding: clamp(24px, 6vw, 32px);
+      /* Allow scrolling past card */
+      touch-action: pan-y pinch-zoom;
     }
 
     .profile-card::after {
@@ -481,10 +483,31 @@ const _contacts = [
     }
 
     .profile-card__contact-bar {
-      flex-direction: column;
-      align-items: stretch;
+      flex-direction: row;
+      justify-content: center;
       gap: var(--space-2);
       width: 100%;
+    }
+
+    .profile-card__contact {
+      padding: 6px 10px;
+      min-height: 36px;
+      gap: var(--space-1);
+    }
+
+    /* Make icons small on mobile */
+    .profile-card__contact :global(.icon-tile) {
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 10px !important;
+    }
+
+    .profile-card__contact-label {
+      font-size: 11px;
+    }
+
+    .profile-card__contact-caption {
+      font-size: 9px;
     }
 
     .profile-card__socials-section {
@@ -499,6 +522,30 @@ const _contacts = [
     .profile-card__socials-section .profile-socials__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-2);
+    }
+
+    /* Enhanced touch interactions */
+    .profile-card__contact,
+    .profile-card__photo {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent image blocking touch events */
+    .profile-card__photo img {
+      pointer-events: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
+    /* Smooth GPU acceleration for touch feedback */
+    .profile-card,
+    .profile-card__contact,
+    .profile-card__photo {
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
   }
 
