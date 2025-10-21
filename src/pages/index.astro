@@ -934,8 +934,6 @@ const toolLinks = [
     .widget-box {
       grid-column: 1 / -1;
       padding: 24px;
-      /* Ensure boxes don't block scrolling */
-      touch-action: inherit;
     }
 
     .widget-header {
@@ -954,6 +952,9 @@ const toolLinks = [
       padding: 4px 0 8px;
       margin: 0;
       overflow-y: hidden;
+      
+      /* Allow both horizontal swipe and vertical page scroll */
+      touch-action: auto;
       
       /* Smooth fade mask to blend harsh shadow edges */
       -webkit-mask-image: linear-gradient(
@@ -1026,9 +1027,9 @@ const toolLinks = [
       /* iOS momentum scrolling */
       -webkit-overflow-scrolling: touch;
       
-      /* Enhanced overscroll behavior */
+      /* Enhanced overscroll behavior - allow vertical scroll through */
       overscroll-behavior-x: contain;
-      overscroll-behavior-y: none;
+      overscroll-behavior-y: auto;
       
       gap: 18px;
       padding: 8px calc((100vw - 85vw) / 2);
@@ -1047,7 +1048,7 @@ const toolLinks = [
       scroll-padding: 0 calc((100vw - 85vw) / 2);
       
       /* Critical: Allow both horizontal carousel scroll AND vertical page scroll */
-      touch-action: pan-x pan-y;
+      touch-action: auto;
     }
     
     /* Hide scrollbar for WebKit browsers */
@@ -1068,9 +1069,6 @@ const toolLinks = [
       -webkit-transform: translateZ(0);
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      
-      /* Prevent blocking vertical scroll */
-      touch-action: inherit;
     }
 
     /* ========== Touch Optimizations ========== */
