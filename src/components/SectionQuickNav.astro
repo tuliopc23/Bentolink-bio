@@ -1,0 +1,466 @@
+---
+interface SectionConfig {
+	id: string;
+	label: string;
+	headingId: string;
+}
+
+interface Props {
+	sections: SectionConfig[];
+	heroSectionId: string;
+}
+
+const {
+	sections = [],
+	heroSectionId,
+} = Astro.props;
+
+const navId = "section-quick-nav";
+const topChipId = "section-nav-top";
+---
+
+{sections.length > 0 && (
+  <nav
+    id={navId}
+    class="section-quick-nav"
+    aria-label="Quick navigation"
+    data-section-nav-root
+    data-hero-section={heroSectionId}
+  >
+    <div class="section-quick-nav__scroll" data-section-nav-scroll>
+      <ul class="section-quick-nav__list" data-section-nav role="list">
+        <li class="section-quick-nav__item" role="listitem">
+          <a
+            id={topChipId}
+            class="section-quick-nav__link section-quick-nav__link--top"
+            href={`#${heroSectionId}`}
+            data-nav-top
+            data-heading={sections[0]?.headingId ?? ""}
+            data-section={heroSectionId}
+            aria-label="Back to top"
+          >
+            Top
+          </a>
+        </li>
+        {sections.map((section, index) => (
+          <li class="section-quick-nav__item" role="listitem">
+            <a
+              class="section-quick-nav__link"
+              href={`#${section.id}`}
+              data-nav-item
+              data-section={section.id}
+              data-heading={section.headingId}
+              aria-current={index === 0 ? "true" : undefined}
+            >
+              {section.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}
+
+<script>
+  function initSectionQuickNav() {
+    const root = document.querySelector('[data-section-nav-root]') as HTMLElement | null;
+    if (!root) return;
+
+    const navList = root.querySelector('[data-section-nav]') as HTMLElement | null;
+    if (!navList) return;
+
+    const navItems = Array.from(navList.querySelectorAll<HTMLAnchorElement>('[data-nav-item]'));
+    if (navItems.length === 0) return;
+
+    const topChip = root.querySelector('[data-nav-top]') as HTMLAnchorElement | null;
+    const heroSectionId = root.dataset.heroSection ?? navItems[0].dataset.section ?? "";
+
+    const interactiveOrder: HTMLElement[] = topChip ? [topChip, ...navItems] : [...navItems];
+    const visibility = new Map<string, number>();
+
+    const prefersReducedMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const allowHaptics = () => {
+      const navigatorAny = navigator as Navigator & { vibrate?: (pattern?: number | number[]) => boolean };
+      return Boolean(navigatorAny.vibrate);
+    };
+
+    const triggerHaptic = () => {
+      if (!allowHaptics()) return;
+      try {
+        navigator.vibrate?.(12);
+      } catch {
+        // ignore vibration errors (e.g., unsupported desktop browsers)
+      }
+    };
+
+    const updateActiveNav = (sectionId: string) => {
+      navItems.forEach((item) => {
+        const isActive = item.dataset.section === sectionId;
+        if (isActive) {
+          item.setAttribute("aria-current", "true");
+          item.classList.add("is-active");
+        } else {
+          item.removeAttribute("aria-current");
+          item.classList.remove("is-active");
+        }
+      });
+    };
+
+    const updateTopChipState = (heroRatio: number) => {
+      if (!topChip) return;
+      const isHeroMostlyVisible = heroRatio >= 0.6;
+      if (isHeroMostlyVisible) {
+        topChip.setAttribute("aria-disabled", "true");
+      } else {
+        topChip.removeAttribute("aria-disabled");
+      }
+      topChip.classList.toggle("is-disabled", isHeroMostlyVisible);
+      topChip.tabIndex = isHeroMostlyVisible ? -1 : 0;
+    };
+
+    const focusHeading = (headingId?: string) => {
+      if (!headingId) return;
+      const heading = document.getElementById(headingId) as HTMLElement | null;
+      if (!heading) return;
+      window.setTimeout(() => {
+        heading.focus({ preventScroll: true });
+      }, prefersReducedMotion() ? 0 : 320);
+    };
+
+    const scrollToSection = (sectionId: string, headingId?: string) => {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      const behavior = prefersReducedMotion() ? "auto" : "smooth";
+
+      section.scrollIntoView({
+        behavior,
+        block: "start",
+        inline: "nearest",
+      });
+
+      focusHeading(headingId);
+      triggerHaptic();
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      const target = event.currentTarget as HTMLAnchorElement;
+      const sectionId = target.dataset.section;
+      const headingId = target.dataset.heading;
+      const isDisabled = target.getAttribute("aria-disabled") === "true";
+
+      if (!sectionId || isDisabled) return;
+      event.preventDefault();
+      scrollToSection(sectionId, headingId);
+    };
+
+    const handleTopClick = (event: MouseEvent) => {
+      const target = event.currentTarget as HTMLAnchorElement;
+      const isDisabled = target.getAttribute("aria-disabled") === "true";
+      if (isDisabled) return;
+      event.preventDefault();
+
+      if (heroSectionId) {
+        scrollToSection(heroSectionId, target.dataset.heading);
+      } else {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+        focusHeading(target.dataset.heading);
+        triggerHaptic();
+      }
+    };
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", handleClick);
+    });
+
+    if (topChip) {
+      topChip.addEventListener("click", handleTopClick);
+      updateTopChipState(1);
+    }
+
+    const handleKeyNavigation = (event: KeyboardEvent) => {
+      const keys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"];
+      if (!keys.includes(event.key)) return;
+
+      const activeElement = document.activeElement as HTMLElement | null;
+      if (!activeElement || !interactiveOrder.includes(activeElement)) return;
+
+      const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
+      let nextIndex = interactiveOrder.indexOf(activeElement);
+
+      if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = interactiveOrder.length - 1;
+      } else {
+        nextIndex += direction;
+      }
+
+      const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+      nextIndex = clamp(nextIndex, 0, interactiveOrder.length - 1);
+
+      let nextElement = interactiveOrder[nextIndex];
+      const visited = new Set<number>();
+      while (
+        nextElement &&
+        nextElement.getAttribute("aria-disabled") === "true" &&
+        !visited.has(nextIndex)
+      ) {
+        visited.add(nextIndex);
+        nextIndex = clamp(nextIndex + direction, 0, interactiveOrder.length - 1);
+        nextElement = interactiveOrder[nextIndex];
+      }
+
+      if (!nextElement || nextElement.getAttribute("aria-disabled") === "true") {
+        event.preventDefault();
+        return;
+      }
+
+      event.preventDefault();
+      nextElement.focus();
+    };
+
+    root.addEventListener("keydown", handleKeyNavigation);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const target = entry.target as HTMLElement;
+          const sectionId = target.id;
+          if (!sectionId) return;
+
+          visibility.set(sectionId, entry.intersectionRatio);
+
+          if (sectionId === heroSectionId) {
+            updateTopChipState(entry.intersectionRatio);
+          }
+        });
+
+        let mostVisibleId = heroSectionId;
+        let highestRatio = visibility.get(heroSectionId) ?? 0;
+
+        visibility.forEach((ratio, id) => {
+          if (ratio > highestRatio) {
+            highestRatio = ratio;
+            mostVisibleId = id;
+          }
+        });
+
+        if (mostVisibleId) {
+          updateActiveNav(mostVisibleId);
+        }
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: "-10% 0px -40% 0px",
+      },
+    );
+
+    const observedSections = new Set<HTMLElement>();
+    navItems.forEach((item) => {
+      const sectionId = item.dataset.section;
+      const section = sectionId ? document.getElementById(sectionId) : null;
+      if (section && !observedSections.has(section)) {
+        observer.observe(section);
+        observedSections.add(section);
+      }
+    });
+
+    const cleanup = () => {
+      observer.disconnect();
+      root.removeEventListener("keydown", handleKeyNavigation);
+      navItems.forEach((item) => item.removeEventListener("click", handleClick));
+      topChip?.removeEventListener("click", handleTopClick);
+    };
+
+    window.addEventListener("beforeunload", cleanup, { once: true });
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSectionQuickNav, { once: true });
+  } else {
+    initSectionQuickNav();
+  }
+</script>
+
+<style>
+  .section-quick-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    grid-column: 1 / -1;
+    margin: clamp(12px, 3vw, 24px) 0;
+  }
+
+  .section-quick-nav__scroll {
+    position: relative;
+  }
+
+  .section-quick-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 16px 20px;
+    margin: 0;
+    list-style: none;
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--surface-card) 88%, transparent);
+    border: 1px solid var(--surface-card-border);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.38),
+      0 4px 8px rgba(0, 0, 0, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .section-quick-nav__item {
+    flex: 0 0 auto;
+  }
+
+  .section-quick-nav__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface-card) 92%, transparent);
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    font-size: var(--fs-footnote);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-footnote);
+    text-decoration: none;
+    transition:
+      background var(--motion-duration-sm) var(--motion-ease-out),
+      color var(--motion-duration-sm) var(--motion-ease-out),
+      border-color var(--motion-duration-sm) var(--motion-ease-out),
+      box-shadow var(--motion-duration-sm) var(--motion-ease-out),
+      transform var(--motion-duration-sm) var(--motion-ease-out);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .section-quick-nav__link:hover {
+    background: color-mix(in srgb, var(--surface-card) 98%, transparent);
+    transform: translateY(-2px);
+    box-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .section-quick-nav__link:focus-visible {
+    outline: none;
+    border-color: color-mix(in srgb, var(--blue) 70%, transparent);
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--blue) 55%, transparent),
+      0 0 0 4px color-mix(in srgb, var(--blue) 25%, transparent);
+  }
+
+  .section-quick-nav__link.is-active {
+    background: color-mix(in srgb, var(--blue) 18%, var(--surface-card) 82%);
+    color: var(--text-strong-on-primary, #f7f9ff);
+    border-color: color-mix(in srgb, var(--blue) 45%, transparent);
+    box-shadow:
+      0 4px 12px rgba(10, 132, 255, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  }
+
+  .section-quick-nav__link[aria-disabled="true"],
+  .section-quick-nav__link.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
+    transform: none;
+  }
+
+  .section-quick-nav__link--top {
+    background: color-mix(in srgb, var(--surface-card) 90%, transparent);
+    border-color: color-mix(in srgb, var(--surface-card-border) 80%, transparent);
+  }
+
+  .section-quick-nav__link--top:hover {
+    background: color-mix(in srgb, var(--surface-card) 96%, transparent);
+  }
+
+  @media (max-width: 767px) {
+    .section-quick-nav {
+      margin-top: var(--space-3);
+    }
+
+    .section-quick-nav__list {
+      flex-wrap: nowrap;
+      gap: var(--space-1);
+      padding: 12px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section-quick-nav__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .section-quick-nav__scroll::before,
+    .section-quick-nav__scroll::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      width: 32px;
+      pointer-events: none;
+      transition: opacity var(--motion-duration-sm) var(--motion-ease-out);
+      opacity: 0.55;
+      z-index: 1;
+    }
+
+    .section-quick-nav__scroll::before {
+      left: 2px;
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--surface-card) 88%, transparent) 0%,
+        color-mix(in srgb, var(--surface-card) 0%, transparent) 100%
+      );
+    }
+
+    .section-quick-nav__scroll::after {
+      right: 2px;
+      background: linear-gradient(
+        270deg,
+        color-mix(in srgb, var(--surface-card) 88%, transparent) 0%,
+        color-mix(in srgb, var(--surface-card) 0%, transparent) 100%
+      );
+    }
+
+    .section-quick-nav__link {
+      padding: 10px 16px;
+      font-size: var(--fs-caption);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-quick-nav__link,
+    .section-quick-nav__scroll::before,
+    .section-quick-nav__scroll::after {
+      transition: none !important;
+    }
+  }
+
+  :global([data-theme="light"]) .section-quick-nav__list {
+    background: color-mix(in srgb, var(--surface-card) 94%, transparent);
+    border-color: color-mix(in srgb, var(--surface-card-border) 86%, transparent);
+  }
+
+  :global([data-theme="light"]) .section-quick-nav__link {
+    background: color-mix(in srgb, var(--surface-card) 96%, transparent);
+  }
+
+  :global([data-theme="light"]) .section-quick-nav__link.is-active {
+    color: var(--text-primary);
+  }
+</style>

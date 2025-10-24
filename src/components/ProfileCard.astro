@@ -15,6 +15,8 @@ interface Props {
 		tint: string;
 		iconAsset: string;
 	}>;
+	sectionId?: string;
+	headingId?: string;
 }
 
 const {
@@ -25,6 +27,8 @@ const {
 	email = "contact@tuliocunha.dev",
 	location = "Brazil",
 	socialLinks = [],
+	sectionId,
+	headingId,
 } = Astro.props;
 
 const _contacts = [
@@ -43,7 +47,14 @@ const _contacts = [
 ];
 ---
 
-<section class="profile-card" data-reveal data-reveal-order="0">
+<section
+  id={sectionId}
+  class="profile-card"
+  data-reveal
+  data-reveal-order="0"
+  aria-labelledby={headingId ?? undefined}
+  role="region"
+>
   <div class="profile-card__identity">
     <div class="profile-card__photo" data-depth>
       <div class="profile-card__photo-ring" aria-hidden="true"></div>
@@ -55,7 +66,7 @@ const _contacts = [
         <i class="ph ph-hand-waving icon--decorative icon--label" aria-hidden="true"></i>
         <span class="profile-card__eyebrow-label">Hello</span>
       </div>
-      <h1 class="profile-card__name">{name}</h1>
+      <h1 id={headingId} class="profile-card__name" tabindex="-1">{name}</h1>
       <p class="profile-card__title">{title}</p>
       {bio && <p class="profile-card__bio">{bio}</p>}
 

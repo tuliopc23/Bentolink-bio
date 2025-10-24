@@ -5,6 +5,7 @@ import GitHubActivity from "../components/GitHubActivity";
 import ProfileCard from "../components/ProfileCard.astro";
 import ScrollCTA from "../components/ScrollCTA.astro";
 import ScrollIndicator from "../components/ScrollIndicator.astro";
+import SectionQuickNav from "../components/SectionQuickNav.astro";
 import Base from "../layouts/Base.astro";
 import { fetchLatestPosts } from "../services/sanity";
 
@@ -100,6 +101,29 @@ const toolLinks = [
 		iconAsset: "/icons/orbstack.svg",
 	},
 ];
+
+const sectionNavItems = [
+	{
+		id: "section-profile",
+		label: "Profile",
+		headingId: "heading-profile",
+	},
+	{
+		id: "section-tools",
+		label: "Tools",
+		headingId: "heading-tools",
+	},
+	{
+		id: "section-github",
+		label: "GitHub",
+		headingId: "heading-github",
+	},
+	{
+		id: "section-writing",
+		label: "Writing",
+		headingId: "heading-writing",
+	},
+];
 ---
 
 <Base
@@ -108,6 +132,8 @@ const toolLinks = [
 >
   <section class="bento-grid">
     <ProfileCard
+      sectionId="section-profile"
+      headingId="heading-profile"
       name="Tulio Cunha"
       title="Full Stack Developer"
       bio=". Command Line Junkie . Mac Head . Unix Enthusiast . Tool Addict."
@@ -117,16 +143,25 @@ const toolLinks = [
       socialLinks={socialLinks}
     />
 
+    <SectionQuickNav sections={sectionNavItems} heroSectionId="section-profile" />
+
     <ScrollCTA />
 
     <div class="widget-carousel" role="region" aria-label="Widget carousel">
-      <div class="widget-box widget-tools hover-elevate" data-reveal data-reveal-order="1">
+      <div
+        id="section-tools"
+        class="widget-box widget-tools hover-elevate"
+        data-reveal
+        data-reveal-order="1"
+        aria-labelledby="heading-tools"
+        role="region"
+      >
         <div class="widget-header">
           <span class="widget-eyebrow icon-text-group">
             <i class="ph ph-wrench icon--decorative icon--label" aria-hidden="true"></i>
             Toolkit
           </span>
-          <h2 class="widget-title icon-text-group">
+          <h2 id="heading-tools" class="widget-title icon-text-group" tabindex="-1">
             Tools
             <i class="ph ph-toolbox icon--heading" aria-hidden="true"></i>
           </h2>
@@ -145,13 +180,20 @@ const toolLinks = [
         </div>
       </div>
 
-      <div class="widget-box widget-github hover-elevate" data-reveal data-reveal-order="2">
+      <div
+        id="section-github"
+        class="widget-box widget-github hover-elevate"
+        data-reveal
+        data-reveal-order="2"
+        aria-labelledby="heading-github"
+        role="region"
+      >
         <div class="widget-header">
           <span class="widget-eyebrow icon-text-group">
             <i class="ph ph-chart-bar icon--decorative icon--label" aria-hidden="true"></i>
             Activity
           </span>
-          <h2 class="widget-title icon-text-group">
+          <h2 id="heading-github" class="widget-title icon-text-group" tabindex="-1">
             <a
               href="https://github.com/tuliopc23"
               target="_blank"
@@ -168,13 +210,20 @@ const toolLinks = [
         <GitHubActivity username="tuliopc23" client:load />
       </div>
 
-      <div class="widget-box widget-feature-writing hover-elevate" data-reveal data-reveal-order="3">
+      <div
+        id="section-writing"
+        class="widget-box widget-feature-writing hover-elevate"
+        data-reveal
+        data-reveal-order="3"
+        aria-labelledby="heading-writing"
+        role="region"
+      >
         <div class="widget-header">
           <span class="widget-eyebrow icon-text-group">
             <i class="ph ph-article icon--decorative icon--label" aria-hidden="true"></i>
             Writing
           </span>
-          <h2 class="widget-title icon-text-group">
+          <h2 id="heading-writing" class="widget-title icon-text-group" tabindex="-1">
             Feature Writing
             <i class="ph ph-newspaper icon--heading" aria-hidden="true"></i>
           </h2>
@@ -201,6 +250,13 @@ const toolLinks = [
     gap: clamp(20px, 2.6vw, 32px);
     grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: stretch;
+  }
+
+  #section-profile,
+  #section-tools,
+  #section-github,
+  #section-writing {
+    scroll-margin-top: clamp(72px, 10vh, 120px);
   }
 
   .bento-grid > [data-reveal] {
