@@ -9,7 +9,9 @@ export default defineConfig({
 	integrations: [solidJs()],
 	output: 'server',
 	adapter: cloudflare({
-		imageService: 'compile'
+		imageService: 'compile',
+		// @ts-expect-error: sessionBinding is supported by the runtime adapter but not typed yet
+		sessionBinding: false, // Disabled: not needed for static portfolio
 	}),
 	image: {
 		service: {

@@ -1,15 +1,23 @@
-name = "bentolink-bio"
-compatibility_date = "2024-01-01"
-pages_build_output_dir = "./dist"
-
-# Environment variables for production
-# Note: Set these in Cloudflare dashboard under Settings > Environment variables
-[env.production]
-# PUBLIC_GITHUB_TOKEN = "your-github-token"
-# PUBLIC_SANITY_PROJECT_ID = "61249gtj"
-# PUBLIC_SANITY_DATASET = "production"
-# PUBLIC_SANITY_API_VERSION = "2023-05-03"
-# SANITY_TOKEN = "your-sanity-token"
+name = 'bentolink-personal'
+type = "javascript"
+main = ".output/server/index.mjs"
+compatibility_date = "2025-10-24"
+compatibility_flags = ["nodejs_compat"]
 
 [build]
-command = "npm run build"
+command = "bun run build"
+cwd = "./"
+watch_paths = ["src/**/*.{astro,tsx,ts}"]
+
+[env.production]
+name = "bentolink-personal-prod"
+routes = [
+  { pattern = "tulio.cc/*", zone_name = "tulio.cc" }
+]
+vars = { PUBLIC_GITHUB_USERNAME = "tuliopc23", PUBLIC_SANITY_PROJECT_ID = "61249gtj", PUBLIC_SANITY_DATASET = "production" }
+
+[env.staging]
+name = "bentolink-personal-staging"
+routes = [
+  { pattern = "staging.tulio.cc/*", zone_name = "tulio.cc" }
+]
