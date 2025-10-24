@@ -1,4 +1,5 @@
 import { createSignal, For, onMount, Show } from "solid-js";
+import "../styles/github-activity-widget.css";
 
 interface GitHubCommit {
 	sha: string;
@@ -112,6 +113,11 @@ const fetchRecentCommits = async (username: string, token: string): Promise<GitH
 	}
 };
 
+function formatCommitMessage(message: string): string {
+	const firstLine = message.split("\n")[0]?.trim() ?? "Commit";
+	return firstLine.length <= 110 ? firstLine : `${firstLine.slice(0, 107)}…`;
+}
+
 export default function GitHubActivity(props: { username: string }) {
 	const token = import.meta.env.PUBLIC_GITHUB_TOKEN;
 
@@ -140,64 +146,56 @@ export default function GitHubActivity(props: { username: string }) {
 	});
 
 	return (
-		<div class="github-widget">
+		<section class="github-widget" data-github-widget>
 			<Show
 				when={!loading() && commits().length > 0}
 				fallback={
-					<div class="github-loading">
-						<div class="github-skeleton"></div>
-						<div class="github-skeleton"></div>
-						<div class="github-skeleton"></div>
+					<div class="github-widget__loading">
+						<div class="github-commit-skeleton"></div>
+						<div class="github-commit-skeleton"></div>
+						<div class="github-commit-skeleton"></div>
 					</div>
 				}
 			>
-				<div class="github-commits-list">
+				<div class="github-commits">
 					<For each={commits()}>
-						{(commit, index) => (
+						{(commit) => (
 							<a
 								href={commit.html_url}
-								class="commit-item"
+								class="github-commit-card"
 								target="_blank"
 								rel="noopener noreferrer"
-								style={{
-									"animation-delay": `${index() * 50}ms`,
-								}}
+								aria-label={`View ${commit.sha} on ${commit.repository?.name ?? "GitHub"}`}
 							>
-								<div class="commit-item__indicator"></div>
-								<div class="commit-item__content">
-									<p class="commit-item__message">{commit.commit.message}</p>
-									<div class="commit-item__meta">
-										<span class="commit-item__repo icon-text-group">
-											<i class="ph ph-git-branch" style="font-size: 10px;" aria-hidden="true"></i>
-											{commit.repository?.name}
-										</span>
-										<span class="commit-item__divider">•</span>
-										<span class="commit-item__time icon-text-group">
-											<i class="ph ph-clock" style="font-size: 10px;" aria-hidden="true"></i>
+								<header class="github-commit-card__header">
+									<span class="github-commit-card__eyebrow icon-text-group">
+										<i class="ph ph-git-branch" aria-hidden="true"></i>
+										{commit.repository?.name ?? "Repository"}
+									</span>
+									<p class="github-commit-card__message">
+										{formatCommitMessage(commit.commit.message)}
+									</p>
+								</header>
+								<footer class="github-commit-card__footer">
+									<div class="github-commit-card__chip-group" role="presentation">
+										<span class="github-commit-card__chip">
+											<i class="ph ph-clock" aria-hidden="true"></i>
 											{commit.commit.author.date}
 										</span>
-										<span class="commit-item__sha">{commit.sha}</span>
+										<span class="github-commit-card__chip github-commit-card__chip--mono">
+											<i class="ph ph-hash" aria-hidden="true"></i>
+											{commit.sha}
+										</span>
 									</div>
-								</div>
-								<div class="commit-item__arrow">
-									<svg
-										width="14"
-										height="14"
-										viewBox="0 0 14 14"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="1.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M3.5 10.5L10.5 3.5M10.5 3.5H5.5M10.5 3.5V8.5" />
-									</svg>
-								</div>
+									<span class="github-commit-card__cta" aria-hidden="true">
+										<i class="ph ph-arrow-up-right"></i>
+									</span>
+								</footer>
 							</a>
 						)}
 					</For>
 				</div>
 			</Show>
-		</div>
+		</section>
 	);
 }

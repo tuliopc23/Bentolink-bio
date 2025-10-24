@@ -29,14 +29,14 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
 
 <style>
   .dock-link {
-    --dock-accent-base: rgba(255, 255, 255, 0.06);
-    --dock-accent-hover: rgba(255, 255, 255, 0.14);
-    --dock-accent-strong: rgba(255, 255, 255, 0.2);
-    --dock-focus-ring: rgba(255, 255, 255, 0.16);
+    --dock-accent-base: rgba(255, 255, 255, 0.08);
+    --dock-accent-hover: rgba(255, 255, 255, 0.16);
+    --dock-accent-strong: rgba(255, 255, 255, 0.24);
+    --dock-focus-ring: rgba(255, 255, 255, 0.2);
     --hover-elevate-translate: -4px;
-    --hover-elevate-scale: 1.01;
-    --hover-shadow: var(--shadow-card-hover), var(--shadow-card-highlight);
-    --hover-border: var(--panel-border-strong);
+    --hover-elevate-scale: 1.015;
+    --hover-shadow: var(--shadow-card-hover), var(--shadow-card-highlight), var(--shadow-card-glow);
+    --hover-border: color-mix(in srgb, var(--panel-border-strong) 55%, transparent);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,16 +54,15 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
     width: 100%;
     position: relative;
     isolation: isolate;
-    background: var(--surface-card);
-    border: 1px solid var(--surface-card-border);
+    background: color-mix(in srgb, var(--surface-card) 96%, transparent);
+    border: 1px solid color-mix(in srgb, var(--panel-border) 68%, transparent);
     box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.6),
-      0 4px 8px rgba(0, 0, 0, 0.48),
-      0 12px 24px rgba(0, 0, 0, 0.36),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 30px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(var(--glass-ultra-thin-blur)) saturate(140%);
-    -webkit-backdrop-filter: blur(var(--glass-ultra-thin-blur)) saturate(140%);
+      var(--shadow-card),
+      var(--shadow-card-highlight),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 36px rgba(10, 132, 255, 0.05);
+    backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-saturation-base));
+    -webkit-backdrop-filter: blur(var(--glass-thin-blur)) saturate(var(--glass-saturation-base));
   }
 
   .dock-link::before,
@@ -77,8 +76,8 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
 
   .dock-link::before {
     inset: 1px;
-    background: radial-gradient(circle at 50% 12%, var(--dock-accent-base), rgba(0, 0, 0, 0) 70%);
-    opacity: 0.2;
+    background: radial-gradient(circle at 50% 14%, var(--dock-accent-base), rgba(0, 0, 0, 0) 72%);
+    opacity: 0.22;
     mix-blend-mode: soft-light;
     transition: opacity var(--motion-duration-sm) var(--motion-ease-out);
   }
@@ -94,18 +93,14 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
   }
   
   .dock-link:hover {
-    background: var(--surface-card-hover);
-    box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.65),
-      0 6px 12px rgba(0, 0, 0, 0.52),
-      0 16px 32px rgba(0, 0, 0, 0.38),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 0 40px rgba(0, 0, 0, 0.18);
+    background: color-mix(in srgb, var(--surface-card) 98%, transparent);
+    border-color: var(--hover-border);
+    box-shadow: var(--hover-shadow);
   }
 
   .dock-link:hover::before {
-    opacity: 0.32;
-    background: radial-gradient(circle at 50% 12%, var(--dock-accent-hover), rgba(0, 0, 0, 0) 70%);
+    opacity: 0.34;
+    background: radial-gradient(circle at 50% 14%, var(--dock-accent-hover), rgba(0, 0, 0, 0) 72%);
   }
   
   .dock-link:focus-visible {
@@ -119,88 +114,88 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
   .dock-link:active {
     --hover-translate: calc(var(--hover-elevate-translate) / 2);
     --hover-scale: var(--motion-scale-active);
-    background: var(--surface-card-active);
+    background: color-mix(in srgb, var(--surface-card-active) 94%, transparent);
     transform: translateY(-2px) scale(0.98);
     transition-duration: var(--motion-duration-instant);
   }
   .dock-link[data-tint="blue"] {
-    --dock-accent-base: rgba(10, 132, 255, 0.1);
-    --dock-accent-hover: rgba(10, 132, 255, 0.2);
-    --dock-accent-strong: rgba(10, 132, 255, 0.32);
-    --dock-focus-ring: rgba(10, 132, 255, 0.24);
-    --hover-border: rgba(10, 132, 255, 0.4);
+    --dock-accent-base: rgba(10, 132, 255, 0.12);
+    --dock-accent-hover: rgba(10, 132, 255, 0.24);
+    --dock-accent-strong: rgba(10, 132, 255, 0.34);
+    --dock-focus-ring: rgba(10, 132, 255, 0.28);
+    --hover-border: rgba(10, 132, 255, 0.42);
   }
 
   .dock-link[data-tint="indigo"] {
-    --dock-accent-base: rgba(94, 92, 232, 0.1);
-    --dock-accent-hover: rgba(94, 92, 232, 0.2);
-    --dock-accent-strong: rgba(94, 92, 232, 0.32);
-    --dock-focus-ring: rgba(94, 92, 232, 0.24);
-    --hover-border: rgba(94, 92, 232, 0.4);
+    --dock-accent-base: rgba(94, 92, 232, 0.12);
+    --dock-accent-hover: rgba(94, 92, 232, 0.24);
+    --dock-accent-strong: rgba(94, 92, 232, 0.34);
+    --dock-focus-ring: rgba(94, 92, 232, 0.28);
+    --hover-border: rgba(94, 92, 232, 0.42);
   }
 
   .dock-link[data-tint="teal"] {
-    --dock-accent-base: rgba(95, 212, 255, 0.1);
-    --dock-accent-hover: rgba(95, 212, 255, 0.2);
-    --dock-accent-strong: rgba(95, 212, 255, 0.32);
-    --dock-focus-ring: rgba(95, 212, 255, 0.24);
-    --hover-border: rgba(95, 212, 255, 0.4);
+    --dock-accent-base: rgba(95, 212, 255, 0.12);
+    --dock-accent-hover: rgba(95, 212, 255, 0.24);
+    --dock-accent-strong: rgba(95, 212, 255, 0.34);
+    --dock-focus-ring: rgba(95, 212, 255, 0.28);
+    --hover-border: rgba(95, 212, 255, 0.42);
   }
 
   .dock-link[data-tint="cyan"] {
-    --dock-accent-base: rgba(90, 200, 250, 0.1);
-    --dock-accent-hover: rgba(90, 200, 250, 0.2);
-    --dock-accent-strong: rgba(90, 200, 250, 0.32);
-    --dock-focus-ring: rgba(90, 200, 250, 0.24);
-    --hover-border: rgba(90, 200, 250, 0.4);
+    --dock-accent-base: rgba(90, 200, 250, 0.12);
+    --dock-accent-hover: rgba(90, 200, 250, 0.24);
+    --dock-accent-strong: rgba(90, 200, 250, 0.34);
+    --dock-focus-ring: rgba(90, 200, 250, 0.28);
+    --hover-border: rgba(90, 200, 250, 0.42);
   }
 
   .dock-link[data-tint="green"] {
-    --dock-accent-base: rgba(48, 217, 72, 0.1);
-    --dock-accent-hover: rgba(48, 217, 72, 0.2);
-    --dock-accent-strong: rgba(48, 217, 72, 0.32);
-    --dock-focus-ring: rgba(48, 217, 72, 0.24);
-    --hover-border: rgba(48, 217, 72, 0.4);
+    --dock-accent-base: rgba(48, 217, 72, 0.12);
+    --dock-accent-hover: rgba(48, 217, 72, 0.24);
+    --dock-accent-strong: rgba(48, 217, 72, 0.34);
+    --dock-focus-ring: rgba(48, 217, 72, 0.28);
+    --hover-border: rgba(48, 217, 72, 0.42);
   }
 
   .dock-link[data-tint="orange"] {
-    --dock-accent-base: rgba(255, 160, 13, 0.1);
-    --dock-accent-hover: rgba(255, 160, 13, 0.2);
-    --dock-accent-strong: rgba(255, 160, 13, 0.32);
-    --dock-focus-ring: rgba(255, 160, 13, 0.24);
-    --hover-border: rgba(255, 160, 13, 0.4);
+    --dock-accent-base: rgba(255, 160, 13, 0.12);
+    --dock-accent-hover: rgba(255, 160, 13, 0.24);
+    --dock-accent-strong: rgba(255, 160, 13, 0.34);
+    --dock-focus-ring: rgba(255, 160, 13, 0.28);
+    --hover-border: rgba(255, 160, 13, 0.42);
   }
 
   .dock-link[data-tint="pink"] {
-    --dock-accent-base: rgba(255, 56, 97, 0.1);
-    --dock-accent-hover: rgba(255, 56, 97, 0.2);
-    --dock-accent-strong: rgba(255, 56, 97, 0.32);
-    --dock-focus-ring: rgba(255, 56, 97, 0.24);
-    --hover-border: rgba(255, 56, 97, 0.4);
+    --dock-accent-base: rgba(255, 56, 97, 0.12);
+    --dock-accent-hover: rgba(255, 56, 97, 0.24);
+    --dock-accent-strong: rgba(255, 56, 97, 0.34);
+    --dock-focus-ring: rgba(255, 56, 97, 0.28);
+    --hover-border: rgba(255, 56, 97, 0.42);
   }
 
   .dock-link[data-tint="purple"] {
-    --dock-accent-base: rgba(194, 91, 244, 0.1);
-    --dock-accent-hover: rgba(194, 91, 244, 0.2);
-    --dock-accent-strong: rgba(194, 91, 244, 0.32);
-    --dock-focus-ring: rgba(194, 91, 244, 0.24);
-    --hover-border: rgba(194, 91, 244, 0.4);
+    --dock-accent-base: rgba(194, 91, 244, 0.12);
+    --dock-accent-hover: rgba(194, 91, 244, 0.24);
+    --dock-accent-strong: rgba(194, 91, 244, 0.34);
+    --dock-focus-ring: rgba(194, 91, 244, 0.28);
+    --hover-border: rgba(194, 91, 244, 0.42);
   }
 
   .dock-link[data-tint="red"] {
-    --dock-accent-base: rgba(255, 71, 60, 0.1);
-    --dock-accent-hover: rgba(255, 71, 60, 0.2);
-    --dock-accent-strong: rgba(255, 71, 60, 0.32);
-    --dock-focus-ring: rgba(255, 71, 60, 0.24);
-    --hover-border: rgba(255, 71, 60, 0.4);
+    --dock-accent-base: rgba(255, 71, 60, 0.12);
+    --dock-accent-hover: rgba(255, 71, 60, 0.24);
+    --dock-accent-strong: rgba(255, 71, 60, 0.34);
+    --dock-focus-ring: rgba(255, 71, 60, 0.28);
+    --hover-border: rgba(255, 71, 60, 0.42);
   }
 
   .dock-link[data-tint="yellow"] {
-    --dock-accent-base: rgba(255, 215, 13, 0.1);
-    --dock-accent-hover: rgba(255, 215, 13, 0.2);
-    --dock-accent-strong: rgba(255, 215, 13, 0.32);
-    --dock-focus-ring: rgba(255, 215, 13, 0.24);
-    --hover-border: rgba(255, 215, 13, 0.4);
+    --dock-accent-base: rgba(255, 215, 13, 0.12);
+    --dock-accent-hover: rgba(255, 215, 13, 0.24);
+    --dock-accent-strong: rgba(255, 215, 13, 0.34);
+    --dock-focus-ring: rgba(255, 215, 13, 0.28);
+    --hover-border: rgba(255, 215, 13, 0.42);
   }
 
   .dock-link__name {
@@ -213,24 +208,22 @@ const { href, title, tint = "blue", iconAsset, revealOrder } = Astro.props;
     margin: 0;
   }
   :global([data-theme="light"]) .dock-link {
-    background: var(--surface-card);
-    border-color: var(--surface-card-border);
+    background: color-mix(in srgb, white 80%, rgba(0, 0, 0, 0.02));
+    border-color: color-mix(in srgb, var(--panel-border) 45%, rgba(34, 48, 88, 0.18));
     box-shadow:
-      0 1px 2px rgba(31, 35, 53, 0.22),
-      0 4px 8px rgba(31, 35, 53, 0.2),
-      0 12px 24px rgba(31, 35, 53, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6),
-      0 0 30px rgba(31, 35, 53, 0.16);
+      0 1px 2px rgba(31, 35, 53, 0.18),
+      0 6px 16px rgba(31, 35, 53, 0.16),
+      0 20px 34px rgba(31, 35, 53, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.68);
   }
 
   :global([data-theme="light"]) .dock-link:hover {
-    border-color: var(--surface-card-border-strong);
+    border-color: color-mix(in srgb, var(--panel-border-strong) 52%, rgba(34, 48, 88, 0.16));
     box-shadow:
-      0 2px 4px rgba(31, 35, 53, 0.24),
-      0 6px 12px rgba(31, 35, 53, 0.22),
-      0 16px 32px rgba(31, 35, 53, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      0 0 40px rgba(31, 35, 53, 0.18);
+      0 2px 4px rgba(31, 35, 53, 0.22),
+      0 10px 24px rgba(31, 35, 53, 0.18),
+      0 30px 48px rgba(31, 35, 53, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76);
   }
   
   
