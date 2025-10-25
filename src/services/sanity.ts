@@ -27,11 +27,12 @@ export async function fetchLatestPosts(limit = 3): Promise<SanityPost[]> {
 	try {
 		const url = `${SANITY_QUERY_URL}?query=${encodeURIComponent(query)}`;
 
-		const response = await fetch(url, {
-			headers: {
-				Authorization: `Bearer ${SANITY_TOKEN}`,
-			},
-		});
+		const headers: HeadersInit = {};
+		if (SANITY_TOKEN) {
+			headers.Authorization = `Bearer ${SANITY_TOKEN}`;
+		}
+
+		const response = await fetch(url, { headers });
 
 		if (!response.ok) {
 			throw new Error(`Sanity API error: ${response.status} ${response.statusText}`);
