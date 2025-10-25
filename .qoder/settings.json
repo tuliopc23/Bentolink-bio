@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "ask": [
+      "Read(!/Users/tuliopinheirocunha/Bentolink-bio/**)",
+      "Edit(!/Users/tuliopinheirocunha/Bentolink-bio/**)"
+    ],
+    "allow": [
+      "Read(/Users/tuliopinheirocunha/Bentolink-bio/**)",
+      "Edit(/Users/tuliopinheirocunha/Bentolink-bio/**)"
+    ]
+  },
+  "memoryImport": {},
+  "monitoring": {}
+}
