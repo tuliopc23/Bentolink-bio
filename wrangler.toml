@@ -10,12 +10,12 @@ cwd = "./"
 [env.production]
 name = "bentolink-personal-prod"
 routes = [
-  { pattern = "tulio.cc/*", zone_name = "tulio.cc" }
+  { pattern = "biolinks.tuliocunha.dev/*", zone_name = "tuliocunha.dev" }
 ]
 vars = { PUBLIC_GITHUB_USERNAME = "tuliopc23", PUBLIC_SANITY_PROJECT_ID = "61249gtj", PUBLIC_SANITY_DATASET = "production" }
 
 [env.staging]
 name = "bentolink-personal-staging"
 routes = [
-  { pattern = "staging.tulio.cc/*", zone_name = "tulio.cc" }
+  { pattern = "staging-biolinks.tuliocunha.dev/*", zone_name = "tuliocunha.dev" }
 ]

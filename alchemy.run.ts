@@ -8,6 +8,9 @@ export const worker = await Astro("bentolink-bio-worker", {
 	main: "./dist/_worker.js/index.js",
 	compatibilityDate: "2025-10-01",
 	compatibilityFlags: ["nodejs_compat"],
+	routes: [
+		{ pattern: "biolinks.tuliocunha.dev/*", zone_name: "tuliocunha.dev" }
+	],
 	build: {
 		command: "bun run build",
 	},
@@ -18,6 +21,7 @@ export const worker = await Astro("bentolink-bio-worker", {
 
 console.log({
 	url: worker.url,
+	domain: "biolinks.tuliocunha.dev",
 	environment: "production",
 	framework: "Astro 5.15.1 + SolidJS",
 });
