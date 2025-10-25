@@ -1,5 +1,5 @@
 {
-	"name": "molecular-main",
+	"name": "bentolink-bio",
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
@@ -19,16 +19,17 @@
 		"@astrojs/solid-js": "^5.1.1",
 		"@lottiefiles/dotlottie-web": "^0.54.1",
 		"@phosphor-icons/web": "^2.1.2",
-		"astro": "^5.14.7",
+		"astro": "^5.15.1",
 		"cache": "^3.0.0",
 		"solid-js": "^1.9.9"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.5",
-		"@biomejs/biome": "^2.2.6",
-		"typescript": "^5.9.3",
-		"alchemy": "0.75.1",
 		"@astrojs/cloudflare": "^12.6.10",
-		"@cloudflare/workers-types": "^4.20251014.0"
+		"@biomejs/biome": "^2.3.0",
+		"@cloudflare/workers-types": "^4.20251014.0",
+		"alchemy": "0.76.1",
+		"typescript": "^5.9.3",
+		"wrangler": "^4.45.0"
 	}
 }
