@@ -9,11 +9,7 @@
 		"astro": "astro",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
-		"check": "biome check --write .",
-		"deploy": "bun alchemy.run.ts",
-		"deploy:pages": "npm run build && wrangler pages deploy dist",
-		"destroy": "alchemy destroy",
-		"alchemy:dev": "alchemy dev"
+		"check": "biome check --write ."
 	},
 	"dependencies": {
 		"@astrojs/solid-js": "^5.1.1",
@@ -25,11 +21,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.5",
-		"@astrojs/cloudflare": "^12.6.10",
 		"@biomejs/biome": "^2.3.0",
-		"@cloudflare/workers-types": "^4.20251014.0",
-		"alchemy": "0.76.1",
-		"typescript": "^5.9.3",
-		"wrangler": "^4.45.0"
+		"typescript": "^5.9.3"
 	}
 }
