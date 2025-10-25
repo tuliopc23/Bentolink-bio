@@ -6,6 +6,7 @@ const app = await alchemy("bentolink-bio");
 export const worker = await Astro("website", {
   build: { command: "bun run build" },
   dev: { command: "bun dev" },
+  domain: "biolinks.tuliocunha.dev",
   env: {
     PUBLIC_GITHUB_TOKEN: process.env.PUBLIC_GITHUB_TOKEN,
     PUBLIC_GITHUB_USERNAME: process.env.PUBLIC_GITHUB_USERNAME,
