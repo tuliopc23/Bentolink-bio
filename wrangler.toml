@@ -1,0 +1,9 @@
+name = "bentolink-bio"
+main = "dist/_worker.js"
+compatibility_date = "2024-10-25"
+
+[build]
+command = "bun run build"
+
+[assets]
+directory = "dist"
