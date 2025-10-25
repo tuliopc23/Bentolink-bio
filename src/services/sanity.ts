@@ -37,7 +37,7 @@ export async function fetchLatestPosts(limit = 3): Promise<SanityPost[]> {
 			throw new Error(`Sanity API error: ${response.status} ${response.statusText}`);
 		}
 
-		const data = await response.json();
+		const data = (await response.json()) as { result?: SanityPost[] };
 		return data.result || [];
 	} catch (error) {
 		console.error("Error fetching posts from Sanity:", error);

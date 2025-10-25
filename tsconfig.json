@@ -2,8 +2,9 @@
 	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
 		"jsx": "preserve",
-		"jsxImportSource": "solid-js"
+		"jsxImportSource": "solid-js",
+		"types": ["@cloudflare/workers-types", "workers/env.ts"]
 	},
-	"include": [".astro/types.d.ts", "**/*"],
+	"include": [".astro/types.d.ts", "**/*", "alchemy.run.ts", "workers/**/*.ts"],
 	"exclude": ["dist"]
 }
