@@ -18,6 +18,8 @@ const app = await alchemy("bentolink-bio");
 export const worker = await Astro("bentolink-bio-worker", {
 	// @ts-expect-error: "main" is a supported runtime option but missing from current types
 	main: "./.output/server/index.mjs",
+	compatibilityDate: "2025-10-24",
+	compatibilityFlags: ["nodejs_compat"],
 	build: {
 		command: "bun run build",
 	},
