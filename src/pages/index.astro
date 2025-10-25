@@ -444,7 +444,7 @@ const sectionNavItems = [
       overscroll-behavior-y: auto;
       
       gap: 18px;
-      padding: 8px calc((100vw - 85vw) / 2);
+      padding: 8px calc((100vw - 85vw) / 2) 8px calc((100vw - 85vw) / 2);
       margin: -8px calc(-1 * (100vw - 85vw) / 2);
       
       /* Performance optimizations */
@@ -456,8 +456,8 @@ const sectionNavItems = [
       scrollbar-width: none;
       -ms-overflow-style: none;
       
-      /* Scroll padding for proper centering */
-      scroll-padding: 0 calc((100vw - 85vw) / 2);
+      /* Scroll padding for proper centering and end spacing */
+      scroll-padding: calc((100vw - 85vw) / 2);
       
       /* Critical: Allow both horizontal carousel scroll AND vertical page scroll */
       touch-action: auto;
