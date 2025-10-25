@@ -164,8 +164,11 @@ function formatCommitMessage(message: string): string {
 	return firstLine.length <= 110 ? firstLine : `${firstLine.slice(0, 107)}…`;
 }
 
-export default function GitHubActivity(props: { username: string }) {
-	const token = import.meta.env.PUBLIC_GITHUB_TOKEN;
+export default function GitHubActivity(props: { username: string; token?: string }) {
+	// Try multiple ways to get the token for different environments
+	const token = props.token || 
+		(typeof window !== 'undefined' ? window.PUBLIC_GITHUB_TOKEN : undefined) ||
+		import.meta.env.PUBLIC_GITHUB_TOKEN;
 
 	const [repositories, setRepositories] = createSignal<GitHubRepo[]>([]);
 	const [loading, setLoading] = createSignal(true);

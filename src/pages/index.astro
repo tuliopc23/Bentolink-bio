@@ -12,6 +12,10 @@ import { fetchLatestPosts } from "../services/sanity";
 // Fetch blog posts server-side
 const blogPosts = await fetchLatestPosts(3);
 
+// Get GitHub token from runtime environment (Cloudflare Workers)
+const githubToken = Astro.locals.runtime?.env?.PUBLIC_GITHUB_TOKEN || 
+	import.meta.env.PUBLIC_GITHUB_TOKEN;
+
 const socialLinks = [
 	{
 		title: "My Website",
@@ -207,7 +211,7 @@ const sectionNavItems = [
           </h2>
           <p class="widget-caption">Latest commits and streaks.</p>
         </div>
-        <GitHubActivity username="tuliopc23" client:load />
+        <GitHubActivity username="tuliopc23" token={githubToken} client:load />
       </div>
 
       <div
@@ -236,6 +240,13 @@ const sectionNavItems = [
     <ScrollIndicator widgetCount={3} />
   </section>
 </Base>
+
+<script define:vars={{ githubToken }}>
+  // Make GitHub token available globally for client-side components
+  if (typeof window !== 'undefined') {
+    window.PUBLIC_GITHUB_TOKEN = githubToken;
+  }
+</script>
 
 <script>
   import '../scripts/carousel-handler';
