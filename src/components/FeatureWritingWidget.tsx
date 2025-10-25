@@ -163,22 +163,14 @@ export default function FeatureWritingWidget(props: Props) {
 			}
 		};
 
-		if (typeof motionQuery.addEventListener === "function") {
-			motionQuery.addEventListener("change", handleMotionChange);
-		} else {
-			motionQuery.addListener(handleMotionChange);
-		}
+		motionQuery.addEventListener("change", handleMotionChange);
 
 		onCleanup(() => {
 			for (const dispose of cleanups) {
 				dispose();
 			}
 			observer.disconnect();
-			if (typeof motionQuery.removeEventListener === "function") {
-				motionQuery.removeEventListener("change", handleMotionChange);
-			} else {
-				motionQuery.removeListener(handleMotionChange);
-			}
+			motionQuery.removeEventListener("change", handleMotionChange);
 		});
 	});
 
