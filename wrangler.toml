@@ -14,3 +14,6 @@ PUBLIC_GITHUB_USERNAME = "tuliopc23"
 PUBLIC_SANITY_PROJECT_ID = "61249gtj"
 PUBLIC_SANITY_DATASET = "production"
 PUBLIC_SANITY_API_VERSION = "2023-05-03"
+
+# Secrets (set via: wrangler secret put PUBLIC_GITHUB_TOKEN)
+# PUBLIC_GITHUB_TOKEN will be set as a secret in Cloudflare Workers
