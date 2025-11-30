@@ -68,12 +68,11 @@ function formatRelativeTime(dateString: string): string {
 
 const fetchRepositoriesWithCommits = async (
 	username: string,
-	token: string,
+	token?: string,
 ): Promise<GitHubRepo[]> => {
 	try {
 		if (!token) {
-			console.warn("GitHub token not found. Please add PUBLIC_GITHUB_TOKEN to your .env file");
-			return [];
+			console.warn("GitHub token not found. Using unauthenticated requests (60 req/hour limit)");
 		}
 
 		const cached = repoCache.get(username);
@@ -81,14 +80,17 @@ const fetchRepositoriesWithCommits = async (
 			return cached.data;
 		}
 
+		const headers: HeadersInit = {
+			Accept: "application/vnd.github.v3+json",
+		};
+		
+		if (token) {
+			headers.Authorization = `Bearer ${token}`;
+		}
+
 		const reposResponse = await fetch(
 			`https://api.github.com/users/${username}/repos?sort=pushed&per_page=12`,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-					Accept: "application/vnd.github.v3+json",
-				},
-			},
+			{ headers },
 		);
 
 		if (!reposResponse.ok) {
@@ -107,14 +109,17 @@ const fetchRepositoriesWithCommits = async (
 		const reposWithCommits = await Promise.all(
 			filteredRepos.map(async (repo) => {
 				try {
+					const headers: HeadersInit = {
+						Accept: "application/vnd.github.v3+json",
+					};
+					
+					if (token) {
+						headers.Authorization = `Bearer ${token}`;
+					}
+
 					const commitsResponse = await fetch(
 						`https://api.github.com/repos/${repo.full_name}/commits?per_page=3`,
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-								Accept: "application/vnd.github.v3+json",
-							},
-						},
+						{ headers },
 					);
 
 					if (commitsResponse.ok) {
@@ -165,23 +170,30 @@ function formatCommitMessage(message: string): string {
 }
 
 export default function GitHubActivity(props: { username: string; token?: string }) {
-	// Try multiple ways to get the token for different environments
-	const token =
-		props.token ||
-		(typeof window !== "undefined" ? (window as any).PUBLIC_GITHUB_TOKEN : undefined) ||
-		import.meta.env.PUBLIC_GITHUB_TOKEN;
-
 	const [repositories, setRepositories] = createSignal<GitHubRepo[]>([]);
 	const [loading, setLoading] = createSignal(true);
 	const [error, setError] = createSignal<string | null>(null);
 	const [activeRepoIndex, setActiveRepoIndex] = createSignal(0);
 	const [showScrollHint, setShowScrollHint] = createSignal(true);
 
+	const getToken = () => {
+		const token = props.token || 
+			(typeof window !== "undefined" ? (window as any).PUBLIC_GITHUB_TOKEN : undefined);
+		
+		if (!token && typeof window !== "undefined") {
+			console.error("[GitHubActivity] Token not found. Props token:", !!props.token, "Window token:", !!(window as any).PUBLIC_GITHUB_TOKEN);
+		}
+		
+		return token;
+	};
+
 	const loadRepositories = async () => {
+		const currentToken = getToken();
+		
 		try {
 			setLoading(true);
 			setError(null);
-			const repos = await fetchRepositoriesWithCommits(props.username, token);
+			const repos = await fetchRepositoriesWithCommits(props.username, currentToken);
 			setRepositories(repos);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Failed to load repositories");

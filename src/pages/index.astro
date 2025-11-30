@@ -14,7 +14,15 @@ const blogPosts = await fetchLatestPosts(3);
 
 // Get GitHub token from runtime environment (Cloudflare Workers)
 const githubToken = Astro.locals.runtime?.env?.PUBLIC_GITHUB_TOKEN || 
-	import.meta.env.PUBLIC_GITHUB_TOKEN;
+	import.meta.env.PUBLIC_GITHUB_TOKEN ||
+	(typeof process !== 'undefined' ? process.env.PUBLIC_GITHUB_TOKEN : undefined);
+
+// Log token availability (not the token itself) for debugging
+if (!githubToken) {
+	console.warn('[Index] GitHub token not found in environment');
+} else {
+	console.log('[Index] GitHub token found, length:', githubToken.length);
+}
 
 const socialLinks = [
 	{

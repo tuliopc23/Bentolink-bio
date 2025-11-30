@@ -1,120 +1,72 @@
 # Deployment Guide
 
-This project is deployed to Cloudflare using Alchemy.
+## Setting up GitHub Token for Production
 
-## Prerequisites
+The GitHub Activity widget requires a GitHub Personal Access Token to fetch commit data. Follow these steps to configure it for Cloudflare Workers:
 
-- Bun installed
-- Alchemy CLI installed (`bun add -g alchemy`)
-- GitHub account with repository secrets configured
-- Cloudflare account
+### 1. Create a GitHub Personal Access Token
 
-## Environment Variables
+1. Go to https://github.com/settings/tokens
+2. Click "Generate new token" → "Generate new token (classic)"
+3. Give it a name like "Bentolink Bio Widget"
+4. Select scopes: `public_repo` (or just `read:user` for public repos only)
+5. Click "Generate token"
+6. **Copy the token immediately** (you won't see it again)
 
-The following environment variables are required for production:
+### 2. Set the Secret in Cloudflare Workers
 
-### GitHub API (for GitHubActivity component)
-- `PUBLIC_GITHUB_TOKEN` - GitHub personal access token with `public_repo` or `read:user` permissions
-- `PUBLIC_GITHUB_USERNAME` - Your GitHub username
-
-### Sanity CMS (for FeatureWritingWidget component)
-- `PUBLIC_SANITY_PROJECT_ID` - Your Sanity project ID
-- `PUBLIC_SANITY_DATASET` - Sanity dataset (usually `production`)
-- `PUBLIC_SANITY_API_VERSION` - Sanity API version (e.g., `2023-05-03`)
-- `SANITY_TOKEN` - Sanity API token with read permissions
-
-### Alchemy
-- `ALCHEMY_STATE_TOKEN` - Token for Alchemy state management
-
-## Local Development
-
-1. Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Fill in your environment variables in `.env`
-
-3. Install dependencies:
-   ```bash
-   bun install
-   ```
-
-4. Run development server:
-   ```bash
-   bun dev
-   ```
-
-## Manual Deployment
-
-To deploy manually from your local machine:
+Run this command to set the token as a secret:
 
 ```bash
-bun run deploy
+bunx wrangler secret put PUBLIC_GITHUB_TOKEN
 ```
 
-This will:
-1. Build the Astro project
-2. Deploy to Cloudflare using Alchemy
-3. Use environment variables from your `.env` file
+When prompted, paste your GitHub token.
 
-## Automated Deployment (GitHub Actions)
+### 3. Verify the Configuration
 
-The project includes a GitHub Actions workflow that automatically deploys on push to `main`.
+After setting the secret, deploy your site:
 
-### Setup GitHub Secrets
-
-Add the following secrets to your GitHub repository (Settings → Secrets and variables → Actions):
-
-- `PUBLIC_GITHUB_TOKEN`
-- `PUBLIC_GITHUB_USERNAME`
-- `PUBLIC_SANITY_PROJECT_ID`
-- `PUBLIC_SANITY_DATASET`
-- `PUBLIC_SANITY_API_VERSION`
-- `SANITY_TOKEN`
-- `ALCHEMY_STATE_TOKEN`
-
-### Workflow Trigger
-
-The deployment workflow runs:
-- Automatically on push to `main` branch
-- Manually via GitHub Actions UI (workflow_dispatch)
-
-## Build Output
-
-The build process creates a `dist/` folder with:
-- `_worker.js/` - Cloudflare Worker entry point
-- `_astro/` - Compiled JavaScript and CSS assets
-- Static assets (images, fonts, icons)
-- `_routes.json` - Cloudflare routing configuration
-
-## Verifying Deployment
-
-After deployment, Alchemy will output the URL where your site is deployed. The URL will be in the format:
+```bash
+bun run build
+bunx wrangler deploy
 ```
-https://bentolink-bio-website-[username].alchemy.run
-```
+
+### 4. Test in Production
+
+Visit your deployed site and check the GitHub Activity widget. It should now display your commits.
 
 ## Troubleshooting
 
-### Environment Variables Not Working
-- Ensure all secrets are set in GitHub repository settings
-- Verify `.env` file exists locally and contains all required variables
-- Check that `alchemy.run.ts` properly passes environment variables
+### Token not working in production
 
-### Build Failures
-- Run `bun run build` locally to test
-- Check for TypeScript errors
-- Verify all dependencies are installed
+1. Verify the secret is set:
+   ```bash
+   bunx wrangler secret list
+   ```
 
-### API Rate Limits
-- GitHub API: Authenticated requests have higher rate limits
-- Sanity: Check your plan's API limits
-- Both components implement caching to reduce API calls
+2. Check the token has correct permissions on GitHub
 
-## Additional Commands
+3. Ensure the token hasn't expired
 
-- `bun run build` - Build for production
-- `bun run preview` - Preview production build locally
-- `bun run destroy` - Destroy Alchemy deployment
-- `bun run alchemy:dev` - Run Alchemy in development mode
+### Rate limiting issues
+
+GitHub API has rate limits:
+- Authenticated: 5,000 requests/hour
+- Unauthenticated: 60 requests/hour
+
+The widget caches data for 5 minutes to minimize API calls.
+
+## Local Development
+
+For local development, create a `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+Then add your GitHub token to the `.env` file:
+
+```
+PUBLIC_GITHUB_TOKEN=your_github_token_here
+```
