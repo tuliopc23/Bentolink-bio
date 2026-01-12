@@ -18,7 +18,7 @@
     "@astrojs/solid-js": "^5.1.3",
     "@lottiefiles/dotlottie-web": "^0.57.0",
     "@phosphor-icons/web": "^2.1.2",
-    "astro": "^5.16.0",
+    "astro": "^5.16.8",
     "cache": "^3.0.0",
     "solid-js": "^1.9.10"
   },
