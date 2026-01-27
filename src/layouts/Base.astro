@@ -26,8 +26,17 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
 <html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{_fullTitle}</title>
+
+    <!-- Theme color: extend site bg into browser toolbar (Chrome, Safari, Edge) -->
+    <meta name="theme-color" id="theme-color-meta" content="#050506" />
+    <meta name="theme-color" content="#050506" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)" />
+
+    <!-- WebKit / iOS: extend under status bar and use site bg -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
 
@@ -66,12 +75,19 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
           }
         };
 
+        const setThemeColor = (theme) => {
+          const meta = document.getElementById("theme-color-meta");
+          if (meta) meta.setAttribute("content", theme === "light" ? "#f6f7fb" : "#050506");
+        };
+
         const stored = readStoredTheme();
         const root = document.documentElement;
+        let theme;
 
         if (stored === "light" || stored === "dark") {
-          root.setAttribute("data-theme", stored);
-          if (stored === "light") {
+          theme = stored;
+          root.setAttribute("data-theme", theme);
+          if (theme === "light") {
             root.classList.remove("dark");
             root.classList.add("light");
           } else {
@@ -79,12 +95,12 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
             root.classList.add("dark");
           }
         } else {
-          // Check system preference
           const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const theme = prefersDark ? "dark" : "light";
+          theme = prefersDark ? "dark" : "light";
           root.setAttribute("data-theme", theme);
           root.classList.add(theme);
         }
+        setThemeColor(theme);
       })();
     </script>
   </head>
@@ -160,6 +176,10 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
             console.error("Failed to save theme preference:", error);
           }
 
+          // Update theme-color so toolbar/status bar match site bg
+          const themeColorMeta = document.getElementById("theme-color-meta");
+          if (themeColorMeta) themeColorMeta.setAttribute("content", newTheme === "light" ? "#f6f7fb" : "#050506");
+
           // Add transition class
           root.classList.add("theme-transition");
           setTimeout(() => {
@@ -188,7 +208,13 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     color: var(--text);
     position: relative;
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
+    /* WebKit/safari: respect safe areas when viewport-fit=cover extends bg into notch */
+    padding-top: env(safe-area-inset-top);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
     
     /* Enhanced touch scrolling */
     touch-action: pan-y pinch-zoom;
@@ -232,8 +258,8 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
   /* Theme toggle container */
   .theme-toggle-container {
     position: fixed;
-    top: clamp(var(--space-sm), 4vw, var(--space-xl));
-    right: clamp(var(--space-sm), 4vw, var(--space-xl));
+    top: calc(clamp(var(--space-sm), 4vw, var(--space-xl)) + env(safe-area-inset-top, 0px));
+    right: calc(clamp(var(--space-sm), 4vw, var(--space-xl)) + env(safe-area-inset-right, 0px));
     z-index: 100;
     display: flex;
     align-items: center;
