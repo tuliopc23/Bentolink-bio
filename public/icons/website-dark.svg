@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    version="1.1"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1024"
+    height="1024"
+    viewBox="0, 0, 1024, 1024"
+    preserveAspectRatio="none"
+    id="svg2">
+   <style>
+     image { filter: invert(1); }
+   </style>
+   <g
+       id="layer_Paper"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;fill-rule:nonzero;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1;stroke-miterlimit:10">
+      <image
+          style="fill:none;stroke:none"
+          id="84F87534"
+          x="0"
+          y="0"
+          width="1024"
+          height="1024"
+          xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABYUlEQVR4Xu3XwQ0CMRCF4S8EES4EESwYERwQcfZxP2e6tWET1dZf7awAAAAAAAAAAP8MmkVoeAQMtk0iAqF0EYBKaEUBOYEoAaSZSBLDVEgTgFJgSgBpJlIEsNUSBOAUmBKAOEGSmPrbr30PmAcpI+/63HgFIZ7PGmCVG0IXUmAFV0oAG2up9AEpJgAqrTBu0k0AO7yhughpJkAou4bt9JNADu8obooaSZAKLuG7fSTQA7vKG6KGkmQCj7pyGJ9BygCcxJIAtUkgB5AyQBLbVEgD5AyQBLYVEwD5AyQBLYVEwD5AuTgAAAAD8DN1/5wDUAEgzLGrwC0gzLG7wC0gzLG7wC0g7eX38J0g9vl98C0g7vV7wC0g7eX38J0g9vl98C0g3WfXwLSDe49PAtIN7j08C0g3WfXwLSDe49PAtINn9+4+zhuZx7+7nJHmhMAAAAAAAAAAP4BMMI9A9QSbTgAAAAASUVORK5CYII="/>
+   </g>
+</svg>

@@ -41,7 +41,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     <meta name="robots" content="index,follow" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/icons/website-placeholder.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icons/website-light.svg" id="favicon" />
 
     <!-- Preconnect to SF font CDN -->
     <link rel="preconnect" href="//fdn.fontcdn.ir" />
@@ -80,6 +80,11 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
           if (meta) meta.setAttribute("content", theme === "light" ? "#f6f7fb" : "#050506");
         };
 
+        const setFavicon = (theme) => {
+          const link = document.getElementById("favicon");
+          if (link) link.setAttribute("href", theme === "light" ? "/icons/website-dark.svg" : "/icons/website-light.svg");
+        };
+
         const stored = readStoredTheme();
         const root = document.documentElement;
         let theme;
@@ -101,6 +106,7 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
           root.classList.add(theme);
         }
         setThemeColor(theme);
+        setFavicon(theme);
       })();
     </script>
   </head>
@@ -179,6 +185,10 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
           // Update theme-color so toolbar/status bar match site bg
           const themeColorMeta = document.getElementById("theme-color-meta");
           if (themeColorMeta) themeColorMeta.setAttribute("content", newTheme === "light" ? "#f6f7fb" : "#050506");
+
+          // Update favicon
+          const favicon = document.getElementById("favicon");
+          if (favicon) favicon.setAttribute("href", newTheme === "light" ? "/icons/website-dark.svg" : "/icons/website-light.svg");
 
           // Add transition class
           root.classList.add("theme-transition");
