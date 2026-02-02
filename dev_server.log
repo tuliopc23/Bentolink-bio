@@ -18,3 +18,42 @@
 
 [Index] GitHub token not found in environment
 14:47:56 [200] / 1168ms
+16:42:07 Configuration file updated. Restarting...
+16:42:07 [watch] /src/components/GitHubActivity.tsx
+16:42:07 [watch] src/components/GitHubActivity.tsx
+16:42:07 [vite] changed tsconfig file detected: /Users/tuliopinheirocunha/Developer/Bentolink-bio/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+16:42:07 [watch] /src/components/FeatureWritingWidget.tsx
+16:42:07 [watch] src/components/FeatureWritingWidget.tsx
+16:42:07 [watch] src/scripts/carousel-handler.ts
+16:42:07 [watch] src/scripts/motion.ts
+16:42:07 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+16:42:07 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+16:42:10 [vite] Re-optimizing dependencies because vite config has changed
+16:42:10 [content] Syncing content
+16:42:10 [content] Synced content
+16:42:10 [types] Generated 419ms
+16:42:10 [vite] Re-optimizing dependencies because vite config has changed
+16:43:07 [vite] changed tsconfig file detected: /Users/tuliopinheirocunha/Developer/Bentolink-bio/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+16:43:07 Configuration file updated. Restarting...
+16:43:07 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+16:43:07 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+16:43:08 [vite] Re-optimizing dependencies because vite config has changed
+16:43:08 [content] Syncing content
+16:43:08 [content] Synced content
+16:43:08 [types] Generated 352ms
+16:43:08 [vite] Re-optimizing dependencies because vite config has changed
+16:44:49 Configuration file updated. Restarting...
+16:44:49 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+16:44:49 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+16:44:49 [ERROR] [@astrojs/cloudflare] An unhandled error occurred while running the "astro:server:setup" hook
+16:44:49 [ERROR] [config] Cannot find module '/Users/tuliopinheirocunha/Developer/Bentolink-bio/node_modules/wrangler/node_modules/miniflare/dist/src/shared/dev-registry.worker.js'
+  Stack trace:
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:845:20)
+
+16:44:49 [ERROR] Continuing with previous valid configuration
+
+16:44:52 [vite] changed tsconfig file detected: /Users/tuliopinheirocunha/Developer/Bentolink-bio/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
