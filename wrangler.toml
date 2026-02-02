@@ -17,3 +17,7 @@ PUBLIC_SANITY_API_VERSION = "2023-05-03"
 
 # Secrets (set via: wrangler secret put PUBLIC_GITHUB_TOKEN)
 # PUBLIC_GITHUB_TOKEN will be set as a secret in Cloudflare Workers
+
+[[kv_namespaces]]
+binding = "SESSION"
+id = "SESSION_KV_ID_PLACEHOLDER"

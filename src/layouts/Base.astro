@@ -111,7 +111,8 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     </script>
   </head>
 
-  <body>
+  <body class="liquid-glass">
+    <div class="liquid-glass-reflector" aria-hidden="true"></div>
     <a href="#main" class="sr-only">Skip to content</a>
 
     <div class="theme-toggle-container">
@@ -213,45 +214,47 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
 </html>
 
 <style>
+  html {
+    background-color: var(--bg);
+    /* Essential for Liquid Glass: prevents color mismatch during rubber-banding */
+    scrollbar-gutter: stable;
+  }
+
   body {
-    background: var(--bg-gradient, var(--bg-base));
     color: var(--text);
     position: relative;
     min-height: 100vh;
     min-height: 100dvh;
     overflow-x: hidden;
-    /* WebKit/safari: respect safe areas when viewport-fit=cover extends bg into notch */
+    margin: 0;
+    
+    /* WebKit/safari: respect safe areas when viewport-fit=cover */
     padding-top: env(safe-area-inset-top);
     padding-right: env(safe-area-inset-right);
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
     
-    /* Enhanced touch scrolling */
     touch-action: pan-y pinch-zoom;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: none;
-    overscroll-behavior-y: contain;
     
-    transition:
-      background-color 400ms var(--motion-ease-smooth),
-      color 400ms var(--motion-ease-smooth);
+    transition: color 400ms var(--motion-ease-smooth);
   }
 
-  body::before,
+  /* Fixed background layers that extend into browser chrome */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--bg-gradient, var(--bg-base));
+    z-index: -2;
+    pointer-events: none;
+  }
+
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    pointer-events: none;
-    z-index: -2;
-  }
-
-  body::before {
-    background: var(--bg-gradient, var(--bg-base));
-    opacity: 1;
-  }
-
-  body::after {
     z-index: -1;
     background-image:
       var(--bg-radial-primary),
@@ -262,26 +265,48 @@ const _lastUpdated = new Date().toLocaleDateString("en-US", {
     background-position: 20% 0%, 80% 10%, 0 0;
     mix-blend-mode: soft-light;
     opacity: 0.32;
-    filter: none;
+    pointer-events: none;
   }
 
-  /* Theme toggle container */
+  /* The Reflector: Blends the top edge with Safari's translucent UI */
+  .liquid-glass-reflector {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: radial-gradient(ellipse at 50% 0%, var(--color-primary) 0%, transparent 70%);
+    opacity: 0.08;
+    z-index: 10;
+    pointer-events: none;
+    filter: blur(40px);
+  }
+
+  :global([data-theme="light"]) .liquid-glass-reflector {
+    opacity: 0.04;
+    background: radial-gradient(ellipse at 50% 0%, var(--blue) 0%, transparent 70%);
+  }
+
+  /* Theme toggle container - adjusted for Liquid Glass */
   .theme-toggle-container {
     position: fixed;
-    top: calc(clamp(var(--space-sm), 4vw, var(--space-xl)) + env(safe-area-inset-top, 0px));
-    right: calc(clamp(var(--space-sm), 4vw, var(--space-xl)) + env(safe-area-inset-right, 0px));
+    top: calc(16px + env(safe-area-inset-top));
+    right: calc(16px + env(safe-area-inset-right));
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 6px;
     border-radius: 999px;
-    backdrop-filter: blur(var(--glass-blur-base)) saturate(var(--glass-saturation-base));
-    background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
-    border: 1px solid var(--panel-border);
-    box-shadow: var(--shadow-0);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+    border: 0.5px solid var(--panel-border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
     transition: all var(--motion-duration-base) var(--motion-ease-out);
   }
+
+  /* ... rest of your theme toggle and footer styles ... */
 
   :global([data-theme="light"]) .theme-toggle-container {
     background: color-mix(in srgb, var(--surface-elevated) 82%, transparent);
