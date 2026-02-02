@@ -83,7 +83,7 @@ const fetchRepositoriesWithCommits = async (
 		const headers: HeadersInit = {
 			Accept: "application/vnd.github.v3+json",
 		};
-		
+
 		if (token) {
 			headers.Authorization = `Bearer ${token}`;
 		}
@@ -112,7 +112,7 @@ const fetchRepositoriesWithCommits = async (
 					const headers: HeadersInit = {
 						Accept: "application/vnd.github.v3+json",
 					};
-					
+
 					if (token) {
 						headers.Authorization = `Bearer ${token}`;
 					}
@@ -177,19 +177,24 @@ export default function GitHubActivity(props: { username: string; token?: string
 	const [showScrollHint, setShowScrollHint] = createSignal(true);
 
 	const getToken = () => {
-		const token = props.token || 
-			(typeof window !== "undefined" ? (window as any).PUBLIC_GITHUB_TOKEN : undefined);
-		
+		const token =
+			props.token || (typeof window !== "undefined" ? window.PUBLIC_GITHUB_TOKEN : undefined);
+
 		if (!token && typeof window !== "undefined") {
-			console.error("[GitHubActivity] Token not found. Props token:", !!props.token, "Window token:", !!(window as any).PUBLIC_GITHUB_TOKEN);
+			console.error(
+				"[GitHubActivity] Token not found. Props token:",
+				!!props.token,
+				"Window token:",
+				!!window.PUBLIC_GITHUB_TOKEN,
+			);
 		}
-		
+
 		return token;
 	};
 
 	const loadRepositories = async () => {
 		const currentToken = getToken();
-		
+
 		try {
 			setLoading(true);
 			setError(null);

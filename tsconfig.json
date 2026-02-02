@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"jsx": "preserve",
 		"jsxImportSource": "solid-js",
-		"types": ["@cloudflare/workers-types", "workers/env.ts"]
+		"types": ["@cloudflare/workers-types", "node"]
 	},
 	"include": [".astro/types.d.ts", "**/*", "alchemy.run.ts", "workers/**/*.ts"],
 	"exclude": ["dist"]
